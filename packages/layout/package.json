@@ -1,0 +1,24 @@
+{
+    "name": "magic-layout",
+    "module": "src/index.ts",
+    "version": "0.0.1",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview"
+    },
+    "devDependencies": {
+        "@types/bun": "latest",
+        "vite": "^6.3.5"
+    },
+    "peerDependencies": {
+        "typescript": "^5.8.3"
+    },
+    "dependencies": {
+        "@lit/context": "^1.1.5",
+        "@shoelace-style/shoelace": "^2.20.1",
+        "flex-tools": "^1.5.2",
+        "lit": "^3.3.0"
+    }
+}
