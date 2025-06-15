@@ -5,7 +5,7 @@
 
 import { CSSResult, LitElement, html } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
-import styles from './styles'
+import styles from './styles/base'
 import { provide } from '@lit/context';
 import { MagicLayoutContextManager, MagicLayoutContext } from '@/context'
 import { registerIconLibrary } from '@shoelace-style/shoelace';
@@ -29,6 +29,7 @@ import '@shoelace-style/shoelace/dist/components/dropdown/dropdown.js';
 import '@shoelace-style/shoelace/dist/components/split-panel/split-panel.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { HeaderOptions, SiderOptions } from '@/types';
+import "./sider"
 
 
 
@@ -66,12 +67,6 @@ export class MagicLayout extends LitElement {
         })
     }
 
-
-
-    _parseArgs() {
-
-    }
-
     connectedCallback(): void {
         super.connectedCallback()
         this.registerIconSet((name) => {
@@ -83,9 +78,9 @@ export class MagicLayout extends LitElement {
         return html`<div class="header ${classMap({
             'header': true,
             'header-fixed': true
-        })}"                
-            >www</div>`
+        })}">www</div>`
     }
+
 
     render() {
         return html`
@@ -93,14 +88,10 @@ export class MagicLayout extends LitElement {
             'full-screen': this.fullScreen,
         })}"> 
             
-            <sl-split-panel part="container" position="15" class="container fit">
+            <sl-split-panel part="container" style="--divider-width: 3px;" position="15" class="container fit">
                 <sl-icon slot="divider" name="grip-vertical"></sl-icon>
-                <div
-                    class="sider"
-                    slot="start"
-                    position="15" 
-           >
-                    <slot name="sider"></slot>
+                <div class="sider" slot="start">
+                    <magic-layout-sider class="fit"></magic-layout-sider>
                 </div>
                 <div slot="end">
                     ${this._renderHeader()}

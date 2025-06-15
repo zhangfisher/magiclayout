@@ -8,7 +8,8 @@ export default css`
         position: relative;
     }        
     .sider{
-        background-color: var(--sl-color-neutral-50);
+        background-color: var(--sl-color-neutral-50);        
+        position: relative;
     }
     .header{
         display: flex;
@@ -41,4 +42,9 @@ export default css`
         width: 100%;
         height: 100%;
     } 
+
+
+    magic-layout-sider{
+        position: relative;
+    }
 `
