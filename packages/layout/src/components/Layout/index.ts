@@ -4,7 +4,7 @@
  */
 
 import { CSSResult, LitElement, html } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { customElement, property, state } from 'lit/decorators.js'
 import styles from './styles'
 import { provide } from '@lit/context';
 import { MagicLayoutContextManager, MagicLayoutContext } from '@/context'
@@ -26,6 +26,9 @@ import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js';
 import '@shoelace-style/shoelace/dist/components/spinner/spinner.js';
 import '@shoelace-style/shoelace/dist/components/icon/icon.js';
 import '@shoelace-style/shoelace/dist/components/dropdown/dropdown.js';
+import '@shoelace-style/shoelace/dist/components/split-panel/split-panel.js';
+import { classMap } from 'lit/directives/class-map.js';
+import { HeaderOptions, SiderOptions } from '@/types';
 
 
 
@@ -38,13 +41,23 @@ export class MagicLayout extends LitElement {
     @property({ type: String })
     iconSet: string = 'https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/${name}.svg'
 
+    @property({ type: Boolean, reflect: true })
+    fullScreen: boolean = true
+
+    @property({ type: Object, reflect: true })
+    header: HeaderOptions = {
+        visible: true,
+    }
+
+    @property({ type: Object, reflect: true })
+    sider: SiderOptions = {}
+
+    @state()
+    state: object = {}
+
 
     /**
-     * 注册图标库
-     * 
-     * registerIcons((name=?{})>)
-     * 
-     * 
+     * 注册图标库 
      */
     registerIconSet(resolver: IconLibraryResolver, options?: Omit<IconLibrary, 'name' | 'resolver'>) {
         registerIconLibrary('default', {
@@ -52,6 +65,13 @@ export class MagicLayout extends LitElement {
             ...options || {}
         })
     }
+
+
+
+    _parseArgs() {
+
+    }
+
     connectedCallback(): void {
         super.connectedCallback()
         this.registerIconSet((name) => {
@@ -59,9 +79,35 @@ export class MagicLayout extends LitElement {
         })
     }
 
+    _renderHeader() {
+        return html`<div class="header ${classMap({
+            'header': true,
+            'header-fixed': true
+        })}"                
+            >www</div>`
+    }
+
     render() {
         return html`
-            <slot></slot>
+        <div part="root" class="root ${classMap({
+            'full-screen': this.fullScreen,
+        })}"> 
+            
+            <sl-split-panel part="container" position="15" class="container fit">
+                <sl-icon slot="divider" name="grip-vertical"></sl-icon>
+                <div
+                    class="sider"
+                    slot="start"
+                    position="15" 
+           >
+                    <slot name="sider"></slot>
+                </div>
+                <div slot="end">
+                    ${this._renderHeader()}
+                    <slot name="body"></slot>    
+                </div>
+            </sl-split-panel>
+        </div>
         `
     }
 

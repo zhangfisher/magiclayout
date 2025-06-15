@@ -47,32 +47,16 @@ export class MagicLayoutExamples extends LitElement {
 
     render() {
         return html`
-        <sl-split-panel  position="15">
-  <div
-    slot="start"
-    style="height: 200px; background: var(--sl-color-neutral-50); display: flex; align-items: center; justify-content: center; overflow: hidden;"
-  >
-    Start
-  </div>
-  <div
-    slot="end"
-    style="height: 200px; background: var(--sl-color-neutral-50); display: flex; align-items: center; justify-content: center; overflow: hidden;"
-  >
-    End
-  </div>
-</sl-split-panel>
-            <magic-layout>
-                <div class="sider">
-                         <magic-toolbar
-                            .items=${this._getItems()}
-                            direction="vertical"
-                        ></magic-toolbar>
-                </div>
-                <div class="content"> 
-                    <magic-toolbar .items=${this._getItems()}></magic-toolbar>
-                    <magic-flex-examples></magic-flex-examples>   
-                </div>
-            </magic-layout>
+
+        <magic-layout>
+            <div slot="sider">
+                <magic-toolbar .items=${this._getItems()} direction="vertical"></magic-toolbar>
+            </div>
+            <div slot="body">
+                <magic-toolbar .items=${this._getItems()}></magic-toolbar>
+                <magic-flex-examples></magic-flex-examples>   
+            </div>
+        </magic-layout> 
         `
     }
 

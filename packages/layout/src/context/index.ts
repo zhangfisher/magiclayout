@@ -18,6 +18,7 @@ export class MagicLayoutContextManager {
         lg: '1200px',
         xl: '1408px',
     }
+    size: 'small' | 'medium' | 'large' = 'medium'
 }
 export const MagicLayoutContext = createContext<MagicLayoutContextManager>('magic-layout');
 

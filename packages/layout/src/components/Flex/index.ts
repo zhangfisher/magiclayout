@@ -27,6 +27,7 @@ export class MagicFlex extends LitElement {
     align?: FlexAlign = 'center'
     @property({ type: String })
     justify?: FlexJustify = 'center'
+
     /**
      * 定义自动扩展的单元格的选择器
      */

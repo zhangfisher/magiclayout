@@ -19,7 +19,7 @@ import "@shoelace-style/shoelace/dist/components/button/button.js";
 import { classMap } from 'lit/directives/class-map.js';
 
 export type MagicToolbarItem = {
-    type?: 'button' | 'dropdown' | 'divider' | 'checkbox' | 'input' | 'search' | 'switch' | 'popupmenu' | 'popover'
+    type?: 'button' | 'dropdown' | 'divider' | 'checkbox' | 'input' | 'search' | 'switch' | 'popup-menu' | 'popup-panel' | 'avator'
     icon?: string
     label?: string
     active?: boolean
@@ -49,6 +49,9 @@ export class MagicToolbar extends LitElement {
     @property({ type: String })
     labelPos: 'right' | 'bottom' = 'right'
 
+    @property({ type: String })
+    title: string = ''
+
     render() {
         return html`
             <div class="toolbar ${classMap({
@@ -65,7 +68,9 @@ export class MagicToolbar extends LitElement {
                     ['input', () => this._renderDivider.call(this, item)],
                     ['search', () => this._renderDivider.call(this, item)],
                     ['checkbox', () => this._renderCheckbox.call(this, item)],
-                    ['checkbox', () => this._renderCheckbox.call(this, item)],
+                    ['avator', () => this._renderCheckbox.call(this, item)],
+                    ['popup-menu', () => this._renderPopupMenu.call(this, item)],
+                    ['popup-panel', () => this._renderPopupPanel.call(this, item)],
                     ['switch', () => this._renderCheckbox.call(this, item)],
                 ], () => this._renderButton.call(this, item))}`
             })}</div>
@@ -74,13 +79,28 @@ export class MagicToolbar extends LitElement {
     _renderWithTooltip(item: MagicToolbarItem, template: TemplateResult) {
         if (item.tips) {
             return html`<sl-tooltip 
-                placement="bottom"
+                placement="${this.direction === 'horizontal' ? 'bottom' : 'right'}"
                 content="${item.tips}">
             ${template}
             </sl-tooltip>`
         } else {
             return template
         }
+    }
+    _renderPopupmenu(item: MagicToolbarItem) {
+
+    }
+    _renderAvator(item: MagicToolbarItem) {
+
+    }
+    _renderSearch(item: MagicToolbarItem) {
+
+    }
+    _renderPopupPanel(item: MagicToolbarItem) {
+
+    }
+    _renderPopupMenu(item: MagicToolbarItem) {
+
     }
     _renderButton(item: MagicToolbarItem) {
         return this._renderWithTooltip(item, html`<sl-button  @click="${item.onClick?.bind(item)}">
