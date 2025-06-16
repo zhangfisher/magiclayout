@@ -37,7 +37,7 @@ export class MagicLayoutSider extends LitElement {
 
     render() {
         return html`
-        <magic-flex direction="column" grow="#menu" class="fit">
+        <magic-flex direction="column" grow="#menu" align="stretch" class="fit">
             <magic-layout-logo> </magic-layout-logo>
             <magic-layout-sider-header> </magic-layout-sider-header>
             <magic-layout-sider-menu id="menu"></magic-layout-sider-menu>

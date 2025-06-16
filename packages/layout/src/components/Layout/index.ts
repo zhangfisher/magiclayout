@@ -4,12 +4,15 @@
  */
 
 import { CSSResult, LitElement, html } from 'lit'
-import { customElement, property, state } from 'lit/decorators.js'
+import { customElement, property } from 'lit/decorators.js'
 import styles from './styles/base'
 import { provide } from '@lit/context';
-import { MagicLayoutContextManager, MagicLayoutContext } from '@/context'
+import { MagicLayoutContext } from '@/context'
 import { registerIconLibrary } from '@shoelace-style/shoelace';
 import { IconLibrary, IconLibraryResolver } from '@shoelace-style/shoelace/dist/components/icon/library.js';
+import { classMap } from 'lit/directives/class-map.js';
+import { IMagicLayoutStore, MagicLayoutHeaderOptions, MagicLayoutSiderOptions } from '@/types';
+import "./sider"
 
 import '@shoelace-style/shoelace/dist/components/button/button.js';
 import '@shoelace-style/shoelace/dist/components/tab/tab.js';
@@ -27,17 +30,16 @@ import '@shoelace-style/shoelace/dist/components/spinner/spinner.js';
 import '@shoelace-style/shoelace/dist/components/icon/icon.js';
 import '@shoelace-style/shoelace/dist/components/dropdown/dropdown.js';
 import '@shoelace-style/shoelace/dist/components/split-panel/split-panel.js';
-import { classMap } from 'lit/directives/class-map.js';
-import { HeaderOptions, SiderOptions } from '@/types';
-import "./sider"
-
 
 
 @customElement('magic-layout')
 export class MagicLayout extends LitElement {
     static styles = styles as CSSResult
+    @property({ type: Object, reflect: true })
+    store: IMagicLayoutStore = {}
+
     @provide({ context: MagicLayoutContext })
-    context = new MagicLayoutContextManager();
+    context = this.store
 
     @property({ type: String })
     iconSet: string = 'https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/${name}.svg'
@@ -46,15 +48,12 @@ export class MagicLayout extends LitElement {
     fullScreen: boolean = true
 
     @property({ type: Object, reflect: true })
-    header: HeaderOptions = {
+    header: MagicLayoutHeaderOptions = {
         visible: true,
     }
 
     @property({ type: Object, reflect: true })
-    sider: SiderOptions = {}
-
-    @state()
-    state: object = {}
+    sider: MagicLayoutSiderOptions = {}
 
 
     /**

@@ -31,31 +31,27 @@ export class MagicLayoutExamples extends LitElement {
             flex-grow: 1;
         }
     `
-    _getItems() {
-        return [
-            { icon: 'settings', label: "设置", tips: '设置' },
-            { icon: 'file', tips: '文件' },
-            { icon: 'aperture', tips: '滤镜' },
-            { icon: 'bell-ring', tips: '通知' },
-            { icon: 'camera' },
-            { icon: 'bug' },
-            { icon: 'chrome' },
-            { icon: 'message-square-more' },
-            { icon: 'rotate-cw' },
-        ]
+    getStore() {
+        return {
+            actions: [
+                { icon: 'settings', label: "设置", tips: '设置' },
+                { icon: 'file', tips: '文件' },
+                { icon: 'aperture', tips: '滤镜' },
+                { icon: 'bell-ring', tips: '通知' },
+                { icon: 'camera' },
+                { icon: 'bug' },
+                { icon: 'chrome' },
+                { icon: 'message-square-more' },
+                { icon: 'rotate-cw' },
+            ]
+        }
     }
 
     render() {
         return html`
 
-        <magic-layout>
-            <div slot="sider">
-                <magic-toolbar .items=${this._getItems()} direction="vertical"></magic-toolbar>
-            </div>
-            <div slot="body">
-                <magic-toolbar .items=${this._getItems()}></magic-toolbar>
-                <magic-flex-examples></magic-flex-examples>   
-            </div>
+        <magic-layout .store=${this.getStore()} >
+      
         </magic-layout> 
         `
     }

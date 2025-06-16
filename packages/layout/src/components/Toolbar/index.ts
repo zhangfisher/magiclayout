@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /** 
- * 
- *   
+ *  
  *  <magic-toobar></magic-toobar>
  * 
  */
@@ -10,27 +9,15 @@ import { LitElement, TemplateResult, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import styles from './styles'
 import { consume } from '@lit/context';
-import { MagicLayoutContextManager, MagicLayoutContext } from '@/context';
+import { MagicLayoutContext } from '@/context';
 import { repeat } from 'lit/directives/repeat.js';
 import { choose } from 'lit/directives/choose.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
 import "@shoelace-style/shoelace/dist/components/button/button.js";
 import { classMap } from 'lit/directives/class-map.js';
+import { IMagicLayoutStore } from '@/types';
 
-export type MagicToolbarItem = {
-    type?: 'button' | 'dropdown' | 'divider' | 'checkbox' | 'input' | 'search' | 'switch' | 'popup-menu' | 'popup-panel' | 'avator'
-    icon?: string
-    label?: string
-    active?: boolean
-    disabled?: boolean
-    badge?: string
-    value?: any
-    tips?: string
-
-    onClick?: () => void
-    onChange?: () => void
-}
 
 @customElement('magic-toolbar')
 export class MagicToolbar extends LitElement {
@@ -38,10 +25,7 @@ export class MagicToolbar extends LitElement {
 
     @consume({ context: MagicLayoutContext })
     @property({ attribute: false })
-    public context?: MagicLayoutContextManager;
-
-    @property({ type: Array, reflect: true })
-    items: MagicToolbarItem[] = []
+    public context?: IMagicLayoutStore;
 
     @property({ type: String })
     direction: 'horizontal' | 'vertical' = 'horizontal'

@@ -24,7 +24,7 @@ export class MagicFlex extends LitElement {
     @property({ type: String })
     wrap: FlexWrap = 'wrap'
     @property({ type: String })
-    align?: FlexAlign = 'center'
+    align: FlexAlign = 'center'
     @property({ type: String })
     justify?: FlexJustify = 'center'
 

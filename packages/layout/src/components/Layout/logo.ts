@@ -8,7 +8,8 @@ export class MagicLayoutLogo extends LitElement {
     render() {
         return html`
             <div class="logo">
-                <div class="logo__text">MagicLayout</div>
+                MagicLayout
+                Logo
             </div>
         `
     }
