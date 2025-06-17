@@ -16,7 +16,6 @@ import { FlexWrap, FlexAlign, FlexJustify } from '@/types'
 @customElement('magic-flex')
 export class MagicFlex extends LitElement {
     static styles = styles as CSSResult
-
     @property({ type: String })
     direction: string = 'row'
     @property({ type: String })
@@ -27,6 +26,9 @@ export class MagicFlex extends LitElement {
     align: FlexAlign = 'center'
     @property({ type: String })
     justify?: FlexJustify = 'center'
+    // none: 没有, inline: 仅单元格内部, full: 包括外边框
+    @property({ type: String })
+    border: string = 'inline'
 
     /**
      * 定义自动扩展的单元格的选择器
@@ -49,7 +51,11 @@ export class MagicFlex extends LitElement {
                 growEle.style.flexGrow = '1'
             }
         }
-
+        if (this.border === 'inline') {
+            this.classList.add('inline-border')
+        } else if (this.border === 'full') {
+            this.classList.add('border')
+        }
     }
     connectedCallback(): void {
         super.connectedCallback()

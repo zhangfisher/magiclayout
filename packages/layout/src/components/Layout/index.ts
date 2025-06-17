@@ -35,6 +35,7 @@ import '@shoelace-style/shoelace/dist/components/split-panel/split-panel.js';
 @customElement('magic-layout')
 export class MagicLayout extends LitElement {
     static styles = styles as CSSResult
+
     @property({ type: Object, reflect: true })
     store: IMagicLayoutStore = {}
 
@@ -47,13 +48,7 @@ export class MagicLayout extends LitElement {
     @property({ type: Boolean, reflect: true })
     fullScreen: boolean = true
 
-    @property({ type: Object, reflect: true })
-    header: MagicLayoutHeaderOptions = {
-        visible: true,
-    }
 
-    @property({ type: Object, reflect: true })
-    sider: MagicLayoutSiderOptions = {}
 
 
     /**

@@ -25,7 +25,7 @@ export class MagicToolbar extends LitElement {
 
     @consume({ context: MagicLayoutContext })
     @property({ attribute: false })
-    public context?: IMagicLayoutStore;
+    context?: IMagicLayoutStore;
 
     @property({ type: String })
     direction: 'horizontal' | 'vertical' = 'horizontal'
@@ -35,6 +35,11 @@ export class MagicToolbar extends LitElement {
 
     @property({ type: String })
     title: string = ''
+
+    connectedCallback(): void {
+        super.connectedCallback()
+
+    }
 
     render() {
         return html`
