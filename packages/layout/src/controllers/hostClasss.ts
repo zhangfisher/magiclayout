@@ -1,5 +1,4 @@
-import { html } from "lit";
-import { ReactiveController, ReactiveControllerHost } from 'lit';
+import { ReactiveController } from 'lit';
 
 /**
  * 用于为组件的host增加class
@@ -24,16 +23,15 @@ export class HostClasses implements ReactiveController {
         (this.host = host).addController(this);
         this.initialClasses = classes;
     }
-    _forEachClasss(args: (string | Record<string, boolean>)[], cb: (cls: string) => void) {
+    _forEachClasss(args: (string | Record<string, boolean>)[], cb: (cls: string, enable: boolean) => void) {
         if (!args) return
         args.forEach((item) => {
             if (typeof item === 'string') {
-                cb(item)
+                cb(item, true)
                 this.host.classList.add(item)
             } else {
                 Object.entries(item).forEach(([key, value]) => {
-                    if (!value) return
-                    cb(key)
+                    cb(key, value)
                 })
             }
         })
@@ -56,6 +54,21 @@ export class HostClasses implements ReactiveController {
         if (!this.host) return
         this._forEachClasss(args, (cls) => {
             this.host.classList.toggle(cls)
+        })
+    }
+    /**
+     * 
+     * @param args 
+     * @returns 
+     */
+    use(...args: (string | Record<string, boolean>)[]) {
+        if (!this.host) return
+        this._forEachClasss(args, (cls, enable) => {
+            if (enable) {
+                this.host.classList.add(cls)
+            } else {
+                this.host.classList.remove(cls)
+            }
         })
     }
     has(className: string) {

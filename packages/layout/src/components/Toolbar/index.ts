@@ -17,6 +17,7 @@ import { when } from 'lit/directives/when.js';
 import "@shoelace-style/shoelace/dist/components/button/button.js";
 import { classMap } from 'lit/directives/class-map.js';
 import { IMagicLayoutStore } from '@/types';
+import { MagicToolbarItem } from './types';
 
 
 @customElement('magic-toolbar')
@@ -27,17 +28,11 @@ export class MagicToolbar extends LitElement {
     @property({ attribute: false })
     context?: IMagicLayoutStore;
 
-    @property({ type: String })
-    direction: 'horizontal' | 'vertical' = 'horizontal'
-
-    @property({ type: String })
-    labelPos: 'right' | 'bottom' = 'right'
-
-    @property({ type: String })
-    title: string = ''
+    items
 
     connectedCallback(): void {
         super.connectedCallback()
+        toolbar = this.context.toolbar
 
     }
 

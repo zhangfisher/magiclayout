@@ -1,5 +1,17 @@
+export type MagicToolbarItemTypes =
+    'button'
+    | 'dropdown'
+    | 'divider'
+    | 'checkbox'
+    | 'input'
+    | 'search'
+    | 'switch'
+    | 'popup-menu'
+    | 'popup-panel'
+    | 'avator'
+
 export type MagicToolbarItem = {
-    type?: 'button' | 'dropdown' | 'divider' | 'checkbox' | 'input' | 'search' | 'switch' | 'popup-menu' | 'popup-panel' | 'avator'
+    type?: MagicToolbarItemTypes
     icon?: string
     label?: string
     active?: boolean

@@ -12,7 +12,7 @@ import { CSSResult, LitElement, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import styles from './styles'
 import { FlexWrap, FlexAlign, FlexJustify } from '@/types'
-import { HostClasses } from '@/directives/hostClasss'
+import { HostClasses } from '@/controllers/hostClasss'
 
 @customElement('magic-flex')
 export class MagicFlex extends LitElement {
@@ -23,39 +23,41 @@ export class MagicFlex extends LitElement {
     })
 
     @property({ type: String })
-    direction: string = 'row'
+    direction: 'row' | 'column' | 'column-reverse' | 'row-reverse' = 'row'
+
     @property({ type: String })
     gap: string = '0'
+
     @property({ type: String })
     wrap: FlexWrap = 'wrap'
+
     @property({ type: String })
     align: FlexAlign = 'center'
+
     @property({ type: String })
     justify?: FlexJustify = 'center'
+
     // none: 没有, inline: 仅单元格内部, full: 包括外边框
     @property({ type: String })
     border: string = 'inline'
 
-    /**
-     * 定义自动扩展的单元格的选择器
-     */
     @property({ type: String })
     grow?: string
 
+    @property({ type: String })
+    shrink?: string
+
+    @property({ type: Boolean, reflect: true })
+    fit: boolean = false
+
     updateStyles() {
         const gap = String(parseInt(this.gap)) === String(this.gap) ? `${this.gap}px` : this.gap
-        Object.assign(this.style, {
-            flexDirection: this.direction,
-            gap: gap,
-            flexWrap: this.wrap,
-            alignItems: this.align,
-            justifyContent: this.justify,
-        })
+        this.style.gap = gap
         if (this.grow) {
-            const growEle = this.querySelector(this.grow) as HTMLElement
-            if (growEle) {
-                growEle.style.flexGrow = '1'
-            }
+            Array.from<HTMLElement>(this.querySelectorAll(this.grow)).forEach(ele => ele.style.flexGrow = '1')
+        }
+        if (this.shrink) {
+            Array.from<HTMLElement>(this.querySelectorAll(this.shrink)).forEach(ele => ele.style.flexShrink = '1')
         }
         if (this.border === 'inline') {
             this.classList.add('inline-border')
