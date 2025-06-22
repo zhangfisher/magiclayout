@@ -16,7 +16,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
 import "@shoelace-style/shoelace/dist/components/button/button.js";
 import { classMap } from 'lit/directives/class-map.js';
-import { IMagicLayoutStore } from '@/types';
+import { IMagicLayoutStore } from '@/context/types';
 import { MagicToolbarItem } from './types';
 
 

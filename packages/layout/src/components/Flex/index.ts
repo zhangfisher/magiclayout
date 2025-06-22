@@ -11,7 +11,7 @@
 import { CSSResult, LitElement, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import styles from './styles'
-import { FlexWrap, FlexAlign, FlexJustify } from '@/types'
+import { FlexWrap, FlexAlign, FlexJustify } from '@/context/types'
 import { HostClasses } from '@/controllers/hostClasss'
 
 @customElement('magic-flex')

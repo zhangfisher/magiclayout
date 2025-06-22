@@ -12,8 +12,7 @@ import { customElement, property } from 'lit/decorators.js'
 import styles from './styles'
 import { consume } from '@lit/context';
 import { MagicLayoutContext } from '@/context';
-import { IMagicLayoutStore } from '@/types';
-
+import { IMagicLayoutStore } from '@/context/store';
 
 @customElement('magic-logo')
 export class MagicLogo extends LitElement {
@@ -21,7 +20,8 @@ export class MagicLogo extends LitElement {
 
     @consume({ context: MagicLayoutContext })
     @property({ attribute: false })
-    public context?: IMagicLayoutStore;
+    context?: IMagicLayoutStore;
+
     render() {
         return html`
             <div>Magic Logo</div>

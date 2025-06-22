@@ -113,13 +113,16 @@ export class AutoBox extends LitElement {
      * 具有grow=1
      */
     @property({ type: String })
-    grow?: 'first' | 'last' | 'all' = "last";
+    grow?: 'first' | 'last' | 'all' | string = "last";
 
     /**
     * 具有shrink=0
     */
     @property({ type: String })
     shrink?: 'first' | 'last' | 'all' = "first";
+
+    @property({ type: String })
+    border?: 'inline' | 'full' | 'none' = "none";
 
 
     updateStyles() {
@@ -149,16 +152,6 @@ export class AutoBox extends LitElement {
         this.updateStyles()
     }
     render() {
-        this.classs.use({
-            small: this.size === 'small',
-            large: this.size === 'large',
-            shadow: this.shadow,
-            noPadding: this.noPadding,
-            noRadius: this.noRadius,
-            noBorder: this.noBorder,
-            row: this.flex === 'row',
-            column: this.flex === 'column',
-        })
         return html` 
             <slot></slot> 
         `
