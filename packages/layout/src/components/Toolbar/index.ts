@@ -28,7 +28,9 @@ export class MagicToolbar extends LitElement {
     @property({ attribute: false })
     context?: IMagicLayoutStore;
 
-    items
+    @property({ type: Array, reflect: true })
+    items: MagicToolbarItem[] = []
+
 
     connectedCallback(): void {
         super.connectedCallback()

@@ -51,7 +51,20 @@ export class MagicLayoutExamples extends LitElement {
         return html`
 
         <magic-layout .store=${this.getStore()} >
-      
+            <div slot="body">
+                <auto-box flex="row" gap="10px" grow="last" style="height:80px;width:700px;background-color:red">
+                    <div>auto-box</div>
+                    <div>auto-box</div>
+                    <div>auto-box</div>
+                    <div>auto-box</div>
+                </auto-box>
+                <auto-box flex="column" gap="10px" grow="last" style="height:300px;width:100px;background-color:#124555">
+                    <div>auto-box</div>
+                    <div>auto-box</div>
+                    <div>auto-box</div>
+                    <div>auto-box</div>
+                </auto-box>
+            </div>
         </magic-layout> 
         `
     }

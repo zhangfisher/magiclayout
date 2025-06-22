@@ -1,12 +1,15 @@
-import { HostClasses } from "@/controllers/hostClasss";
 import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 @customElement('auto-box')
 export class AutoBox extends LitElement {
-    classs = new HostClasses(this)
     static styles = css`
-        :host{          
+        :host{
+            display: block;                    
+            position: relative;            
+        }
+
+        :host > .box{
             display: flex;
             position: relative;            
             align-items: center;
@@ -18,73 +21,67 @@ export class AutoBox extends LitElement {
             color: var(--auto-text-color);
         }
         /* 小 */
-        :host([size=small]) {
+        :host([size=small]) > .box {
             font-size: var(--sl-font-size-small);
             padding: var(--sl-spacing-small);
             border-radius: var(--sl-border-radius-small);
         }
-        :host([shadow][size=small]) {
+        :host([shadow][size=small]) > .box {
             box-shadow: var(--sl-shadow-small);
         }
          
         /* 大 */
-        :host([size=large]) {
+        :host([size=large]) > .box {
             font-size: var(--sl-font-size-large);
             padding: var(--sl-spacing-large);            
             border-radius: var(--sl-border-radius-large);
         }
-        :host([shadow][size=small]) {
+        :host([shadow][size=small]) > .box {
             box-shadow: var(--sl-shadow-large);
-        } 
+        }
+
         /* Flex布局 */
-        :host([flex=row]) {            
+        :host([flex=row]) > .box {            
             display: flex;
             flex-direction: row;
             align-items: center;
-            &>::slotted(*){
-                box-sizing: border-box;
-                height: 100%;
-            }
+            
         }
-        :host([flex=column]) {
+        :host([flex=column]) > .box {
             display: flex;
-            flex-direction: column;                
-            &>::slotted(*){
-                box-sizing: border-box;
-                width: 100%;
-            }        
+            flex-direction: column;            
         }
         /* Grow  */
-        :host([grow=first]) > ::slotted(:first-child){
+        :host([grow=first]) > .box > ::slotted(:first-child){
             flex-grow: 1;
         }
-        :host([grow=last]) > ::slotted(:last-child){           
+        :host([grow=last]) > .box > ::slotted(:last-child){           
             flex-grow: 1;
         }
-        :host[grow=all] > ::slotted(*){
+        :host[grow=all] > .box > ::slotted(*){
             flex-grow: 1;
         }
         /* Shrink */
-        :host([shrink=first])  > ::slotted(:first-child){
+        :host([shrink=first]) > .box  > ::slotted(:first-child){
             flex-shrink: 0;
         }
-        :host([shrink=last]) > ::slotted(:last-child){
+        :host([shrink=last]) > .box > ::slotted(:last-child){
             flex-shrink: 0;
         }
-        :host([shrink=all])  > ::slotted(*){
+        :host([shrink=all]) > .box  > ::slotted(*){
             flex-shrink: 0;
         }
 
         :host([no-padding]){
             padding: 0px;
         }
-        :host([no-border]) {
+        :host([no-border]) > .box {
             border: 0px;
         }
-        :host([no-radius]) {
+        :host([no-radius]) > .box {
             border-radius: none;
         }        
-        :host([shadow]) {
+        :host([shadow]) > .box {
             box-shadow: var(--auto-shadow);
         }
 
@@ -106,8 +103,6 @@ export class AutoBox extends LitElement {
 
     @property({ type: String })
     flex?: string;
-    @property({ type: String })
-    gap: string = '0'
 
     /**
      * 具有grow=1
@@ -122,45 +117,11 @@ export class AutoBox extends LitElement {
     shrink?: 'first' | 'last' | 'all' = "first";
 
 
-    updateStyles() {
-        const gap = String(parseInt(this.gap)) === String(this.gap) ? `${this.gap}px` : this.gap
-        this.style.gap = gap
-        if (this.grow) {
-            Array.from<HTMLElement>(this.querySelectorAll(this.grow)).forEach(ele => ele.style.flexGrow = '1')
-        }
-        if (this.shrink) {
-            Array.from<HTMLElement>(this.querySelectorAll(this.shrink)).forEach(ele => ele.style.flexShrink = '1')
-        }
-        if (this.border === 'inline') {
-            this.classList.add('inline-border')
-        } else if (this.border === 'full') {
-            this.classList.add('border')
-        }
-    }
-    connectedCallback(): void {
-        super.connectedCallback()
-        if (!this.grow) {
-            this.grow = this.flex === 'row' ? ':first-child' : ':last-child'
-        }
-        this.updateStyles()
-    }
-    attributeChangedCallback(name: string, _old: string | null, value: string | null): void {
-        super.attributeChangedCallback(name, _old, value)
-        this.updateStyles()
-    }
     render() {
-        this.classs.use({
-            small: this.size === 'small',
-            large: this.size === 'large',
-            shadow: this.shadow,
-            noPadding: this.noPadding,
-            noRadius: this.noRadius,
-            noBorder: this.noBorder,
-            row: this.flex === 'row',
-            column: this.flex === 'column',
-        })
-        return html` 
-            <slot></slot> 
+        return html`
+            <div class="box">
+                <slot></slot>
+            </div>
         `
     }
 }

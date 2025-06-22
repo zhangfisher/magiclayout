@@ -85,7 +85,7 @@ export class MagicLayout extends LitElement {
             <sl-split-panel part="container" style="--divider-width: 3px;" position="15" class="container fit">
                 <sl-icon slot="divider" name="grip-vertical"></sl-icon>
                 <div class="sider" slot="start">
-                    <magic-layout-sider class="fit"></magic-layout-sider>
+                    <magic-sider class="fit"></magic-sider>
                 </div>
                 <div slot="end">
                     ${this._renderHeader()}
