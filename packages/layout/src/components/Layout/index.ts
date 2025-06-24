@@ -61,30 +61,26 @@ export class MagicLayout extends LitElement {
         })
     }
 
-    _renderHeader() {
-        return html`<div class="header ${classMap({
-            'header': true,
-            'header-fixed': true
-        })}">www</div>`
-    }
+    renderWorkspace() {
 
+    }
 
     render() {
         return html`
         <div part="root" class="root ${classMap({
             'full-screen': this.fullScreen,
-        })}"> 
-            
-            <sl-split-panel part="container" style="--divider-width: 3px;" position="15" class="container fit">
-                <sl-icon slot="divider" name="grip-vertical"></sl-icon>
-                <div class="sider" slot="start">
-                    <magic-layout-sider class="fit"></magic-layout-sider>
+        })}">
+            <div part="sider" class="sider">
+                <magic-layout-sider class="fit"></magic-layout-sider>
+            </div>
+            <div part="body" class="body" > 
+                <magic-layout-header part="header"  class="fit"></magic-layout-header> 
+                <magic-layout-tabs part="tabs"  class="fit"></magic-layout-tabs> 
+                <div part="workspace" class="workspace">
+                    <magic-layout-panels part="panels"></magic-layout-panels>  
                 </div>
-                <div slot="end">
-                    ${this._renderHeader()}
-                    <slot name="body"></slot>    
-                </div>
-            </sl-split-panel>
+            </div> 
+            <magic-layout-drawer part="drawer"></magic-layout-drawer>  
         </div>
         `
     }

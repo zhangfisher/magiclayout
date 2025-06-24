@@ -1,3 +1,4 @@
+import { DeepRequired } from "flex-tools/types"
 import { MagicMenubarOptions } from "../components/Menu/types"
 import { MagicToolbarOptions } from "../components/Toolbar/types"
 
@@ -65,7 +66,7 @@ export type MagicLayoutLogoOptions = {
     color?: string
 }
 
-export type MagicLayoutBodyOptions = {
+export type MagicLayoutWorkspaceOptions = {
 
 }
 
@@ -106,10 +107,11 @@ export type MagicLayoutOptions = {
     logo?: MagicLayoutLogoOptions
     header?: MagicLayoutHeaderOptions
     sider?: MagicLayoutSiderOptions
-    body?: MagicLayoutBodyOptions
+    workspace?: MagicLayoutWorkspaceOptions
     actions?: MagicLayoutAction[]
     onAction?: (action: MagicLayoutAction) => void
     onResize?: (width: number, height: number) => void
 }
 
 
+export type RequiredMagicLayoutOptions = DeepRequired<MagicLayoutOptions>

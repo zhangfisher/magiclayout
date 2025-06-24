@@ -5,26 +5,19 @@ import './header'
 import './menu'
 import './footer'
 import '@/components/Logo'
-import { MagicLayoutContext } from "@/context";
-import { consume } from "@lit/context";
-import { IMagicLayoutStore } from "@/context/store";
-import { MagicElement } from "@/utils/magicElement";
+import { MagicElement } from "../../MagicElement";
+import { RequiredMagicLayoutOptions } from "@/context/types";
 
 @customElement('magic-layout-sider')
-export class MagicLayoutSider extends MagicElement('sider') {
+export class MagicLayoutSider extends MagicElement<RequiredMagicLayoutOptions['sider']> {
     static styles = styles.base
-
-    // @consume({ context: MagicLayoutContext })
-    // @property({ attribute: false })
-    // context?: IMagicLayoutStore;
-
+    stateKey = 'sider'
     connectedCallback(): void {
         super.connectedCallback()
-        debugger
-        this.context
-        this.state
     }
     render() {
+        this.context.state.sider
+
         return html`
         <magic-flex direction="column" grow="magic-sider-menu" align="stretch" fit>
             <magic-logo> </magic-logo>
