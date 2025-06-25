@@ -7,6 +7,8 @@ import './footer'
 import '@/components/Logo'
 import { MagicElement } from "../../MagicElement";
 import { RequiredMagicLayoutOptions } from "@/context/types";
+import { styleMap } from "lit/directives/style-map.js";
+import { getCssSize } from "@/utils/getCssSize";
 
 @customElement('magic-layout-sider')
 export class MagicLayoutSider extends MagicElement<RequiredMagicLayoutOptions['sider']> {
@@ -16,15 +18,20 @@ export class MagicLayoutSider extends MagicElement<RequiredMagicLayoutOptions['s
         super.connectedCallback()
     }
     render() {
-        this.context.state.sider
-
         return html`
-        <magic-flex direction="column" grow="magic-sider-menu" align="stretch" fit>
-            <magic-logo> </magic-logo>
-            <magic-sider-header> </magic-sider-header>
-            <magic-sider-menu style="border: 1px solid red;"></magic-sider-menu>
-            <magic-sider-footer> </magic-sider-footer>
-        </magic-flex>
+            <magic-flex 
+                direction="column" 
+                grow="magic-sider-menu" 
+                align="stretch"  
+                style=${styleMap({
+            width: getCssSize(this.state.width)
+        })}
+            >
+                <magic-logo> </magic-logo>
+                <magic-sider-header> </magic-sider-header>
+                <magic-sider-menu style="border: 1px solid red;"></magic-sider-menu>
+                <magic-sider-footer> </magic-sider-footer>
+            </magic-flex>
         `
     }
 }

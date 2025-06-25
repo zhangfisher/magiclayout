@@ -35,8 +35,8 @@ export const defaultState = {
     sider: {
         visible: true,
         collapsed: false,
-        width: 220,
-        collapsedWidth: 64,
+        width: '220px',
+        collapsedWidth: '72px',
         header: {
             visible: true,
             items: ['file', 'aperture', 'bell-ring']

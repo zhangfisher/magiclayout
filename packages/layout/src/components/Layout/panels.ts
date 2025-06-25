@@ -5,16 +5,17 @@ import '@/components/Logo'
 
 @customElement('magic-layout-panels')
 export class MagicLayoutPanels extends LitElement {
-    static styles = styles.base
+    static styles = styles.panels
 
     render() {
         return html`
         <magic-flex 
             direction="column" 
             grow="#menu" 
-            align="stretch" 
+            align="stretch"  
             fit
         > 
+        dssssssss
         </magic-flex>
         `
     }

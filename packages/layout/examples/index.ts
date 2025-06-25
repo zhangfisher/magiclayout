@@ -17,18 +17,12 @@ export class MagicLayoutExamples extends LitElement {
     static styles = css`
         :host{
             margin: 10px;
-        }
-        magic-layout{
-            display: flex;
-            flex-direction: row;
-            border: 1px solid var(--sl-color-gray-400);
-            justify-content: stretch;
-        }
-        .sider{
-            width: 80px;
-        }
-        .content{
-            flex-grow: 1;
+            display: block;
+            position: relative;
+            width: 80%;
+            height: 700px;
+            border: 1px solid #ccc;
+
         }
     `
     getStore() {

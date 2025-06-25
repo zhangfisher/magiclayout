@@ -1,2 +1,2 @@
-export * from '../sider/styles'
 export * from './header'
+export * from './panels'

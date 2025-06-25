@@ -42,7 +42,8 @@ export type MagicLayoutHeaderOptions = {
 export type MagicLayoutSiderOptions = {
     visible?: boolean                       // 是否显示    
     collapsed?: boolean                     // 是否折叠
-    width?: number                          // 初始化宽度    
+    width?: string | number                 // 初始化宽度    
+    collapsedWidth?: string | number        // 折叠宽度    
     colorized?: boolean                     // 是否全彩色背景
     resizeable?: boolean                    // 是否可拖动改变宽度
     bgColor?: string                        // 背景色

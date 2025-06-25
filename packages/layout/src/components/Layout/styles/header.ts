@@ -2,4 +2,4 @@ import { css } from "lit";
 
 
 
-export default css``
+export const header = css``

@@ -3,15 +3,16 @@
  * <magic-layout>
  */
 
-import { CSSResult, LitElement, html } from 'lit'
+import { LitElement, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import styles from './styles/base'
+import { root as rootStyles } from './styles/root'
 import { provide } from '@lit/context';
 import { MagicLayoutContext } from '@/context'
 import { registerIconLibrary } from '@shoelace-style/shoelace';
 import { IconLibrary, IconLibraryResolver } from '@shoelace-style/shoelace/dist/components/icon/library.js';
 import { classMap } from 'lit/directives/class-map.js';
-import "./sider"
+import './sider'
+import './panels'
 
 import '@shoelace-style/shoelace/dist/components/button/button.js';
 import '@shoelace-style/shoelace/dist/components/tab/tab.js';
@@ -33,7 +34,7 @@ import { MagicLayoutStore } from '@/context/store';
 
 @customElement('magic-layout')
 export class MagicLayout extends LitElement {
-    static styles = styles as CSSResult
+    static styles = rootStyles
 
     @provide({ context: MagicLayoutContext })
     context = new MagicLayoutStore()
@@ -68,19 +69,22 @@ export class MagicLayout extends LitElement {
     render() {
         return html`
         <div part="root" class="root ${classMap({
-            'full-screen': this.fullScreen,
+            // 'full-screen': this.fullScreen,
         })}">
-            <div part="sider" class="sider">
-                <magic-layout-sider class="fit"></magic-layout-sider>
+            <magic-layout-sider part="sider" ></magic-layout-sider>           
+            <div class="container">
+                <sl-split-panel class="fit"  position="75">
+                    <div part="body" class="body"  slot="start"> 
+                        <magic-layout-header part="header">eee</magic-layout-header> 
+                        <magic-layout-tabs part="tabs" >www</magic-layout-tabs>                 
+                        <div part="workspace" class="workspace">       
+                            sdddddddddd                 
+                        </div>                
+                    </div> 
+                    <magic-layout-panels part="panels" slot="end"></magic-layout-panels>  
+                </sl-split-panel>            
             </div>
-            <div part="body" class="body" > 
-                <magic-layout-header part="header"  class="fit"></magic-layout-header> 
-                <magic-layout-tabs part="tabs"  class="fit"></magic-layout-tabs> 
-                <div part="workspace" class="workspace">
-                    <magic-layout-panels part="panels"></magic-layout-panels>  
-                </div>
-            </div> 
-            <magic-layout-drawer part="drawer"></magic-layout-drawer>  
+            <!-- <magic-layout-drawer part="drawer"></magic-layout-drawer>   -->
         </div>
         `
     }
