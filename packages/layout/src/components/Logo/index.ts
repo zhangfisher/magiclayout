@@ -10,19 +10,15 @@
 import { CSSResult, LitElement, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import styles from './styles'
-import { consume } from '@lit/context';
-import { MagicLayoutContext } from '@/context';
-import { IMagicLayoutStore } from '@/context/store';
+import { MagicElement } from '../MagicElement';
+import { RequiredMagicLayoutOptions } from '@/context/types';
 
-@customElement('magic-logo')
-export class MagicLogo extends LitElement {
+@customElement('magic-layout-logo')
+export class MagicLayoutLogo extends MagicElement<RequiredMagicLayoutOptions['logo']> {
     static styles = styles as CSSResult
-
-    @consume({ context: MagicLayoutContext })
-    @property({ attribute: false })
-    context?: IMagicLayoutStore;
-
+    stateKey = 'logo'
     render() {
+
         return html`
             <div>Magic Logo</div>
         `
@@ -33,6 +29,6 @@ export class MagicLogo extends LitElement {
 
 declare global {
     interface HTMLElementTagNameMap {
-        'magic-logo': MagicLogo
+        'magic-layout-logo': MagicLayoutLogo
     }
 }

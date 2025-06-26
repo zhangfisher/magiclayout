@@ -9,4 +9,16 @@ export const fit = css`
         width: 100%;
         height: 100%;
     }
-` 
+`
+
+
+
+export const fullScreen = css`
+    .full-screen{
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+    } 
+`

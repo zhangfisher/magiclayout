@@ -1,7 +1,7 @@
 import { css } from "lit";
 import { fit } from "@/styles/utils";
 
-export const panels = css`
+export const tabs = css`
     ${fit}
     :host{
         position: relative;

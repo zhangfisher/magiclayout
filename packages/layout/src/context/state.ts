@@ -1,10 +1,10 @@
-import { MagicLayoutOptions } from "./types";
+import { MagicLayoutAction, RequiredMagicLayoutOptions } from "./types";
 
 
 export const defaultState = {
     theme: {
         theme: "light",
-        dark: false,
+        size: "medium",
         colors: {
             primary: "#1890ff",
             secondary: "#f5222d",
@@ -13,7 +13,8 @@ export const defaultState = {
             danger: "#f5222d",
             info: "#1890ff",
             neutral: "#f5f5f5",
-        }
+        },
+        borderRadius: 4
     },
     breakpoints: {
         sm: "576px",
@@ -25,42 +26,63 @@ export const defaultState = {
     header: {
         visible: true,
         height: 60,
+        colorized: true,
+        bgColor: '',
+        fullRow: 0,
+        border: true,
+        shadow: 'small',
         toolbar: {
             visible: true,
             items: [
-                'settings', 'file', 'aperture', 'bell-ring', 'camera', 'bug', 'chrome', 'message-square-more', 'rotate-cw'
+
             ]
         }
     },
     sider: {
         visible: true,
         collapsed: false,
-        width: '220px',
+        width: '200px',
         collapsedWidth: '72px',
+        colorized: true,
+        resizeable: true,
+        bgColor: '#fff',
+        border: true,
+        shadow: '0 2px 4px hsl(240 3.8% 46.1% / 12%)',
         header: {
             visible: true,
-            items: ['file', 'aperture', 'bell-ring']
+            items: []
         },
         menu: {
             visible: true,
             items: [
-                'settings', 'file', 'aperture', 'bell-ring', 'camera', 'bug', 'chrome', 'message-square-more', 'rotate-cw'
+
             ]
         },
         footer: {
             visible: true,
-            items: ['file', 'aperture', 'bell-ring']
+            bgColor: '#fff',
+            color: '#000',
+            colorized: true,
+            items: []
         }
     },
+    panels: {
+        visible: true
+    },
+    logo: {
+        visible: true,
+        title: 'MagicLayout',
+        image: '',
+        url: '',
+        bgColor: '',
+        color: ''
+    },
+    workspace: {
+        bgColor: '#fff'
+    },
     actions: [
-        { id: 'settings', label: "设置", tips: '设置' },
-        { id: 'file', tips: '文件' },
-        { id: 'aperture', tips: '滤镜' },
-        { id: 'bell-ring', tips: '通知' },
-        { id: 'camera' },
-        { id: 'bug' },
-        { id: 'chrome' },
-        { id: 'message-square-more' },
-        { id: 'rotate-cw' },
-    ]
-} as MagicLayoutOptions
+
+    ],
+    onAction: (action: MagicLayoutAction) => { },
+    onResize: (width: number, height: number) => { }
+} as RequiredMagicLayoutOptions

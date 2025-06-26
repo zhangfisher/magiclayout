@@ -1,2 +1,5 @@
 export * from './header'
 export * from './panels'
+export * from './workspace'
+export * from './tabs'
+export * from './drawer'

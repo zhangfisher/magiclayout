@@ -1,3 +1,4 @@
+import { workspace } from './styles/workspace';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /** 
  * <magic-layout>
@@ -5,15 +6,6 @@
 
 import { LitElement, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import { root as rootStyles } from './styles/root'
-import { provide } from '@lit/context';
-import { MagicLayoutContext } from '@/context'
-import { registerIconLibrary } from '@shoelace-style/shoelace';
-import { IconLibrary, IconLibraryResolver } from '@shoelace-style/shoelace/dist/components/icon/library.js';
-import { classMap } from 'lit/directives/class-map.js';
-import './sider'
-import './panels'
-
 import '@shoelace-style/shoelace/dist/components/button/button.js';
 import '@shoelace-style/shoelace/dist/components/tab/tab.js';
 import '@shoelace-style/shoelace/dist/components/input/input.js';
@@ -29,6 +21,19 @@ import '@shoelace-style/shoelace/dist/components/spinner/spinner.js';
 import '@shoelace-style/shoelace/dist/components/icon/icon.js';
 import '@shoelace-style/shoelace/dist/components/dropdown/dropdown.js';
 import '@shoelace-style/shoelace/dist/components/split-panel/split-panel.js';
+import { IconLibrary, IconLibraryResolver } from '@shoelace-style/shoelace/dist/components/icon/library.js';
+
+import { root as rootStyles } from './styles/root'
+import { provide } from '@lit/context';
+import { MagicLayoutContext } from '@/context'
+import { registerIconLibrary } from '@shoelace-style/shoelace';
+
+import { classMap } from 'lit/directives/class-map.js';
+import './sider'
+import './panels'
+import './header'
+import './tabs'
+import './workspace'
 import { MagicLayoutStore } from '@/context/store';
 
 
@@ -62,8 +67,26 @@ export class MagicLayout extends LitElement {
         })
     }
 
-    renderWorkspace() {
+    renderBody() {
+        return html`
+            <magic-layout-header part="header"></magic-layout-header> 
+            <magic-layout-tabs part="tabs" ></magic-layout-tabs>                 
+            <magic-layout-workspace part="workspace" class="workspace"></magic-layout-workspace >   
+        `
+    }
 
+    renderContainer() {
+        if (this.context.state.panels.visible) {
+            return html`
+                <sl-split-panel class="fit"  position="75">
+                    <div part="body" class="body"  slot="start"> 
+                        ${this.renderBody()}              
+                    </div> 
+                    <magic-layout-panels part="panels" slot="end"></magic-layout-panels>  
+                </sl-split-panel>            
+            `
+        }
+        return this.renderBody()
     }
 
     render() {
@@ -73,16 +96,7 @@ export class MagicLayout extends LitElement {
         })}">
             <magic-layout-sider part="sider" ></magic-layout-sider>           
             <div class="container">
-                <sl-split-panel class="fit"  position="75">
-                    <div part="body" class="body"  slot="start"> 
-                        <magic-layout-header part="header">eee</magic-layout-header> 
-                        <magic-layout-tabs part="tabs" >www</magic-layout-tabs>                 
-                        <div part="workspace" class="workspace">       
-                            sdddddddddd                 
-                        </div>                
-                    </div> 
-                    <magic-layout-panels part="panels" slot="end"></magic-layout-panels>  
-                </sl-split-panel>            
+               ${this.renderContainer()}
             </div>
             <!-- <magic-layout-drawer part="drawer"></magic-layout-drawer>   -->
         </div>

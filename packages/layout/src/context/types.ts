@@ -31,7 +31,6 @@ export type MagicLayoutHeaderOptions = {
     colorized?: boolean                     // 是否全彩色背景
     bgColor?: string                        // 背景色
     height?: number | string                // 高度
-    location?: 'body' | 'right'
     fullRow?: number                       // 0-none， 1- over-sider  2- over-drawer ,4- over-header
     border?: number | boolean | string      // 是否显示下边框
     shadow?: 'none' | 'x-small' | 'small' | 'medium' | 'large' | 'x-large'
@@ -48,7 +47,7 @@ export type MagicLayoutSiderOptions = {
     resizeable?: boolean                    // 是否可拖动改变宽度
     bgColor?: string                        // 背景色
     border?: number | boolean | string      // 是否显示下边框
-    shadow?: 'none' | 'x-small' | 'small' | 'medium' | 'large' | 'x-large'
+    shadow?: string //'none' | 'x-small' | 'small' | 'medium' | 'large' | 'x-large'
     menu?: MagicMenubarOptions
     footer?: {
         visible?: boolean
@@ -68,11 +67,14 @@ export type MagicLayoutLogoOptions = {
 }
 
 export type MagicLayoutWorkspaceOptions = {
-
+    bgColor?: string
 }
 
 export type MagicLayoutDrawerOptions = {
 
+}
+export type MagicLayoutPanelsOptions = {
+    visible?: boolean
 }
 
 
@@ -109,6 +111,7 @@ export type MagicLayoutOptions = {
     header?: MagicLayoutHeaderOptions
     sider?: MagicLayoutSiderOptions
     workspace?: MagicLayoutWorkspaceOptions
+    panels?: MagicLayoutPanelsOptions
     actions?: MagicLayoutAction[]
     onAction?: (action: MagicLayoutAction) => void
     onResize?: (width: number, height: number) => void

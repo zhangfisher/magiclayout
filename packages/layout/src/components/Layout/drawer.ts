@@ -5,7 +5,7 @@ import '@/components/Logo'
 
 @customElement('magic-layout-drawer')
 export class MagicLayoutDrawer extends LitElement {
-    static styles = styles.base
+    static styles = styles.drawer
 
     render() {
         return html`

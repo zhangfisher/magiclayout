@@ -1,14 +1,15 @@
-import { html, LitElement } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { html } from "lit";
+import { customElement } from "lit/decorators.js";
 import * as styles from "./styles";
-import './header'
-import './menu'
-import './footer'
 import '@/components/Logo'
 import { MagicElement } from "../../MagicElement";
 import { RequiredMagicLayoutOptions } from "@/context/types";
 import { styleMap } from "lit/directives/style-map.js";
 import { getCssSize } from "@/utils/getCssSize";
+import './header'
+import './menu'
+import './footer'
+
 
 @customElement('magic-layout-sider')
 export class MagicLayoutSider extends MagicElement<RequiredMagicLayoutOptions['sider']> {
@@ -24,11 +25,13 @@ export class MagicLayoutSider extends MagicElement<RequiredMagicLayoutOptions['s
                 grow="magic-sider-menu" 
                 align="stretch"  
                 style=${styleMap({
-            width: getCssSize(this.state.width)
+            width: getCssSize(this.state.width),
+            boxShadow: this.state.shadow
         })}
             >
                 <magic-logo> </magic-logo>
                 <magic-sider-header> </magic-sider-header>
+                <magic-sider-menu style="border: 1px solid red;"></magic-sider-menu>
                 <magic-sider-menu style="border: 1px solid red;"></magic-sider-menu>
                 <magic-sider-footer> </magic-sider-footer>
             </magic-flex>

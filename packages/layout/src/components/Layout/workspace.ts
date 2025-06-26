@@ -3,13 +3,13 @@ import { customElement } from "lit/decorators.js";
 import * as styles from "./styles";
 import '@/components/Logo'
 
-@customElement('magic-layout-header')
-export class MagicLayoutHeader extends LitElement {
-    static styles = styles.header
+@customElement('magic-layout-workspace')
+export class MagicLayoutWorkspace extends LitElement {
+    static styles = styles.workspace
 
     render() {
         return html` 
-        <div>Header</div>
+         workspace
         `
     }
 }
@@ -20,6 +20,6 @@ export class MagicLayoutHeader extends LitElement {
 
 declare global {
     interface HTMLElementTagNameMap {
-        'magic-layout-header': MagicLayoutHeader
+        'magic-layout-workspace': MagicLayoutWorkspace
     }
 }
