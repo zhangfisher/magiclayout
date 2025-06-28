@@ -5,7 +5,7 @@ import '@shoelace-style/shoelace/dist/themes/dark.css';
 import { customElement } from 'lit/decorators.js';
 import { css, html, LitElement } from 'lit';
 
-
+import '../src/styles/index.css'
 export * from './flex'
 export * from './toolbar'
 
@@ -19,8 +19,8 @@ export class MagicLayoutExamples extends LitElement {
             margin: 10px;
             display: block;
             position: relative;
-            width: 80%;
-            height: 700px;
+            width: 90%;
+            height: 800px;
             border: 1px solid #ccc;
 
         }
@@ -44,7 +44,7 @@ export class MagicLayoutExamples extends LitElement {
     render() {
         return html`
 
-        <magic-layout .store=${this.getStore()} >
+        <magic-layout .options=${this.getStore()}>
             <div slot="body">
                 <auto-box flex="row" gap="10px" grow="last" style="height:80px;width:700px;background-color:red">
                     <div>auto-box</div>

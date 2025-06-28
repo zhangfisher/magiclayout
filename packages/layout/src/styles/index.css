@@ -11,6 +11,7 @@ magic-layout[size=small]{
 
 magic-layout,magic-layout[size=medium]{
     --ml-text-color: var(--sl-color-gray-700);    
+    --ml-theme-color: var(--sl-color-gray-700);    
     --ml-gray-color: var(--sl-color-gray-500);    
     --ml-bgcolor: var(--sl-color-neutral-0);    
     --ml-font-size: var(--sl-font-size-medium);    

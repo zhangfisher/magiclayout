@@ -1,9 +1,8 @@
-import { DeepRequired } from "flex-tools/types"
 import { MagicMenubarOptions } from "../components/Menu/types"
 import { MagicToolbarOptions } from "../components/Toolbar/types"
 
 
-
+export type HTMLElementCustomStyles = Record<string, string | Record<string, string>>
 
 export type MagicActionTypes =
     'button'
@@ -27,59 +26,72 @@ export type MagicLayoutThemeOptions = {
 
 
 export type MagicLayoutHeaderOptions = {
-    visible?: boolean                       // 是否显示
-    colorized?: boolean                     // 是否全彩色背景
+    visible: boolean                       // 是否显示
+    colorized: boolean                     // 是否全彩色背景
     bgColor?: string                        // 背景色
     height?: number | string                // 高度
-    fullRow?: number                       // 0-none， 1- over-sider  2- over-drawer ,4- over-header
+    fullRow?: number                       // 0-none， 1- over-sidebar  2- over-drawer ,4- over-header
     border?: number | boolean | string      // 是否显示下边框
     shadow?: 'none' | 'x-small' | 'small' | 'medium' | 'large' | 'x-large'
     toolbar?: MagicToolbarOptions
 }
 
 // 侧边栏
-export type MagicLayoutSiderOptions = {
-    visible?: boolean                       // 是否显示    
-    collapsed?: boolean                     // 是否折叠
-    width?: string | number                 // 初始化宽度    
-    collapsedWidth?: string | number        // 折叠宽度    
-    colorized?: boolean                     // 是否全彩色背景
-    resizeable?: boolean                    // 是否可拖动改变宽度
+export type MagicLayoutSidebarOptions = {
+    visible: boolean                       // 是否显示    
+    collapsed: boolean                     // 是否折叠
+    width: string | number                 // 初始化宽度    
+    collapsedWidth: string | number        // 折叠宽度    
+    colorized: boolean                     // 是否全彩色背景
+    resizeable: boolean                    // 是否可拖动改变宽度
     bgColor?: string                        // 背景色
-    border?: number | boolean | string      // 是否显示下边框
-    shadow?: string //'none' | 'x-small' | 'small' | 'medium' | 'large' | 'x-large'
+    border?: number | boolean | string                // 是否显示边框
+    shadow?: string                         //'none' | 'x-small' | 'small' | 'medium' | 'large' | 'x-large'
     menu?: MagicMenubarOptions
-    footer?: {
-        visible?: boolean
+    footer: {
+        visible: boolean
+        colorized: boolean                     // 是否全彩色背景
         bgColor?: string
         color?: string
-        colorized?: boolean                     // 是否全彩色背景
         items?: (string | MagicLayoutAction)[]
     }
+    styles?: HTMLElementCustomStyles
 }
 
 export type MagicLayoutLogoOptions = {
-    title?: string
-    image?: string
+    visible: boolean           //  
+    colorized: boolean         // 是否全彩色背景，=true时使用bgColor
+    aspectRatio: string | number
+    image: string              // Logo图片地址
+    imageSize: string          // Logo在小，默认是50*50
+    title: string
+    radius: string | number     // 是否为Logo图片启用圆角
+    subtitle?: string
+    icon?: string               // 图标名称，当指定image时，优先显示image
+    bgColor?: string            // 背景色
+    color?: string              // 字体颜色
     url?: string
-    bgColor?: string
-    color?: string
+    direction?: 'row' | 'col'
+    styles?: HTMLElementCustomStyles
 }
 
 export type MagicLayoutWorkspaceOptions = {
     bgColor?: string
+    styles?: HTMLElementCustomStyles
 }
 
 export type MagicLayoutDrawerOptions = {
-
+    visible: boolean
+    styles?: HTMLElementCustomStyles
 }
 export type MagicLayoutPanelsOptions = {
-    visible?: boolean
+    visible: boolean
+    styles?: HTMLElementCustomStyles
 }
 
 
 export type MagicLayoutFooterOptions = {
-    visible?: boolean
+    visible: boolean
     content?: string
     bgColor?: string
     color?: string
@@ -87,9 +99,8 @@ export type MagicLayoutFooterOptions = {
 }
 
 export type MagicLayoutAction = {
-    id?: string
+    id: string
     type?: MagicActionTypes
-    location?: 'header-left' | 'header-right' | 'sider-top' | 'sider-bottom'
     icon?: string
     label?: string
     checked?: boolean
@@ -102,20 +113,20 @@ export type MagicLayoutAction = {
     onClick?: () => void
     onChange?: () => void
     onPopup?: () => void
+    styles?: HTMLElementCustomStyles
 }
 
 export type MagicLayoutOptions = {
-    theme?: MagicLayoutThemeOptions
-    breakpoints?: Record<string, string>
-    logo?: MagicLayoutLogoOptions
-    header?: MagicLayoutHeaderOptions
-    sider?: MagicLayoutSiderOptions
-    workspace?: MagicLayoutWorkspaceOptions
-    panels?: MagicLayoutPanelsOptions
-    actions?: MagicLayoutAction[]
-    onAction?: (action: MagicLayoutAction) => void
-    onResize?: (width: number, height: number) => void
+    theme: MagicLayoutThemeOptions
+    breakpoints: Record<string, string>
+    logo: MagicLayoutLogoOptions
+    header: MagicLayoutHeaderOptions
+    sidebar: MagicLayoutSidebarOptions
+    workspace: MagicLayoutWorkspaceOptions
+    panels: MagicLayoutPanelsOptions
+    actions: MagicLayoutAction[]
+    styles?: HTMLElementCustomStyles
 }
 
 
-export type RequiredMagicLayoutOptions = DeepRequired<MagicLayoutOptions>
+export type RequiredMagicLayoutOptions = Required<MagicLayoutOptions>

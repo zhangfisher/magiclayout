@@ -1,12 +1,14 @@
+import { fit } from "@/styles/utils";
 import { css } from "lit";
 
 export const base = css`
+    ${fit}
     :host{
         position: relative;
         display: flex;
         & > magic-flex{
             box-sizing: border-box;
-            &>magic-logo,magic-sider-header,magic-sider-footer{
+            &>magic-logo,magic-sidebar-header,magic-sidebar-footer{
                 flex-shrink: 0;
             }
         }

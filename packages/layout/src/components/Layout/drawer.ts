@@ -16,9 +16,9 @@ export class MagicLayoutDrawer extends LitElement {
             fit
         >
             <magic-logo> </magic-logo>
-            <magic-sider-header> </magic-sider-header>
-            <magic-sider-menu style="border: 1px solid red;"></magic-sider-menu>
-            <magic-sider-footer> </magic-sider-footer>
+            <magic-sidebar-header> </magic-sidebar-header>
+            <magic-sidebar-menu style="border: 1px solid red;"></magic-sidebar-menu>
+            <magic-sidebar-footer> </magic-sidebar-footer>
         </magic-flex>
         `
     }

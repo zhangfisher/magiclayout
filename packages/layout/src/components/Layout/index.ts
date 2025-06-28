@@ -1,4 +1,3 @@
-import { workspace } from './styles/workspace';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /** 
  * <magic-layout>
@@ -22,19 +21,20 @@ import '@shoelace-style/shoelace/dist/components/icon/icon.js';
 import '@shoelace-style/shoelace/dist/components/dropdown/dropdown.js';
 import '@shoelace-style/shoelace/dist/components/split-panel/split-panel.js';
 import { IconLibrary, IconLibraryResolver } from '@shoelace-style/shoelace/dist/components/icon/library.js';
-
+import { createLayoutStore } from '@/context/store';
 import { root as rootStyles } from './styles/root'
 import { provide } from '@lit/context';
 import { MagicLayoutContext } from '@/context'
 import { registerIconLibrary } from '@shoelace-style/shoelace';
-
 import { classMap } from 'lit/directives/class-map.js';
-import './sider'
+import './sidebar'
 import './panels'
 import './header'
 import './tabs'
 import './workspace'
-import { MagicLayoutStore } from '@/context/store';
+import { MagicLayoutOptions } from '@/context/types';
+import { deepMerge } from 'flex-tools/object';
+
 
 
 @customElement('magic-layout')
@@ -42,7 +42,10 @@ export class MagicLayout extends LitElement {
     static styles = rootStyles
 
     @provide({ context: MagicLayoutContext })
-    context = new MagicLayoutStore()
+    store = createLayoutStore()
+
+    @property({ type: Object, reflect: true })
+    options?: Partial<MagicLayoutOptions>
 
     @property({ type: String })
     iconSet: string = 'https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/${name}.svg'
@@ -65,6 +68,13 @@ export class MagicLayout extends LitElement {
         this.registerIconSet((name) => {
             return this.iconSet.replace('${name}', name)
         })
+        if (typeof (this.options) === 'object') {
+            this.store.update((state) => {
+                deepMerge(state, this.options)
+            }, {
+                silent: true
+            })
+        }
     }
 
     renderBody() {
@@ -76,7 +86,7 @@ export class MagicLayout extends LitElement {
     }
 
     renderContainer() {
-        if (this.context.state.panels.visible) {
+        if (this.store.state.panels.visible) {
             return html`
                 <sl-split-panel class="fit"  position="75">
                     <div part="body" class="body"  slot="start"> 
@@ -94,7 +104,7 @@ export class MagicLayout extends LitElement {
         <div part="root" class="root ${classMap({
             // 'full-screen': this.fullScreen,
         })}">
-            <magic-layout-sider part="sider" ></magic-layout-sider>           
+            <magic-layout-sidebar part="sidebar" ></magic-layout-sidebar>           
             <div class="container">
                ${this.renderContainer()}
             </div>

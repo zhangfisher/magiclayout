@@ -1,4 +1,6 @@
-export type MagicToolbarItemTypes =
+import { HTMLElementCustomStyles } from "@/context/types"
+
+export type MagicToolbarActionTypes =
     'button'
     | 'dropdown'
     | 'divider'
@@ -10,21 +12,22 @@ export type MagicToolbarItemTypes =
     | 'popup-panel'
     | 'avator'
 
-export type MagicToolbarItem = {
-    type?: MagicToolbarItemTypes
+export type MagicToolbarAction = {
+    type?: MagicToolbarActionTypes
     icon?: string
     label?: string
     active?: boolean
-    disabled?: boolean
+    enable?: boolean
     badge?: string
     value?: any
     tips?: string
     onClick?: () => void
     onChange?: () => void
+    styles?: HTMLElementCustomStyles
 }
 
 
 export type MagicToolbarOptions = {
     visible?: boolean
-    items?: (string | MagicToolbarItem)[]
+    items?: (string | MagicToolbarAction)[]
 }

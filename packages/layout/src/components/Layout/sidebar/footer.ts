@@ -3,8 +3,8 @@ import { customElement } from "lit/decorators.js";
 import * as styles from "./styles";
 
 
-@customElement('magic-sider-footer')
-export class MagicSiderFooter extends LitElement {
+@customElement('magic-sidebar-footer')
+export class MagicSidebarFooter extends LitElement {
     static styles = styles.footer
     render() {
         return html`<div class="footer">footer</div>`
@@ -16,6 +16,6 @@ export class MagicSiderFooter extends LitElement {
 
 declare global {
     interface HTMLElementTagNameMap {
-        'magic-sider-footer': MagicSiderFooter
+        'magic-sidebar-footer': MagicSidebarFooter
     }
 }

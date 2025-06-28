@@ -2,86 +2,65 @@ import { css } from "lit";
 
 export default css`
     :host{
+
+    }        
+
+    .logo{
         display: flex;
-        position: relative;
-        background-color: var(--sl-color-neutral-0);
-    }
-    .auto-field{
-        display: flex;
-        position: relative;
-        flex-direction:column;
-        width:100%;        
-        padding: 0.3em;
-        
-        &>.label{
-            color: var(--sl-color-neutral-800);           
-            padding: 4px; 
-            font-weight: 600;
-            display: flex;
-            &>.title{
-                flex-grow: 1;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;  
+        box-sizing: border-box;        
+        border-bottom: 1px solid var(--ml-border-color);
+        overflow: hidden;
+        &>.image{
+            box-sizing: border-box;                             
+            &>img{
+                border-radius: 8px;                
+                box-shadow: var(--ml-shadow);
+            }
+        }
+        &>.title{
+            font-size: 1.2rem;
+            color: var(--ml-theme-color);  
+            margin: 4px 0px;
+            text-align: center;
+            & > .subtitle{ 
+                display: block;
+                color: var(--ml-gray-color);
+                font-size: 0.8rem;
+                font-weight: 100;
+                text-overflow: ellipsis;
+                overflow:hidden;      
+                white-space: nowrap;          
             }
         }        
-        /* 必填字段 */
-        &.required{
-            &>.label{
-                &>.title{
-                }
-            }
+        &.row{
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap:0.5rem;
         }
-
-        &.left{
-            flex-direction:row;
-        }
-        
-
-        sl-input::part(base){
-            outline: none!important;
-            box-shadow: none!important;
-        }
-        /* 错误样式 */
-        &.error{
-            color:red; 
-            & sl-input::part(base){
-                outline: none!important;
-                box-shadow: none!important;
-                border-color: red;
-                color:red;
-            }
-            & sl-input::part(input){
-                color:red;
-            }
-            .error{
-                display: flex;
-                align-items: center;
-                padding: 4px;                
-                font-size: 0.8em;
-            }
-            & > .label > .title {
-                color:red;
-            }
-        } 
-        /* 禁用样式 */
-        &.disable{
-            &>.label{
-                color: var(--sl-color-gray-400);
-            }
+        &.collapsed{
             &>.title{
-                color: var(--sl-color-gray-400);
+                display: none;
+            }   
+        }
+        &.colorized{
+            border-bottom: none;
+            &>.title{
+                color: white;
+                &>.subtitle{
+                    color: #eaeaea;
+                }                
             }
-            & sl-input::part(base),sl-input::part(input){
-                color: var(--sl-color-gray-400);
-                user-select: none;
-                cursor: not-allowed;
-                pointer-events: none;
-            }
-            & sl-textarea::part(textarea){
-                color: var(--sl-color-gray-400);
-                user-select: none;
-                cursor: not-allowed;
-                pointer-events: none;
+        }
+        &.row{
+            padding: 1rem;                       
+            &>.image{
+                display: flex
+     
             }
         }
     }
-        
+    
 `
