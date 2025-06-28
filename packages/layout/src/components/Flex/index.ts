@@ -11,16 +11,14 @@
 import { CSSResult, LitElement, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import styles from './styles'
-import { FlexWrap, FlexAlign, FlexJustify } from '@/context/types'
 import { HostClasses } from '@/controllers/hostClasss'
+import { FlexAlign, FlexJustify, FlexWrap } from '@/types'
 
 @customElement('magic-flex')
 export class MagicFlex extends LitElement {
     static styles = styles as CSSResult
 
-    classes = new HostClasses(this, "x", "y", {
-        a: true
-    })
+    classes = new HostClasses(this)
 
     @property({ type: String })
     direction: 'row' | 'column' | 'column-reverse' | 'row-reverse' = 'row'

@@ -30,8 +30,8 @@ export const defaultState = {
         colorized: true,
         bgColor: '',
         fullRow: 0,
-        border: true,
-        shadow: 'small',
+        border: '1px solid var(--ml-border-color)',
+        shadow: '0px 1px 2px var(--ml-border-color)',
         toolbar: {
             visible: true,
             items: [

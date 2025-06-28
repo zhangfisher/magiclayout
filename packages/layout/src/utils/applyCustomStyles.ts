@@ -1,7 +1,7 @@
 import { HTMLElementCustomStyles } from "@/context/types";
 
 
-export function applyCustomStyles(el: HTMLElement, styles: HTMLElementCustomStyles) {
+export function applyCustomStyles(el: HTMLElement, styles: HTMLElementCustomStyles | undefined) {
     if (!styles) return
     Object.entries(styles).forEach(([selector, value]) => {
         const eles = selector === 'root' ? [el] : Array.from(el.querySelectorAll(selector)) as HTMLElement[]

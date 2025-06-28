@@ -25,26 +25,34 @@ export class MagicLayoutExamples extends LitElement {
 
         }
     `
-    getStore() {
+    getOptions() {
         return {
-            actions: [
-                { icon: 'settings', label: "设置", tips: '设置' },
-                { icon: 'file', tips: '文件' },
-                { icon: 'aperture', tips: '滤镜' },
-                { icon: 'bell-ring', tips: '通知' },
-                { icon: 'camera' },
-                { icon: 'bug' },
-                { icon: 'chrome' },
-                { icon: 'message-square-more' },
-                { icon: 'rotate-cw' },
-            ]
+            header: {
+                header: {
+                    title: "管理系统"
+                },
+                toolbar: {
+                    items: [
+                        { icon: 'settings', label: "设置", tips: '设置' },
+                        { icon: 'file', tips: '文件' },
+                        { icon: 'aperture', tips: '滤镜' },
+                        { icon: 'bell-ring', tips: '通知' },
+                        { icon: 'camera' },
+                        { icon: 'bug' },
+                        { icon: 'chrome' },
+                        { icon: 'message-square-more' },
+                        { icon: 'rotate-cw' },
+                    ]
+                }
+            }
+
         }
     }
 
     render() {
         return html`
 
-        <magic-layout .options=${this.getStore()}>
+        <magic-layout .options=${this.getOptions()}>
             <div slot="body">
                 <auto-box flex="row" gap="10px" grow="last" style="height:80px;width:700px;background-color:red">
                     <div>auto-box</div>

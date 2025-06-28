@@ -27,9 +27,10 @@ import { provide } from '@lit/context';
 import { MagicLayoutContext } from '@/context'
 import { registerIconLibrary } from '@shoelace-style/shoelace';
 import { classMap } from 'lit/directives/class-map.js';
-import './sidebar'
+import '../Toolbar'
+import './Sidebar'
 import './panels'
-import './header'
+import './Header'
 import './tabs'
 import './workspace'
 import { MagicLayoutOptions } from '@/context/types';
@@ -44,7 +45,7 @@ export class MagicLayout extends LitElement {
     @provide({ context: MagicLayoutContext })
     store = createLayoutStore()
 
-    @property({ type: Object, reflect: true })
+    @property({ type: Object, reflect: true, attribute: false })
     options?: Partial<MagicLayoutOptions>
 
     @property({ type: String })

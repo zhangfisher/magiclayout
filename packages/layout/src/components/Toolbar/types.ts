@@ -29,5 +29,6 @@ export type MagicToolbarAction = {
 
 export type MagicToolbarOptions = {
     visible?: boolean
-    items?: (string | MagicToolbarAction)[]
+    styles?: HTMLElementCustomStyles
+    items?: MagicToolbarAction[]
 }
