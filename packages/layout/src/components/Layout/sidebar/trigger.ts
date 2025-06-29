@@ -19,7 +19,7 @@ export class MagicSidebarTrigger extends MagicElement<MagicSidebarTriggerOptions
     static styles = css`
         sl-button::part(base){
             border:none;
-            border-radius: opx;
+            border-radius: 0px;
         }
         sl-icon{
             transition: transform 0.2s ease-in;
@@ -36,19 +36,11 @@ export class MagicSidebarTrigger extends MagicElement<MagicSidebarTriggerOptions
 
 
     onTrigger() {
-        const collapsedEvent = SidebarCollapsedEvent({ collapsed: this.sidebarCollapsed })
-        this.dispatchEvent(collapsedEvent)
+        this.store.state.sidebar.collapsed = !this.store.state.sidebar.collapsed
     }
-
-    onStateUpdate(operate: StateOperate): void {
-        console.log("collapsed=", this.state)
-    }
-
     render() {
         return html`<sl-button             
-            class="sidebar-trigger
-                ${classMap({ 'collapsed': this.state })}
-            "
+            class="sidebar-trigger ${classMap({ 'collapsed': this.store.state.sidebar.collapsed })}"
             style="width: 100%;"
             @click=${this.onTrigger.bind(this)}
         >

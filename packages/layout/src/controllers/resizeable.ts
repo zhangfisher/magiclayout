@@ -162,6 +162,9 @@ export class Resizeable implements ReactiveController {
         this.startWidth = this.host.offsetWidth;
         this.startHeight = this.host.offsetHeight;
 
+        // 添加dragging类
+        this.host.classList.add('dragging');
+
         // 设置光标样式
         this.setCursorForDirection(direction);
 
@@ -227,7 +230,8 @@ export class Resizeable implements ReactiveController {
         document.removeEventListener('mousemove', this.boundMouseMove);
         document.removeEventListener('mouseup', this.boundMouseUp);
 
-
+        // 移除dragging类
+        this.host.classList.remove('dragging');
     }
 
     private _onResize(width: number, height: number) {

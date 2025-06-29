@@ -45,7 +45,7 @@ export class MagicElement<State> extends LitElement {
 
         if (this.watchKeys && this.watchKeys.length > 0) watchKeys.push(...this.watchKeys)
 
-        if (this.stateKey && this.stateKey.length > 0) {
+        if (stateKey && stateKey.length > 0) {
             this.state = getVal(this.store?.state, stateKey, {})
         }
 
