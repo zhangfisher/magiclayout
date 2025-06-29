@@ -62,13 +62,11 @@ export class Resizeable implements ReactiveController {
     private boundMouseUp: () => void;
     private boundMouseOver: (e: MouseEvent) => void;
     private boundElementMouseMove: (e: MouseEvent) => void;
-
     constructor(host: any, options?: ResizeableOptions) {
         (this.host = host).addController(this);
         if (options) {
             Object.assign(this.options, options);
         }
-
         // 绑定事件处理器
         this.boundMouseDown = this.handleMouseDown.bind(this);
         this.boundMouseMove = this.handleMouseMove.bind(this);

@@ -14,15 +14,20 @@ export const base = css`
                 flex-shrink: 0;
             }
         }
-        &.collapsed{
-            transition: width 0.5s ease-out;
-        }
     } 
+    :host(:not(.dragging)){
+        transition: width 0.5s ease-out;
+    }
 `
 export const header = css``
 
 
 export const menu = css`
+    :host{
 
+    }
+    sl-menu{
+        
+    }
 `
 export const footer = css``
