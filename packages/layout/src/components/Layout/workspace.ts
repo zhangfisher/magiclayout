@@ -9,7 +9,10 @@ export class MagicLayoutWorkspace extends LitElement {
 
     render() {
         return html` 
-         workspace
+         <div style="margin:2rem;border:1px solid red;">
+            <magic-layout-logo direction="col"></magic-layout-logo>
+            <magic-layout-logo direction="row"></magic-layout-logo>
+         </div>
         `
     }
 }

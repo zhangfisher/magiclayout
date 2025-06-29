@@ -9,7 +9,7 @@
  */
 
 import { html, PropertyValues } from 'lit'
-import { customElement, query } from 'lit/decorators.js'
+import { customElement, property, query } from 'lit/decorators.js'
 import styles from './styles'
 import { MagicElement } from '../MagicElement';
 import { RequiredMagicLayoutOptions } from '@/context/types';
@@ -25,10 +25,22 @@ export class MagicLayoutLogo extends MagicElement<RequiredMagicLayoutOptions['lo
     stateKey = 'logo'
 
 
+    @property({ type: Boolean, reflect: true })
+    collapsed: boolean = false
+
+    @property({ type: String })
+    direction?: 'row' | 'col'
+
+    @property({ type: Boolean, reflect: true })
+    inline: boolean = false
+
+
+
     @query('.title')
     titleEle?: HTMLElement
 
     private _titleWidth: number = 0
+
 
     renderImage() {
         const imageStyles = styleMap({
@@ -43,7 +55,7 @@ export class MagicLayoutLogo extends MagicElement<RequiredMagicLayoutOptions['lo
         })
     }
     renderTitle() {
-        if (!this.sidebarCollapsed && this.state.title && this.state.title.length > 0) {
+        if (!this.collapsed && this.state.title && this.state.title.length > 0) {
             return html`<span class="title">
                 ${this.state.title} 
                 ${when(this.state.subtitle && this.state.subtitle.length > 0, () => {
@@ -59,18 +71,16 @@ export class MagicLayoutLogo extends MagicElement<RequiredMagicLayoutOptions['lo
         }
     }
 
-
-
     render() {
         return html`<div
                 class="logo ${classMap({
-            collapsed: this.sidebarCollapsed,
-            row: this.state.direction === 'row',
-            col: this.state.direction === 'col',
+            collapsed: this.collapsed,
+            row: this.direction ? this.direction === 'row' : this.state.direction === 'row',
+            col: this.direction ? this.direction === 'col' : this.state.direction === 'col',
             colorized: this.state.colorized,
+            inline: this.inline,
         })}"
             style = "${styleMap({
-            'aspect-ratio': this.state.direction === 'col' && this.state.aspectRatio ? String(this.state.aspectRatio) : undefined,
             'background-color': this.state.colorized ? this.state.bgColor : undefined,
         })}"
         >

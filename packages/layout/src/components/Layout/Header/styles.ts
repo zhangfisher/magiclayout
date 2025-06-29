@@ -16,6 +16,10 @@ export default css`
             &>magic-layout-toolbar{
                 flex-grow: 1;
             }
+            &>magic-layout-logo{
+                display: inline-flex;
+                padding: 0px 0.5rem;
+            }
         }
     }
 ` 

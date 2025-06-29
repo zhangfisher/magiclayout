@@ -18,6 +18,10 @@ export const base = css`
     :host(:not(.dragging)){
         transition: width 0.5s ease-out;
     }
+    magic-layout-logo{
+        border-bottom: 1px solid var(--ml-border-color);
+        padding:1rem 0px;
+    }
 `
 export const header = css``
 
@@ -27,7 +31,7 @@ export const menu = css`
 
     }
     sl-menu{
-        
+
     }
 `
 export const footer = css``

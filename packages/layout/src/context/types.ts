@@ -29,6 +29,7 @@ export type MagicLayoutHeaderOptions = {
     visible: boolean                       // 是否显示
     title: string
     colorized: boolean                     // 是否全彩色背景
+    logo: boolean                           // 是否显示Logo
     fullRow: boolean                       // 是否占满顶部一行
     bgColor?: string                        // 背景色
     height?: number | string                // 高度    
@@ -63,12 +64,12 @@ export type MagicLayoutSidebarOptions = {
 export type MagicLayoutLogoOptions = {
     visible: boolean           //  
     colorized: boolean         // 是否全彩色背景，=true时使用bgColor
-    aspectRatio: string | number
     image: string              // Logo图片地址
     imageSize: string          // Logo在小，默认是50*50
+    showTitle?: boolean        // 是否显示标题
     title: string
-    radius: string | number     // 是否为Logo图片启用圆角
     subtitle?: string
+    radius: string | number     // 是否为Logo图片启用圆角
     icon?: string               // 图标名称，当指定image时，优先显示image
     bgColor?: string            // 背景色
     color?: string              // 字体颜色

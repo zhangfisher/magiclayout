@@ -90,7 +90,7 @@ export class MagicLayoutSidebar extends MagicElement<RequiredMagicLayoutOptions[
                 align="stretch"  
                 class="fit"
             >
-                <magic-layout-logo> </magic-layout-logo>
+                <magic-layout-logo ?collapsed=${this.state.collapsed}> </magic-layout-logo>
                 <magic-sidebar-header> </magic-sidebar-header>
                 <magic-sidebar-menu></magic-sidebar-menu> 
                 <magic-sidebar-footer> </magic-sidebar-footer>

@@ -28,6 +28,7 @@ export const defaultState = {
     header: {
         title: 'MagicLayout',
         visible: true,
+        logo: true,
         height: 60,
         colorized: true,
         bgColor: '',
@@ -76,6 +77,7 @@ export const defaultState = {
         visible: true,
         title: 'MagicLayout',
         subtitle: '强大的应用布局系统',
+        showTitle: true,
         image: 'https://ui.shadcn.com/avatars/shadcn.jpg',
         imageSize: '52px',
         url: 'http://www.homekylin.com',

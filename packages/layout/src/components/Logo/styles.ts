@@ -11,7 +11,6 @@ export default css`
         align-items: center;
         justify-content: center;  
         box-sizing: border-box;        
-        border-bottom: 1px solid var(--ml-border-color);
         overflow: hidden;
         &>.image{
             box-sizing: border-box;                             
@@ -29,6 +28,8 @@ export default css`
             color: var(--ml-theme-color);  
             margin: 4px 0px;
             text-align: center;
+            transition: display,width,height 0.5s ease-out;
+
             & > .subtitle{ 
                 display: block;
                 color: var(--ml-gray-color);
@@ -36,7 +37,8 @@ export default css`
                 font-weight: 100;
                 text-overflow: ellipsis;
                 overflow:hidden;      
-                white-space: nowrap;          
+                white-space: nowrap;     
+                line-height: 100%;     
             }
         }        
         &.row{
@@ -58,8 +60,7 @@ export default css`
                 }                
             }
         }
-        &.row{
-            padding: 1rem;                       
+        &.row{                
             &>.image{
                 display: flex
      

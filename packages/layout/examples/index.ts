@@ -38,6 +38,7 @@ export class MagicLayoutExamples extends LitElement {
         return {
             header: {
                 title: "管理系统",
+                logo: true,
                 toolbar: {
                     items: [
                         { icon: 'settings', label: "设置", tips: '设置' },

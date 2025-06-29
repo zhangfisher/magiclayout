@@ -4,6 +4,7 @@ import styles from "./styles";
 import { MagicElement } from "@/components/MagicElement";
 import { MagicLayoutOptions } from "@/context/types";
 import { HostStyles } from "@/controllers/hostStyles";
+import { when } from "lit/directives/when.js";
 
 
 @customElement('magic-layout-header')
@@ -21,6 +22,8 @@ export class MagicLayoutHeader extends MagicElement<MagicLayoutOptions['header']
         <magic-flex 
             grow="magic-layout-toolbar"
             class="fit">
+            ${when(this.state.logo, () => html`
+                <magic-layout-logo direction="row"></magic-layout-logo>`)}
             <span class="title">
                 ${this.state.title}
             </span>            
