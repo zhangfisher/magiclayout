@@ -29,9 +29,9 @@ export type MagicLayoutHeaderOptions = {
     visible: boolean                       // 是否显示
     title: string
     colorized: boolean                     // 是否全彩色背景
+    fullRow: boolean                       // 是否占满顶部一行
     bgColor?: string                        // 背景色
-    height?: number | string                // 高度
-    fullRow?: number                       // 0-none， 1- over-sidebar  2- over-drawer ,4- over-header
+    height?: number | string                // 高度    
     border?: string      // 是否显示下边框
     shadow?: string
     toolbar: MagicToolbarOptions

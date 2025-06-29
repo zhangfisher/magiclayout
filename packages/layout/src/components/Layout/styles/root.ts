@@ -29,8 +29,12 @@ export const root = css`
             box-shadow: var(--ml-shadow);
             color: var(--ml-text-color);
         }
+        
     }        
     
+    
+
+
     .title{
         background: -webkit-linear-gradient(120deg,#bd34fe 30%,#41d1ff);
         -webkit-text-fill-color: transparent;
@@ -61,6 +65,7 @@ export const root = css`
             position: relative;
             flex-grow: 1;
             display: flex;
+            flex-direction: column;
             justify-content: center;
         }
     }

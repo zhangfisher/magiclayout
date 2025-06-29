@@ -31,7 +31,7 @@ export const defaultState = {
         height: 60,
         colorized: true,
         bgColor: '',
-        fullRow: 0,
+        fullRow: false,
         border: '1px solid var(--ml-border-color)',
         shadow: '0px 1px 4px var(--ml-shadow-color)',
         toolbar: {

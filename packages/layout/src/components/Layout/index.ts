@@ -32,11 +32,12 @@ import '../Toolbar'
 import './Sidebar'
 import './panels'
 import './Header'
-import './tabs'
+import './pages'
 import './workspace'
 import { MagicLayoutOptions } from '@/context/types';
 import { deepMerge } from 'flex-tools/object';
 import type { MagicLayoutSidebar } from './Sidebar';
+import { toggleWrapper } from '@/utils/toggleWrapper';
 
 
 
@@ -55,6 +56,11 @@ export class MagicLayout extends LitElement {
 
     @property({ type: Boolean, reflect: true })
     fullScreen: boolean = true
+
+    state: MagicLayoutOptions = this.store.state
+
+
+
     constructor() {
         super()
         this.store.root = this
@@ -91,7 +97,11 @@ export class MagicLayout extends LitElement {
         }
     }
 
-    renderBody() {
+
+
+
+
+    renderContainer() {
         return html`
             <magic-layout-header part="header"></magic-layout-header> 
             <magic-layout-tabs part="tabs" ></magic-layout-tabs>                 
@@ -99,29 +109,36 @@ export class MagicLayout extends LitElement {
         `
     }
 
-    renderContainer() {
-        if (this.store.state.panels.visible) {
-            return html`
-                <sl-split-panel class="fit"  position="75">
-                    <div part="body" class="body"  slot="start"> 
-                        ${this.renderBody()}              
-                    </div> 
-                    <magic-layout-panels part="panels" slot="end"></magic-layout-panels>  
-                </sl-split-panel>            
+    renderBodyWithHeader() {
+        return html`${toggleWrapper(this.state.header.fullRow, this.renderBody(), (content) => {
+            return html`<div class="body-wrapper">
+                    <magic-layout-header part="header"></magic-layout-header>
+                    <div>
+                        ${content}
+                    </div>                    
+                </div>
             `
-        }
-        return this.renderBody()
+        })}`
+    }
+    renderBody() {
+        return html` 
+            <magic-layout-sidebar part="sidebar"></magic-layout-sidebar>           
+            <div class="container">
+               ${this.renderContainer()}
+            </div>
+        `
     }
 
     render() {
         return html`
         <div part="root" class="root ${classMap({
-            // 'full-screen': this.fullScreen,
+            // 'full-screen': this.fullScreen,            
         })}">
-            <magic-layout-sidebar part="sidebar" ></magic-layout-sidebar>           
+        ${this.renderBodyWithHeader()}
+            <!-- <magic-layout-sidebar part="sidebar" ></magic-layout-sidebar>           
             <div class="container">
                ${this.renderContainer()}
-            </div>
+            </div> -->
             <!-- <magic-layout-drawer part="drawer"></magic-layout-drawer>   -->
         </div>
         `
