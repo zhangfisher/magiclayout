@@ -1,5 +1,6 @@
 import { AutoStore } from "autostore";
 import { MagicLayoutOptions } from "./types";
+import type { MagicLayoutStore } from ".";
 
 
 export const defaultState = {
@@ -25,13 +26,14 @@ export const defaultState = {
         xxl: "1400px"
     },
     header: {
+        title: 'MagicLayout',
         visible: true,
         height: 60,
         colorized: true,
         bgColor: '',
         fullRow: 0,
         border: '1px solid var(--ml-border-color)',
-        shadow: '0px 1px 2px var(--ml-border-color)',
+        shadow: '0px 1px 4px var(--ml-shadow-color)',
         toolbar: {
             visible: true,
             items: [
@@ -47,8 +49,8 @@ export const defaultState = {
         colorized: true,
         resizeable: true,
         bgColor: '#fff',
-        border: true,
-        shadow: '0 2px 4px hsl(240 3.8% 46.1% / 12%)',
+        border: '1px solid var(--ml-border-color)',
+        shadow: '1px 0px 4px var(--ml-shadow-color)',
         header: {
             visible: true,
             items: []
@@ -95,5 +97,5 @@ export const defaultState = {
 
 
 export function createLayoutStore(options?: MagicLayoutOptions) {
-    return new AutoStore<MagicLayoutOptions>(Object.assign({}, defaultState, options))
+    return new AutoStore<MagicLayoutOptions>(Object.assign({}, defaultState, options)) as MagicLayoutStore
 }

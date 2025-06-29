@@ -20,6 +20,10 @@ export default css`
                 box-shadow: var(--ml-shadow);
             }
         }
+        &>a.image{
+            display: contents;
+        }
+
         &>.title{
             font-size: 1.2rem;
             color: var(--ml-theme-color);  

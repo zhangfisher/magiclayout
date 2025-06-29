@@ -6,13 +6,18 @@ export const base = css`
     :host{
         position: relative;
         display: flex;
+        z-index:9;
+        
         & > magic-flex{
             box-sizing: border-box;
             &>magic-logo,magic-sidebar-header,magic-sidebar-footer{
                 flex-shrink: 0;
             }
         }
-    }
+        &.collapsed{
+            transition: width 0.5s ease-out;
+        }
+    } 
 `
 export const header = css``
 

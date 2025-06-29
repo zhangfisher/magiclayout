@@ -35,6 +35,7 @@ import './tabs'
 import './workspace'
 import { MagicLayoutOptions } from '@/context/types';
 import { deepMerge } from 'flex-tools/object';
+import type { MagicLayoutSidebar } from './Sidebar';
 
 
 
@@ -53,6 +54,17 @@ export class MagicLayout extends LitElement {
 
     @property({ type: Boolean, reflect: true })
     fullScreen: boolean = true
+    constructor() {
+        super()
+        this.store.root = this
+    }
+    get shadow() {
+        return this.shadowRoot!
+    }
+
+    get sibebar(): MagicLayoutSidebar {
+        return this.shadow.querySelector('magic-layout-sidebar') as MagicLayoutSidebar
+    }
 
     /**
      * 注册图标库 

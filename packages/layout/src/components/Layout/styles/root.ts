@@ -13,6 +13,7 @@ export const root = css`
         --ml-text-color: var(--sl-color-gray-700);    
         --ml-theme-color: hsl(208.21deg 100% 59.31%);    
         --ml-gray-color: var(--sl-color-gray-500);    
+        --ml-shadow-color: var(--sl-color-gray-200);    
         --ml-bgcolor: var(--sl-color-neutral-0);    
         --ml-font-size: var(--sl-font-size-medium);    
         --ml-spacing: var(--sl-spacing-medium);                    /* 用于内边距和外边距 */

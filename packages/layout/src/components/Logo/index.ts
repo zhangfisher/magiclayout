@@ -8,8 +8,8 @@
  * 
  */
 
-import { html } from 'lit'
-import { customElement } from 'lit/decorators.js'
+import { html, PropertyValues } from 'lit'
+import { customElement, query } from 'lit/decorators.js'
 import styles from './styles'
 import { MagicElement } from '../MagicElement';
 import { RequiredMagicLayoutOptions } from '@/context/types';
@@ -23,6 +23,12 @@ import { getCssSize } from '../../utils/getCssSize';
 export class MagicLayoutLogo extends MagicElement<RequiredMagicLayoutOptions['logo']> {
     static styles = styles
     stateKey = 'logo'
+
+
+    @query('.title')
+    titleEle?: HTMLElement
+
+    private _titleWidth: number = 0
 
     renderImage() {
         const imageStyles = styleMap({
@@ -47,23 +53,40 @@ export class MagicLayoutLogo extends MagicElement<RequiredMagicLayoutOptions['lo
         }
     }
 
+    protected updated(_changedProperties: PropertyValues): void {
+        if (this.titleEle) {
+            this._titleWidth = this.titleEle.offsetWidth
+        }
+    }
+
+
+
     render() {
         return html`<div
-            class="logo ${classMap({
+                class="logo ${classMap({
             collapsed: this.sidebarCollapsed,
             row: this.state.direction === 'row',
             col: this.state.direction === 'col',
             colorized: this.state.colorized,
         })}"
-        style = "${styleMap({
+            style = "${styleMap({
             'aspect-ratio': this.state.direction === 'col' && this.state.aspectRatio ? String(this.state.aspectRatio) : undefined,
             'background-color': this.state.colorized ? this.state.bgColor : undefined,
         })}"
-    >
-        ${this.renderImage()}
-        ${this.renderTitle()}
-    </div>
-    `
+        >
+            ${this.renderImage()}
+            ${this.renderTitle()}
+        </div>
+        `
+    }
+
+    onResize({ width }: { width: number }) {
+        if (!this.titleEle) return
+        if (this._titleWidth > 0 && this._titleWidth > width * 0.9) {
+            this.titleEle.style.display = 'none'
+        } else {
+            this.titleEle.style.display = 'block'
+        }
     }
 
 

@@ -3,7 +3,7 @@ import { MagicLayoutOptions } from "@/context/types";
 import { HostClasses } from "@/controllers/hostClasss";
 import { getVal } from "@/utils/getVal";
 import { consume } from "@lit/context";
-import { WatchListener } from "autostore";
+import { StateOperate, WatchListener } from "autostore";
 import { ObjectKeyPaths } from "flex-tools/types";
 import { LitElement } from "lit";
 import { property, state } from "lit/decorators.js";
@@ -17,12 +17,9 @@ export class MagicElement<State> extends LitElement {
     @property({ attribute: false })
     store!: MagicLayoutStore;
     state!: State
+    // 监听状态额外的属性，如['sidebar.collapsed']
+    watchKeys: string[] = []
 
-    /**
-     * 侧边栏是否收起
-     */
-    @state()
-    sidebarCollapsed: boolean = false
     classs = new HostClasses(this)
 
     subscribers: any[] = []
@@ -33,16 +30,42 @@ export class MagicElement<State> extends LitElement {
 
     connectedCallback(): void {
         super.connectedCallback()
-        if (this.stateKey && this.stateKey.length > 0) {
-            this.state = getVal(this.store?.state, this.stateKey, {})
-            this.sidebarCollapsed = !!this.store.state.sidebar.collapsed
-            // 监听状态变化多端
-            this.subscribers.push(this.store.watch(this.stateKey, (operate) => {
-                console.log(operate)
-            }))
+        const watchKeys = []
+        const stateKey = this.stateKey ? (this.stateKey.endsWith('/') ?
+            this.stateKey.substring(0, this.stateKey.length - 1) : this.stateKey) : undefined
+
+        if (stateKey) {
+            // 如果stateKey以/结尾，则只监听stateKey变化，而不监听stateKey下的所有子属性变化
+            if (this.stateKey.endsWith('/')) {
+                watchKeys.push(stateKey)
+            } else {
+                watchKeys.push(this.stateKey + '.**')
+            }
         }
 
+        if (this.watchKeys && this.watchKeys.length > 0) watchKeys.push(...this.watchKeys)
+
+        if (this.stateKey && this.stateKey.length > 0) {
+            this.state = getVal(this.store?.state, stateKey, {})
+        }
+
+        if (watchKeys.length > 0) {
+            this.subscribers.push(this.store.watch(watchKeys, (operate) => {
+                if (operate.reply) return
+                this.onStateUpdate(operate)
+            }, {
+                operates: 'write'
+            }))
+        }
     }
+    /**
+     * 当组件的状态数据更新时触发
+     * @param operate 
+     */
+    onStateUpdate(operate: StateOperate) {
+        this.requestUpdate()
+    }
+
     disconnectedCallback(): void {
         super.disconnectedCallback()
         this.subscribers.forEach((subscriber) => {
@@ -56,8 +79,5 @@ export class MagicElement<State> extends LitElement {
      */
     watch(statePath: string | string[], listener: WatchListener) {
         this.subscribers.push(this.store.watch(statePath, listener))
-    }
-    onResize({ width, height }: { width: number, height: number }) {
-        console.log(width, height)
     }
 }

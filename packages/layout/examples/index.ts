@@ -2,13 +2,13 @@ import '@shoelace-style/shoelace/dist/shoelace.js';
 import '@shoelace-style/shoelace/dist/shoelace-autoloader.js';
 import '@shoelace-style/shoelace/dist/themes/light.css';
 import '@shoelace-style/shoelace/dist/themes/dark.css';
-import { customElement } from 'lit/decorators.js';
-import { css, html, LitElement } from 'lit';
+import { customElement, query } from 'lit/decorators.js';
+import { css, html, LitElement, PropertyValues } from 'lit';
 
 import '../src/styles/index.css'
 export * from './flex'
 export * from './toolbar'
-
+import type { MagicLayout } from '../src/components/layout'
 
 
 
@@ -19,18 +19,25 @@ export class MagicLayoutExamples extends LitElement {
             margin: 10px;
             display: block;
             position: relative;
-            width: 90%;
+            width: 100%;
             height: 800px;
             border: 1px solid #ccc;
 
         }
     `
+
+    @query('magic-layout')
+    layout?: HTMLElement
+
+    protected updated(_changedProperties: PropertyValues): void {
+        super.updated(_changedProperties)
+        globalThis.layout = this.layout as MagicLayout
+    }
+
     getOptions() {
         return {
             header: {
-                header: {
-                    title: "管理系统"
-                },
+                title: "管理系统",
                 toolbar: {
                     items: [
                         { icon: 'settings', label: "设置", tips: '设置' },

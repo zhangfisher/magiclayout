@@ -1,8 +1,11 @@
 import { createContext } from '@lit/context';
 import type { AutoStore } from 'autostore';
 import { MagicLayoutOptions } from './types';
+import type { MagicLayout } from '@/components';
 
 
-export type MagicLayoutStore = AutoStore<MagicLayoutOptions>
+export type MagicLayoutStore = AutoStore<MagicLayoutOptions> & {
+    root: MagicLayout
+}
 export const MagicLayoutContext = createContext<MagicLayoutStore>('magic-layout-context');
 
