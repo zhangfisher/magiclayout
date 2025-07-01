@@ -12,6 +12,7 @@ import './menu'
 import './footer'
 import './trigger'
 import type { MagicLayoutLogo } from "@/components/Logo";
+import { when } from "lit/directives/when.js";
 
 
 @customElement('magic-layout-sidebar')
@@ -90,7 +91,7 @@ export class MagicLayoutSidebar extends MagicElement<RequiredMagicLayoutOptions[
                 align="stretch"  
                 class="fit"
             >
-                <magic-layout-logo ?collapsed=${this.state.collapsed}> </magic-layout-logo>
+                ${when(this.store.state.logo.position === 'sidebar', () => html`<magic-layout-logo ?collapsed=${this.state.collapsed}> </magic-layout-logo>`)}
                 <magic-sidebar-header> </magic-sidebar-header>
                 <magic-sidebar-menu></magic-sidebar-menu> 
                 <magic-sidebar-footer> </magic-sidebar-footer>

@@ -15,7 +15,7 @@ export const fit = css`
 
 export const fullScreen = css`
     .full-screen{
-        position: fixed;
+        position: fixed!important;
         left: 0px;
         top: 0px;
         width: 100%;

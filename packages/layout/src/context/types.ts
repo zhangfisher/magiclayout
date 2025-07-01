@@ -67,6 +67,7 @@ export type MagicLayoutLogoOptions = {
     image: string              // Logo图片地址
     imageSize: string          // Logo在小，默认是50*50
     showTitle?: boolean        // 是否显示标题
+    position?: 'sidebar' | 'header' | 'none'
     title: string
     subtitle?: string
     radius: string | number     // 是否为Logo图片启用圆角
@@ -75,6 +76,7 @@ export type MagicLayoutLogoOptions = {
     color?: string              // 字体颜色
     url?: string
     direction?: 'row' | 'col'
+    shape?: 'radius' | 'circle'
     styles?: HTMLElementCustomStyles
 }
 
@@ -120,6 +122,7 @@ export type MagicLayoutAction = {
 }
 
 export type MagicLayoutOptions = {
+    fullScreen: boolean
     theme: MagicLayoutThemeOptions
     breakpoints: Record<string, string>
     logo: MagicLayoutLogoOptions

@@ -34,6 +34,8 @@ export class MagicLayoutLogo extends MagicElement<RequiredMagicLayoutOptions['lo
     @property({ type: Boolean, reflect: true })
     inline: boolean = false
 
+    @property({ type: String })
+    shape?: 'radius' | 'circle'
 
 
     @query('.title')
@@ -48,7 +50,9 @@ export class MagicLayoutLogo extends MagicElement<RequiredMagicLayoutOptions['lo
             height: getCssSize(this.state.imageSize),
         })
         const logoImage = when(this.state.image,
-            () => html`<img class="image" src="${this.state.image}" style="${imageStyles}"/>`,
+            () => html`<img class="image"  class="${classMap({
+                [this.shape || this.state.shape || 'radius']: true
+            })}" src="${this.state.image}" style="${imageStyles}"/>`,
             () => html`<span class="image" style="${imageStyles}"><sl-icon name="${this.state.icon!}"></sl-icon></span>`)
         return toggleWrapper(!!this.state.url, logoImage, (content) => {
             return html`<a class="image" target="_blank" href="${this.state.url!}">${content}</a>`

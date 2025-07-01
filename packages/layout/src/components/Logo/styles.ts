@@ -2,7 +2,8 @@ import { css } from "lit";
 
 export default css`
     :host{
-
+        display: inline-block;
+        position: relative;
     }        
 
     .logo{
@@ -15,8 +16,14 @@ export default css`
         &>.image{
             box-sizing: border-box;                             
             &>img{
-                border-radius: 8px;                
-                box-shadow: var(--ml-shadow);
+                
+                box-shadow: var(--ml-shadow);      
+                &.radius{
+                    border-radius: 8px;                
+                }          
+                &.circle{
+                    border-radius: 50%;                
+                }          
             }
         }
         &>a.image{
@@ -64,6 +71,9 @@ export default css`
             &>.image{
                 display: flex
      
+            }
+            .subtitle{
+                text-align: left;
             }
         }
     }

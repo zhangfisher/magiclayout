@@ -1,79 +1,68 @@
 import { css } from "lit";
-import { fit } from "@/styles/utils";
+import { fullScreen, fit } from "@/styles/utils";
+import { vars } from "./vars";
 
 export const root = css`
     ${fit}
+    ${vars}
+    ${fullScreen}
     :host{
         position: absolute;
         left: 0px;
         top: 0px;
         width: 100%;
-        height: 100%;        
-        /* 变量 */
-        --ml-text-color: var(--sl-color-gray-700);    
-        --ml-theme-color: hsl(208.21deg 100% 59.31%);    
-        --ml-gray-color: var(--sl-color-gray-500);    
-        --ml-shadow-color: var(--sl-color-gray-200);    
-        --ml-bgcolor: var(--sl-color-neutral-0);    
-        --ml-font-size: var(--sl-font-size-medium);    
-        --ml-spacing: var(--sl-spacing-medium);                    /* 用于内边距和外边距 */
-        --ml-border-color: var(--sl-color-neutral-300);
-        --ml-border: 1px solid var(--ml-border-color);    
-        --ml-border-radius: var(--sl-border-radius-medium);
-        --ml-shadow: var(--sl-shadow-medium);    
-        --ml-workspace-bgcolor: var(--sl-color-neutral-50);
-        auto-box{
-            padding: var(--ml-spacing);
-            font-size: var(--ml-font-size);
-            border-radius: var(--ml-border-radius);
-            box-shadow: var(--ml-shadow);
-            color: var(--ml-text-color);
-        }
-        
-    }        
-    
-    
-
-
-    .title{
-        background: -webkit-linear-gradient(120deg,#bd34fe 30%,#41d1ff);
-        -webkit-text-fill-color: transparent;
-    }
-    
-
-    :host([size=small]){ 
-        --ml-font-size: var(--sl-font-size-small);    
-        --ml-spacing: var(--sl-spacing-small);                    /* 用于内边距和外边距 */
-        --ml-border-radius: var(--sl-border-radius-small);
-        --ml-shadow: var(--sl-shadow-small);    
-    }
-
-    
-    :host([size=large]){ 
-        --ml-font-size: var(--sl-font-size-large);    
-        --ml-spacing: var(--sl-spacing-large);                    /* 用于内边距和外边距 */
-        --ml-border-radius: var(--sl-border-radius-large);
-        --ml-shadow: var(--sl-shadow-large);    
-    } 
-
-    :host > .root{
-        display: flex;
-        position: relative;
-        flex-direction: row;        
-        height:100%;
-        &>.container{
-            position: relative;
-            flex-grow: 1;
+        height: 100%;
+        &> .root{
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            position: relative;
+            flex-direction: row;        
+            height:100%;
+            &>.container{
+                position: relative;
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
         }
     }
+
     :host::part(body){
         position: relative;
         display: flex;
         flex-direction: column;
     }
-     
+    
+
  
 `
+    // /* 媒体查询框架 */
+    // @media (max-width: 575.98px) {
+    //     /* 小屏幕设备（手机）样式 */
+    //     :host::part(sidebar){
+    //         display: none;
+    //     } 
+    //     ::part(header-toolbar){
+    //         display: none;
+    //     }
+    // }
+
+    // @media (min-width: 576px) and (max-width: 767.98px) {
+    //     /* 中等屏幕设备（平板）样式 */
+    //     ::part(sidebar){
+    //         display: none;
+    //     } 
+    // }
+
+    // @media (min-width: 768px) and (max-width: 991.98px) {
+    //     /* 大屏幕设备（桌面）样式 */
+    // }
+
+    // @media (min-width: 992px) and (max-width: 1199.98px) {
+    //     /* 超大屏幕设备（大桌面）样式 */
+    // }
+
+    // @media (min-width: 1200px) {
+    //     /* 超超大屏幕设备（超大桌面）样式 */
+    // }
+    

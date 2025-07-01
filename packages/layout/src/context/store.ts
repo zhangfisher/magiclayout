@@ -4,6 +4,7 @@ import type { MagicLayoutStore } from ".";
 
 
 export const defaultState = {
+    fullScreen: true,
     theme: {
         theme: "light",
         size: "medium",
@@ -29,7 +30,7 @@ export const defaultState = {
         title: 'MagicLayout',
         visible: true,
         logo: true,
-        height: 60,
+        height: 64,
         colorized: true,
         bgColor: '',
         fullRow: false,
@@ -81,11 +82,12 @@ export const defaultState = {
         image: 'https://ui.shadcn.com/avatars/shadcn.jpg',
         imageSize: '52px',
         url: 'http://www.homekylin.com',
+        position: 'sidebar',
         bgColor: '#2f9dff',
         color: 'white',
         colorized: false,
-        aspectRatio: 1.2 / 1,
         radius: 8,
+        shape: 'radius',
         direction: 'col'
     },
     workspace: {
