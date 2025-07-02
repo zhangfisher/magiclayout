@@ -1,10 +1,11 @@
 import { html } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, query } from "lit/decorators.js";
 import styles from "./styles";
 import { MagicElement } from "@/components/MagicElement";
 import { MagicLayoutOptions } from "@/context/types";
 import { HostStyles } from "@/controllers/hostStyles";
 import { when } from "lit/directives/when.js";
+import type { SlDrawer } from "@shoelace-style/shoelace";
 import './trigger'
 
 @customElement('magic-layout-header')
@@ -13,6 +14,22 @@ export class MagicLayoutHeader extends MagicElement<MagicLayoutOptions['header']
     stateKey: string = 'header'
     styles = new HostStyles(this)
 
+    @query('sl-drawer')
+    drawer?: SlDrawer
+    renderSidebar() {
+        return html`<sl-drawer label="Drawer" placement="start" class="drawer-overview">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        
+        <sl-button slot="footer" variant="primary" @click=${this._onCloseSidebar.bind(this)}>Close</sl-button>
+        </sl-drawer>`
+    }
+
+    _onOpenSidebar(e) {
+        this.drawer?.show()
+    }
+    _onCloseSidebar(e) {
+        this.drawer?.hide()
+    }
     render() {
         this.styles.toggle({
             [`height: ${this.state.height}px`]: this.state.visible !== false,
@@ -20,6 +37,7 @@ export class MagicLayoutHeader extends MagicElement<MagicLayoutOptions['header']
             [`border-bottom: ${this.state.border}`]: !!this.state.border,
         })
         return html` 
+        ${this.renderSidebar()}
         <magic-flex 
             grow="magic-layout-toolbar"
             class="fit">            
@@ -27,7 +45,7 @@ export class MagicLayoutHeader extends MagicElement<MagicLayoutOptions['header']
                 <magic-layout-logo direction="row" shape="circle"></magic-layout-logo>`)
             }
             <span class="title">
-                <magic-header-trigger></magic-header-trigger>
+                <sl-icon-button name="menu" @click=${this._onOpenSidebar.bind(this)}></sl-icon-button> 
                 ${this.state.title}
             </span>            
             <magic-layout-toolbar

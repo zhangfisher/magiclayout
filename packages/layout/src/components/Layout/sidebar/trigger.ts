@@ -5,8 +5,6 @@
  */
 
 import { MagicElement } from "@/components/MagicElement";
-import { SidebarCollapsedEvent } from "@/events";
-import { StateOperate } from "autostore";
 import { css, html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
@@ -48,8 +46,6 @@ export class MagicSidebarTrigger extends MagicElement<MagicSidebarTriggerOptions
         </sl-button>`
     }
 }
-
-
 
 
 declare global {

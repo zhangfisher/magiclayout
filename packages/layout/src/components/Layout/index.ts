@@ -41,6 +41,7 @@ import type { MagicLayoutSidebar } from './Sidebar';
 import { toggleWrapper } from '@/utils/toggleWrapper';
 import { when } from 'lit/directives/when.js';
 import { MediaQuery, MediaQueryResult } from '@/controllers/mediaQuery';
+import { HostClasses } from '@/controllers/hostClasss';
 
 
 
@@ -62,7 +63,10 @@ export class MagicLayout extends LitElement {
 
     state: MagicLayoutOptions = this.store.state
 
-    mediaQuery = new MediaQuery(this)
+    classs = new HostClasses(this)
+
+    mediaQuery = new MediaQuery(this, this.store.state.breakpoints)
+
 
     constructor() {
         super()
@@ -78,6 +82,9 @@ export class MagicLayout extends LitElement {
 
     onMediaQuery(mediaResult: MediaQueryResult) {
         console.log("mediaResult=", mediaResult)
+        this.classs.use({
+            [`${mediaResult.current}`]: true
+        })
     }
 
     /**
