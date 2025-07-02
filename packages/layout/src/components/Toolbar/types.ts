@@ -21,6 +21,9 @@ export type MagicToolbarAction = {
     badge?: string
     value?: any
     tips?: string
+    labelPos?: 'none' | 'bottom' | 'right',   // 0-不显示，1-右，2-下
+    // 当工具栏折叠时，如果设置了fixed，那么该按钮将始终显示,其他按钮将隐藏显示在more菜单中
+    fixed?: boolean
     onClick?: () => void
     onChange?: () => void
     styles?: HTMLElementCustomStyles

@@ -1,5 +1,37 @@
+import { drawer } from './../styles/drawer';
 import { fit } from "@/styles/utils";
 import { css } from "lit";
+
+
+
+const media = css`
+
+    @media (max-width: 575.98px) {
+         /* 小屏幕设备（手机）样式 */       
+        .sidebar-tigger{
+            display:block;
+        }
+    }
+    @media (min-width: 576px) and (max-width: 767.98px) {
+        /* 中等屏幕设备（平板）样式 */            
+        .sidebar-tigger{
+            display:block;
+        }
+    }
+
+    @media (min-width: 768px) and (max-width: 991.98px) {
+        /* 大屏幕设备（桌面）样式 */
+        
+    }
+
+    @media (min-width: 992px) and (max-width: 1199.98px) {
+        /* 超大屏幕设备（大桌面）样式 */
+    }
+
+    @media (min-width: 1200px) {
+        /* 超超大屏幕设备（超大桌面）样式 */
+    }
+`
 
 export default css`
     ${fit}
@@ -21,39 +53,21 @@ export default css`
                 padding: 0px 0.5rem;
             }
         }
-    }    
-    @media (max-width: 575.98px) {
-         /* 小屏幕设备（手机）样式 */
-         :host::part(sidebar){
-             display: none;
-         } 
-         ::part(header-toolbar){
-             display: none;
-         }
-        :host{
-            .toolbar{
-                display: none;
-            } 
+        sl-drawer::part(body){
+            padding: 0px;            
         }
-    }
-    
-    @media (min-width: 576px) and (max-width: 767.98px) {
-        /* 中等屏幕设备（平板）样式 */
-        .toolbar{
+        sl-drawer::part(header){
             display: none;
-        } 
+        }
+        sl-drawer::part(footer){
+            display: none;
+        }
+        sl-drawer::part(panel){
+            overflow: unset;
+        }
+    }        
+    .sidebar-tigger{
+        display:none;
     }
-
-    @media (min-width: 768px) and (max-width: 991.98px) {
-        /* 大屏幕设备（桌面）样式 */
-    }
-
-    @media (min-width: 992px) and (max-width: 1199.98px) {
-        /* 超大屏幕设备（大桌面）样式 */
-    }
-
-    @media (min-width: 1200px) {
-        /* 超超大屏幕设备（超大桌面）样式 */
-    }
-    
+    ${media}    
 ` 

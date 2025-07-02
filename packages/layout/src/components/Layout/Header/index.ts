@@ -17,17 +17,20 @@ export class MagicLayoutHeader extends MagicElement<MagicLayoutOptions['header']
     @query('sl-drawer')
     drawer?: SlDrawer
     renderSidebar() {
-        return html`<sl-drawer label="Drawer" placement="start" class="drawer-overview">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        
+        return html`<sl-drawer 
+            placement="start" 
+            class="drawer-placement-start"
+            style="--size: ${this.store.state.sidebar.width};"
+        >
+        <magic-layout-sidebar class="fit"></magic-layout-sidebar>
         <sl-button slot="footer" variant="primary" @click=${this._onCloseSidebar.bind(this)}>Close</sl-button>
         </sl-drawer>`
     }
 
-    _onOpenSidebar(e) {
+    _onOpenSidebar() {
         this.drawer?.show()
     }
-    _onCloseSidebar(e) {
+    _onCloseSidebar() {
         this.drawer?.hide()
     }
     render() {
@@ -45,7 +48,7 @@ export class MagicLayoutHeader extends MagicElement<MagicLayoutOptions['header']
                 <magic-layout-logo direction="row" shape="circle"></magic-layout-logo>`)
             }
             <span class="title">
-                <sl-icon-button name="menu" @click=${this._onOpenSidebar.bind(this)}></sl-icon-button> 
+                <sl-icon-button class="sidebar-tigger" name="menu" @click=${this._onOpenSidebar.bind(this)}></sl-icon-button> 
                 ${this.state.title}
             </span>            
             <magic-layout-toolbar

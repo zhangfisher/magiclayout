@@ -39,13 +39,13 @@ export class MagicLayoutExamples extends LitElement {
                 toolbar: {
                     items: [
                         { icon: 'settings', label: "设置", tips: '设置' },
-                        { icon: 'file', tips: '文件' },
-                        { icon: 'aperture', tips: '滤镜' },
-                        { icon: 'bell-ring', tips: '通知' },
-                        { icon: 'camera' },
-                        { icon: 'bug' },
-                        { icon: 'chrome' },
-                        { icon: 'message-square-more' },
+                        { icon: 'file', label: "打开文件", tips: '文件' },
+                        { icon: 'aperture', label: "滤镜", tips: '滤镜' },
+                        { icon: 'bell-ring', label: '我的通知', tips: '通知' },
+                        { icon: 'camera', label: '我的相机', tips: '相机' },
+                        { icon: 'bug', label: 'Bug管理' },
+                        { icon: 'chrome', label: '浏览器' },
+                        { icon: 'message-square-more', label: '更多...' },
                         { icon: 'rotate-cw' },
                     ]
                 }

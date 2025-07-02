@@ -36,11 +36,34 @@ export class MagicLayoutToolbar extends LitElement {
     align: 'start' | 'end' = 'start'
 
 
+    @property({ type: String })
+    collapsed?: 'none' | 'before' | 'after'
 
     connectedCallback(): void {
         super.connectedCallback()
-
     }
+
+    _renderDropdown() {
+        const items = this.items.filter((item) => {
+            return item.fixed !== true
+        })
+        return html`<sl-dropdown distance="25">
+                    <magic-layout-action-button slot="trigger"
+                        .action=${{
+                icon: "more"
+            }}
+                    >x</magic-layout-action-button>
+                    <sl-menu>
+                        ${repeat(items, (item) => {
+                return html`<sl-menu-item>
+                                <sl-icon .name="${item.icon}"></sl-icon>
+                                ${item.label}
+                            </sl-menu-item>`
+            })}
+                    </sl-menu>
+                </sl-dropdown>`
+    }
+
     _renderAction(action: MagicToolbarAction) {
         const extraStyles = action.styles
         const widget = action.type || 'button'
@@ -59,18 +82,16 @@ export class MagicLayoutToolbar extends LitElement {
     render() {
         return html`
             <div class="toolbar fit ${classMap({
-            'hori': this.direction.startsWith('hori'),
-            'vert': this.direction.startsWith('vert'),
-            'right-label': this.labelPos === 'right',
-            'bottom-label': this.labelPos === 'bottom',
-            'align-start': this.align === 'start',
-            'align-end': this.align === 'end',
-        })
-            }"
-            >
+            [this.direction]: true,
+            [`${this.labelPos}-label`]: true,
+            ['align-${this.align}']: true
+        })}">
             ${repeat(this.items, (item) => {
-                return this._renderAction(item)
-            })}</div>
+            return this._renderAction(item)
+        })} 
+            
+            ${this._renderDropdown()}   
+        </div>
         `
     }
 
