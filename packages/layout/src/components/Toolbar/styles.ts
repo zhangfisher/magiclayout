@@ -20,6 +20,17 @@ export default css`
         &.vert{
             flex-direction: column;
         }   
+        & sl-menu{
+            min-width: 12em;
+            & sl-menu-item::part(label){
+                text-align: left;
+                padding-left: 0.5em;
+            }
+            & sl-menu-item::part(base){
+                display: flex;
+                align-items: center;
+            }
+        }
     }
     
     

@@ -104,10 +104,11 @@ export type MagicLayoutFooterOptions = {
 }
 
 export type MagicLayoutAction = {
-    id: string
+    id?: string
     type?: MagicActionTypes
     icon?: string
     label?: string
+    showLabel?: boolean
     checked?: boolean
     disabled?: boolean
     badge?: number

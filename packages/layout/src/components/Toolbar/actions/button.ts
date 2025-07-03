@@ -1,6 +1,7 @@
 import { css, html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { MagicLayoutActionBase } from "./base";
+import { when } from "lit/directives/when.js";
 
 @customElement('magic-layout-action-button')
 export class MagicLayoutActionButton extends MagicLayoutActionBase {
@@ -23,7 +24,7 @@ export class MagicLayoutActionButton extends MagicLayoutActionBase {
     renderWidget() {
         return html`<sl-button size="large">
             <sl-icon name="${this.action.icon || 'settings'}" slot="prefix"></sl-icon>
-            ${this.action.label}
+            ${when(this.action.showLabel, () => html`<span slot="label">${this.action.label}</span>`)}
         </sl-button>`
     }
 }

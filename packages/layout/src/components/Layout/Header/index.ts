@@ -56,6 +56,7 @@ export class MagicLayoutHeader extends MagicElement<MagicLayoutOptions['header']
                 part="header-toolbar"
                 .items=${this.state.toolbar.items || []}
                 align="end"                
+                collapsed="after"
             ></magic-layout-toolbar>
         </magic-flex >
         `

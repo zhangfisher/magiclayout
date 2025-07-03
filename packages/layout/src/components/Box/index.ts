@@ -2,8 +2,8 @@ import { HostClasses } from "@/controllers/hostClasss";
 import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-@customElement('auto-box')
-export class AutoBox extends LitElement {
+@customElement('magic-card')
+export class MagicCard extends LitElement {
     classs = new HostClasses(this)
     static styles = css`
         :host{          
@@ -162,6 +162,6 @@ export class AutoBox extends LitElement {
 
 declare global {
     interface HTMLElementTagNameMap {
-        'auto-box': AutoBox;
+        'magic-card': MagicCard;
     }
 }

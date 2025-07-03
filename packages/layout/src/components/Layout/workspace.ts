@@ -12,6 +12,7 @@ export class MagicLayoutWorkspace extends LitElement {
          <div style="margin:2rem;border:1px solid red;">
             <magic-layout-logo direction="col"></magic-layout-logo>
             <magic-layout-logo direction="row"></magic-layout-logo>
+            <magic-icon></magic-icon>
          </div>
         `
     }

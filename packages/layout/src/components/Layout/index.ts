@@ -29,6 +29,7 @@ import { MagicLayoutContext } from '@/context'
 import { registerIconLibrary } from '@shoelace-style/shoelace';
 import { classMap } from 'lit/directives/class-map.js';
 import { presetIcons } from './icons';
+import '../Icon'
 import '../Toolbar'
 import './Sidebar'
 import './panels'

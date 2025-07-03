@@ -14,6 +14,8 @@ export const vars = css`
         --ml-border-radius: var(--sl-border-radius-medium);
         --ml-shadow: var(--sl-shadow-medium);    
         --ml-workspace-bgcolor: var(--sl-color-neutral-50);         
+        --ml-icon-size: calc(var(--sl-font-size-medium) * 1.5);    
+
     }
     :host([size=small]){ 
         --ml-font-size: var(--sl-font-size-small);    

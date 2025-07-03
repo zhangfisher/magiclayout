@@ -41,7 +41,7 @@ export class MagicLayoutExamples extends LitElement {
                         { icon: 'settings', label: "设置", tips: '设置' },
                         { icon: 'file', label: "打开文件", tips: '文件' },
                         { icon: 'aperture', label: "滤镜", tips: '滤镜' },
-                        { icon: 'bell-ring', label: '我的通知', tips: '通知' },
+                        { icon: 'bell-ring', label: '我的通知', fixed: true, tips: '通知' },
                         { icon: 'camera', label: '我的相机', tips: '相机' },
                         { icon: 'bug', label: 'Bug管理' },
                         { icon: 'chrome', label: '浏览器' },
