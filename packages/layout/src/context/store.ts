@@ -4,7 +4,10 @@ import type { MagicLayoutStore } from ".";
 
 
 export const defaultState = {
-    fullScreen: true,
+    screen: {
+        full: true,
+        size: ''
+    },
     theme: {
         theme: "light",
         size: "medium",

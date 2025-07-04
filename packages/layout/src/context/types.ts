@@ -122,8 +122,14 @@ export type MagicLayoutAction = {
     styles?: HTMLElementCustomStyles
 }
 
+export type MagicLayoutScreenOptions = {
+    full: boolean   // 是否全屏
+    size: string    // 尺寸，媒体查询断点尺寸
+}
+
+
 export type MagicLayoutOptions = {
-    fullScreen: boolean
+    screen: MagicLayoutScreenOptions
     theme: MagicLayoutThemeOptions
     breakpoints: Record<string, string>
     logo: MagicLayoutLogoOptions

@@ -82,10 +82,7 @@ export class MagicLayout extends LitElement {
     }
 
     onMediaQuery(mediaResult: MediaQueryResult) {
-        console.log("mediaResult=", mediaResult)
-        this.classs.use({
-            [`${mediaResult.current}`]: true
-        })
+
     }
 
     /**
@@ -153,7 +150,7 @@ export class MagicLayout extends LitElement {
     render() {
         return html`
         <div part="root" class="root ${classMap({
-            'full-screen': this.state.fullScreen,
+            'full-screen': this.state.screen.full,
         })}">
             ${this.renderBodyWithHeader()}
         </div>

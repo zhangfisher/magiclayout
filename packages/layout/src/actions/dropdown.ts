@@ -2,7 +2,7 @@ import { html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { MagicLayoutActionBase } from "./base";
 
-@customElement('magic-layout-action-dropdown')
+@customElement('magic-action-dropdown')
 export class MagicLayoutActionDropdown extends MagicLayoutActionBase {
 
 
@@ -19,6 +19,6 @@ export class MagicLayoutActionDropdown extends MagicLayoutActionBase {
 
 declare global {
     interface HTMLElementTagNameMap {
-        'magic-layout-action-dropdown': MagicLayoutActionDropdown
+        'magic-action-dropdown': MagicLayoutActionDropdown
     }
 }

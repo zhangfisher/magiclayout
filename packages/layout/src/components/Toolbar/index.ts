@@ -12,9 +12,10 @@ import { repeat } from 'lit/directives/repeat.js';
 import { choose } from 'lit/directives/choose.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { MagicToolbarAction } from './types';
-import './actions'
+import '../../actions'
 import { applyCustomStyles } from '../../utils/applyCustomStyles';
 import { when } from 'lit/directives/when.js';
+import { ResizeObserver } from '../../controllers/resizeObserver';
 
 export type MagicToolbarOptions = {
 
@@ -26,6 +27,8 @@ export class MagicLayoutToolbar extends LitElement {
 
     @property({ type: Array, reflect: true, attribute: false })
     items: MagicToolbarAction[] = []
+
+    resizeObserver = new ResizeObserver(this)
 
     @property({ type: String })
     direction: 'hori' | 'vert' = 'hori'
@@ -44,14 +47,18 @@ export class MagicLayoutToolbar extends LitElement {
         super.connectedCallback()
     }
 
+    onResize({ width, height }: { width: number, height: number }) {
+        console.log(width, height)
+    }
+
     _renderMoreMenu() {
         const items = this.items.filter((item) => {
             return item.fixed !== true
         })
         if (items.length == 0) return null
         return html`<sl-dropdown distance="25">
-                    <magic-layout-action-button slot="trigger" .action=${{ icon: "more" } as any}>
-                    </magic-layout-action-button>
+                    <magic-action-button slot="trigger" .action=${{ icon: "more" } as any}>
+                    </magic-action-button>
                     <sl-menu>
                         ${repeat(items, (item) => {
             return html`${choose(item.type, [
@@ -78,9 +85,9 @@ export class MagicLayoutToolbar extends LitElement {
         const widget = action.type || 'button'
         let actionEle: HTMLElement
         try {
-            actionEle = document.createElement(`magic-layout-action-${widget || 'button'}`)
+            actionEle = document.createElement(`magic-action-${widget || 'button'}`)
         } catch {
-            actionEle = document.createElement('magic-layout-action-button')
+            actionEle = document.createElement('magic-action-button')
         }
         // @ts-ignore
         actionEle.action = action
@@ -90,7 +97,7 @@ export class MagicLayoutToolbar extends LitElement {
 
     renderActions() {
         return html`${repeat(this.items, (item) => {
-            if (this.collapsed && !item.fixed) return null
+            //if (this.collapsed && !item.fixed) return null
             return this._renderAction(item)
         })} `
     }

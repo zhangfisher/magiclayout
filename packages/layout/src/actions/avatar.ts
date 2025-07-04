@@ -2,7 +2,7 @@ import { css, html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { MagicLayoutActionBase } from "./base";
 
-@customElement('magic-layout-action-avatar')
+@customElement('magic-action-avatar')
 export class MagicLayoutActionAvatar extends MagicLayoutActionBase {
     static styles = [MagicLayoutActionBase.styles, css`
         :host::part(base){
@@ -28,6 +28,6 @@ export class MagicLayoutActionAvatar extends MagicLayoutActionBase {
 
 declare global {
     interface HTMLElementTagNameMap {
-        'magic-layout-action-avatar': MagicLayoutActionAvatar
+        'magic-action-avatar': MagicLayoutActionAvatar
     }
 }

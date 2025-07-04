@@ -150,11 +150,18 @@ export class MediaQuery implements ReactiveController {
      * @private
      */
     private notifyHost(): void {
+        this._addMediaQueryClass()
         // @ts-ignore
         if (typeof this.host.onMediaQuery === 'function') {
             // @ts-ignore
             this.host.onMediaQuery({ ...this.result });
         }
+    }
+    _addMediaQueryClass() {
+        Object.keys(this.breakpoints).forEach((key) => {
+            this.host.classList.remove(key)
+        })
+        this.host.classList.add(this.result.current!)
     }
 
     /**

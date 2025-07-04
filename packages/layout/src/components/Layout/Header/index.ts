@@ -13,7 +13,6 @@ export class MagicLayoutHeader extends MagicElement<MagicLayoutOptions['header']
     static styles = styles
     stateKey: string = 'header'
     styles = new HostStyles(this)
-
     @query('sl-drawer')
     drawer?: SlDrawer
     renderSidebar() {
@@ -25,6 +24,13 @@ export class MagicLayoutHeader extends MagicElement<MagicLayoutOptions['header']
         <magic-layout-sidebar class="fit"></magic-layout-sidebar>
         <sl-button slot="footer" variant="primary" @click=${this._onCloseSidebar.bind(this)}>Close</sl-button>
         </sl-drawer>`
+    }
+    /**
+     * 当屏幕尺寸变化时触发
+     * @param value 
+     */
+    onScreenSize(value: any) {
+
     }
 
     _onOpenSidebar() {

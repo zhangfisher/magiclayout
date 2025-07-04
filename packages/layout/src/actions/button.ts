@@ -3,7 +3,7 @@ import { customElement } from "lit/decorators.js";
 import { MagicLayoutActionBase } from "./base";
 import { when } from "lit/directives/when.js";
 
-@customElement('magic-layout-action-button')
+@customElement('magic-action-button')
 export class MagicLayoutActionButton extends MagicLayoutActionBase {
     static styles = [MagicLayoutActionBase.styles, css`
         :host::part(base){
@@ -32,6 +32,6 @@ export class MagicLayoutActionButton extends MagicLayoutActionBase {
 
 declare global {
     interface HTMLElementTagNameMap {
-        'magic-layout-action-button': MagicLayoutActionButton
+        'magic-action-button': MagicLayoutActionButton
     }
 }

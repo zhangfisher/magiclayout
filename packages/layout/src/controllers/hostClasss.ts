@@ -28,7 +28,6 @@ export class HostClasses implements ReactiveController {
         args.forEach((item) => {
             if (typeof item === 'string') {
                 cb(item, true)
-                this.host.classList.add(item)
             } else {
                 Object.entries(item).forEach(([key, value]) => {
                     cb(key, value)
