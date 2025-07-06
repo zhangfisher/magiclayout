@@ -58,19 +58,15 @@ export class MagicLayoutToolbar extends LitElement {
         this._splitItems()
     }
     _splitItems(): [number, HTMLElement | undefined] {
-        const actions = Array.from(this.shadowRoot?.querySelectorAll("*") || [])
-        let maxWidth = 0
-        let maxHeight = 0
+        const actions = Array.from(this.shadowRoot?.querySelectorAll(".toolbar > *") || [])
         let overIndex = -1
         for (let i = 0; i < actions.length; i++) {
             const action = actions[i] as HTMLElement
-            maxWidth = Math.max(this.offsetWidth, action.offsetLeft + action.offsetWidth)
-            if (maxWidth > this.offsetWidth) {
+            if (action.offsetLeft + action.offsetWidth > this.offsetWidth) {
                 overIndex = i
                 if (this.direction == 'hori') break
             }
-            maxHeight = Math.max(this.offsetHeight, action.offsetTop + action.offsetHeight)
-            if (maxHeight > this.offsetHeight) {
+            if (action.offsetTop + action.offsetHeight > this.offsetHeight) {
                 overIndex = i
                 if (this.direction == 'vert') break
             }
@@ -135,7 +131,7 @@ export class MagicLayoutToolbar extends LitElement {
 
     renderActions() {
         return html`${repeat(this.items, (item, index) => {
-            if (this.splitIndex !== -1 && index > this.splitIndex) return null
+            if (this.splitIndex > -1 && index < this.splitIndex) return null
             return this._renderAction(item)
         })} `
     }
