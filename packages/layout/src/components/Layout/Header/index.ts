@@ -48,7 +48,7 @@ export class MagicLayoutHeader extends MagicElement<MagicLayoutOptions['header']
         return html` 
         ${this.renderSidebar()}
         <magic-flex 
-            grow="magic-layout-toolbar"
+            grow=".title"
             class="fit">            
             ${when(this.store.state.logo.position === 'header', () => html`
                 <magic-layout-logo direction="row" shape="circle"></magic-layout-logo>`)
@@ -56,18 +56,19 @@ export class MagicLayoutHeader extends MagicElement<MagicLayoutOptions['header']
             <span class="title">
                 <sl-icon-button class="sidebar-tigger" name="menu" @click=${this._onOpenSidebar.bind(this)}></sl-icon-button> 
                 ${this.state.title}
-            </span>            
-            <magic-layout-toolbar
-                class="toolbar"
-                part="header-toolbar"
-                .items=${this.state.toolbar.items || []}
-                align="end"                
-                collapsed="after"
-            ></magic-layout-toolbar>
+            </span>          
+            <div style="border:1px solid red">
+                 <magic-layout-toolbar
+     class="toolbar"
+     part="header-toolbar"
+     .items=${this.state.toolbar.items || []}             
+ ></magic-layout-toolbar> 
+            </div>   
         </magic-flex >
         `
     }
 }
+
 
 
 

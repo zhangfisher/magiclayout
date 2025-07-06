@@ -5,8 +5,8 @@
  * 
  */
 
-import { LitElement, html } from 'lit'
-import { customElement, property } from 'lit/decorators.js';
+import { LitElement, PropertyValues, html } from 'lit'
+import { customElement, property, state } from 'lit/decorators.js';
 import styles from './styles'
 import { repeat } from 'lit/directives/repeat.js';
 import { choose } from 'lit/directives/choose.js';
@@ -43,24 +43,61 @@ export class MagicLayoutToolbar extends LitElement {
     @property({ type: String })
     collapsed?: 'none' | 'before' | 'after'
 
+    @state()
+    splitIndex: number = -1
+
     connectedCallback(): void {
         super.connectedCallback()
     }
 
-    onResize({ width, height }: { width: number, height: number }) {
-        console.log(width, height)
+    disconnectedCallback(): void {
+        super.disconnectedCallback()
+    }
+    protected firstUpdated(_changedProperties: PropertyValues): void {
+        super.firstUpdated(_changedProperties)
+        this._splitItems()
+    }
+    _splitItems(): [number, HTMLElement | undefined] {
+        const actions = Array.from(this.shadowRoot?.querySelectorAll("*") || [])
+        let maxWidth = 0
+        let maxHeight = 0
+        let overIndex = -1
+        for (let i = 0; i < actions.length; i++) {
+            const action = actions[i] as HTMLElement
+            maxWidth = Math.max(this.offsetWidth, action.offsetLeft + action.offsetWidth)
+            if (maxWidth > this.offsetWidth) {
+                overIndex = i
+                if (this.direction == 'hori') break
+            }
+            maxHeight = Math.max(this.offsetHeight, action.offsetTop + action.offsetHeight)
+            if (maxHeight > this.offsetHeight) {
+                overIndex = i
+                if (this.direction == 'vert') break
+            }
+        }
+        this.splitIndex = overIndex
+        return [overIndex, actions[overIndex] as HTMLElement | undefined]
+    }
+    onResize = () => {
+        this._splitItems()
+    }
+
+    _onCollapseToolbar(action: HTMLElement | undefined) {
+        if (this.direction == 'hori') {
+
+        } else {
+
+        }
     }
 
     _renderMoreMenu() {
-        const items = this.items.filter((item) => {
-            return item.fixed !== true
-        })
-        if (items.length == 0) return null
-        return html`<sl-dropdown distance="25">
+        if (this.splitIndex == -1) return
+        return html`<sl-dropdown distance="25" class="more">
                     <magic-action-button slot="trigger" .action=${{ icon: "more" } as any}>
                     </magic-action-button>
                     <sl-menu>
-                        ${repeat(items, (item) => {
+                        ${repeat(this.items, (item, index) => {
+            if (index < this.splitIndex) return null
             return html`${choose(item.type, [
                 ['divider', () => this.renderDivider()]
             ], () => {
@@ -78,8 +115,9 @@ export class MagicLayoutToolbar extends LitElement {
                 </sl-menu-item>`
     }
     renderDivider() {
-        return html`<sl-divider></sl-divider>`
+        return html`<sl-divider .vertical=${this.direction === 'hori'}></sl-divider>`
     }
+
     _renderAction(action: MagicToolbarAction) {
         const extraStyles = action.styles
         const widget = action.type || 'button'
@@ -96,8 +134,8 @@ export class MagicLayoutToolbar extends LitElement {
     }
 
     renderActions() {
-        return html`${repeat(this.items, (item) => {
-            //if (this.collapsed && !item.fixed) return null
+        return html`${repeat(this.items, (item, index) => {
+            if (this.splitIndex !== -1 && index > this.splitIndex) return null
             return this._renderAction(item)
         })} `
     }
@@ -108,9 +146,8 @@ export class MagicLayoutToolbar extends LitElement {
             [`${this.labelPos}-label`]: true,
             [`align-${this.align}`]: true
         })}">
-            ${when(this.collapsed === 'before', () => this._renderMoreMenu())}        
             ${this.renderActions()}
-            ${when(this.collapsed === 'after', () => this._renderMoreMenu())}        
+            ${this._renderMoreMenu()}
         </div>
         `
     }
