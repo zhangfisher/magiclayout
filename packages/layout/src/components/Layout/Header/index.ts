@@ -47,24 +47,21 @@ export class MagicLayoutHeader extends MagicElement<MagicLayoutOptions['header']
         })
         return html` 
         ${this.renderSidebar()}
-        <magic-flex 
-            grow=".title"
-            class="fit">            
+        <div part="header-base" class="header fit flex-row" >         
             ${when(this.store.state.logo.position === 'header', () => html`
                 <magic-layout-logo direction="row" shape="circle"></magic-layout-logo>`)
             }
-            <span class="title">
+            <span part="header-title" class="title">
                 <sl-icon-button class="sidebar-tigger" name="menu" @click=${this._onOpenSidebar.bind(this)}></sl-icon-button> 
                 ${this.state.title}
             </span>          
-            <div style="border:1px solid red">
-                 <magic-layout-toolbar
-     class="toolbar"
-     part="header-toolbar"
-     .items=${this.state.toolbar.items || []}             
- ></magic-layout-toolbar> 
-            </div>   
-        </magic-flex >
+            <magic-layout-toolbar
+                class="toolbar"
+                style="border: 1px solid red;"
+                part="header-toolbar"
+                .items=${this.state.toolbar.items || []}             
+            ></magic-layout-toolbar>  
+        </div>
         `
     }
 }

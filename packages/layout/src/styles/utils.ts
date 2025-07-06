@@ -22,3 +22,25 @@ export const fullScreen = css`
         height: 100%;
     } 
 `
+
+
+export const flexRow = css`
+    .flex-row{
+        display: flex;
+        flex-direction: row;
+        &.center{
+            align-items: center;
+        }
+    }
+`
+
+export const flexCol = css`
+    .flex-col{
+        display: flex;
+        flex-direction: column;
+        &.center{
+            align-items: stretch;
+            justify-content: center;
+        }
+    }
+`

@@ -81,9 +81,6 @@ export class MagicLayout extends LitElement {
         return this.shadow.querySelector('magic-layout-sidebar') as MagicLayoutSidebar
     }
 
-    onMediaQuery(mediaResult: MediaQueryResult) {
-
-    }
 
     /**
      * 注册图标库 

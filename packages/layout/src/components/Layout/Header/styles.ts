@@ -1,3 +1,4 @@
+import { flexCol, flexRow } from './../../../styles/utils';
 import { drawer } from './../styles/drawer';
 import { fit } from "@/styles/utils";
 import { css } from "lit";
@@ -35,21 +36,29 @@ const media = css`
 
 export default css`
     ${fit}
+    ${flexRow}
+    ${flexCol}   
     :host{
         position: relative;
         display: flex;        
-        & > magic-flex{
-            box-sizing: border-box;
+        & > .header{
+            box-sizing: border-box; 
+            &>magic-layout-logo{
+                display: inline-flex;
+                padding: 0px 0.5rem;
+            }
             &>.title{
                 display: flex;
                 align-items: center;         
                 padding: 0px 0.5rem ;
                 min-width: 40%;
-            } 
-            &>magic-layout-logo{
-                display: inline-flex;
-                padding: 0px 0.5rem;
+                flex-grow: 1;
+                min-width: 0;
             }
+            &>magic-layout-toolbar{
+                max-width: 60%;
+            }
+
         }
         sl-drawer::part(body){
             padding: 0px;            
