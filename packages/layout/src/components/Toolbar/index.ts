@@ -39,66 +39,67 @@ export class MagicLayoutToolbar extends LitElement {
     @property({ type: String })
     align: 'start' | 'end' = 'start'
 
-
-    @property({ type: String })
-    collapsed?: 'none' | 'before' | 'after'
-
     @state()
-    splitIndex: number = -1
+    breakpoint: number = -1
 
-    connectedCallback(): void {
-        super.connectedCallback()
-    }
+    // 标记是否正在渲染过程中
+    private isRendering: boolean = false
 
-    disconnectedCallback(): void {
-        super.disconnectedCallback()
-    }
-    protected firstUpdated(_changedProperties: PropertyValues): void {
-        super.firstUpdated(_changedProperties)
-        this._splitItems()
-    }
-    _splitItems(): [number, HTMLElement | undefined] {
-        const actions = Array.from(this.shadowRoot?.querySelectorAll(".toolbar > *") || [])
-        let overIndex = -1
-        for (let i = 0; i < actions.length; i++) {
-            const action = actions[i] as HTMLElement
-            if (action.offsetLeft + action.offsetWidth > this.offsetWidth) {
-                overIndex = i
-                this.requestUpdate()
-                if (this.direction == 'hori') break
-            }
-            if (action.offsetTop + action.offsetHeight > this.offsetHeight) {
-                overIndex = i
-                if (this.direction == 'vert') break
+
+    _breakItems() {
+        const actions = Array.from(this.shadowRoot?.children || []) as HTMLElement[];
+        if (actions.length === 0) return;
+
+        let breakpoint = -1;
+
+        // 确定要监测的属性（水平布局监测top，垂直布局监测left）
+        const offsetProperty = this.direction === 'hori' ? 'offsetTop' : 'offsetLeft';
+
+        // 获取第一个元素的位置作为基准
+        const baseOffset = actions[0][offsetProperty];
+
+        // 遍历所有元素，检测位置变化
+        for (let i = 1; i < actions.length; i++) {
+            const action = actions[i];
+
+            // 如果当前元素的位置与基准位置不同，说明发生了换行
+            if (action[offsetProperty] !== baseOffset) {
+                breakpoint = i;
+                break;
             }
         }
-        this.splitIndex = overIndex
-        return [overIndex, actions[overIndex] as HTMLElement | undefined]
-    }
-    onResize = () => {
 
+        // 只有当breakpoint发生变化时才更新状态并触发重新渲染
+        if (this.breakpoint !== breakpoint) {
+            this.breakpoint = breakpoint;
+            this.requestUpdate();
+        }
     }
+
+    onResize = () => {
+        // 如果正在渲染过程中，忽略resize事件
+        if (this.isRendering) return;
+        this._breakItems()
+    }
+    protected willUpdate(): void {
+        this.isRendering = true;
+    }
+
     protected updated(_changedProperties: PropertyValues): void {
         super.updated(_changedProperties)
-        this._splitItems()
-    }
-
-    _onCollapseToolbar(action: HTMLElement | undefined) {
-        if (this.direction == 'hori') {
-
-        } else {
-
-        }
+        this._breakItems()
+        // 标记更新完成
+        this.isRendering = false;
     }
 
     _renderMoreMenu() {
-        if (this.splitIndex == -1) return
+        if (this.breakpoint == -1) return
         return html`<sl-dropdown distance="25" class="more">
                     <magic-action-button slot="trigger" .action=${{ icon: "more" } as any}>
                     </magic-action-button>
                     <sl-menu>
                         ${repeat(this.items, (item, index) => {
-            if (index < this.splitIndex) return null
+            if (index < this.breakpoint) return null
             return html`${choose(item.type, [
                 ['divider', () => this.renderDivider()]
             ], () => {
@@ -115,6 +116,7 @@ export class MagicLayoutToolbar extends LitElement {
                     ${item.label}                
                 </sl-menu-item>`
     }
+
     renderDivider() {
         return html`<sl-divider .vertical=${this.direction === 'hori'}></sl-divider>`
     }
@@ -136,21 +138,25 @@ export class MagicLayoutToolbar extends LitElement {
 
     renderActions() {
         return html`${repeat(this.items, (item, index) => {
-            if (this.splitIndex > -1 && index > this.splitIndex) return null
+            if (this.breakpoint > -1 && index > this.breakpoint) return null
             return this._renderAction(item)
         })} `
     }
     render() {
         return html`
-            <div class="toolbar fit ${classMap({
-            [this.direction]: true,
-            [`${this.labelPos}-label`]: true,
-            [`align-${this.align}`]: true
-        })}">
             ${this.renderActions()}
             ${this._renderMoreMenu()}
-        </div>
         `
+        // return html`
+        //     <div class="toolbar fit ${classMap({
+        //     [this.direction]: true,
+        //     [`${this.labelPos}-label`]: true,
+        //     [`align-${this.align}`]: true
+        // })}">
+        //     ${this.renderActions()}
+        //     ${this._renderMoreMenu()}
+        // </div>
+        // `
     }
 
 
