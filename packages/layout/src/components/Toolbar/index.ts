@@ -64,6 +64,7 @@ export class MagicLayoutToolbar extends LitElement {
             const action = actions[i] as HTMLElement
             if (action.offsetLeft + action.offsetWidth > this.offsetWidth) {
                 overIndex = i
+                this.requestUpdate()
                 if (this.direction == 'hori') break
             }
             if (action.offsetTop + action.offsetHeight > this.offsetHeight) {
@@ -75,6 +76,10 @@ export class MagicLayoutToolbar extends LitElement {
         return [overIndex, actions[overIndex] as HTMLElement | undefined]
     }
     onResize = () => {
+
+    }
+    protected updated(_changedProperties: PropertyValues): void {
+        super.updated(_changedProperties)
         this._splitItems()
     }
 
@@ -131,7 +136,7 @@ export class MagicLayoutToolbar extends LitElement {
 
     renderActions() {
         return html`${repeat(this.items, (item, index) => {
-            if (this.splitIndex > -1 && index < this.splitIndex) return null
+            if (this.splitIndex > -1 && index > this.splitIndex) return null
             return this._renderAction(item)
         })} `
     }
