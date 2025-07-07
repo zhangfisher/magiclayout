@@ -42,9 +42,11 @@ export class MagicLayoutToolbar extends LitElement {
     @state()
     breakpoint: number = -1
 
-    // 标记是否正在渲染过程中
-    private isRendering: boolean = false
+    totalSize: number = 0
 
+    connectedCallback(): void {
+        super.connectedCallback()
+    }
 
     _breakItems() {
         const actions = Array.from(this.shadowRoot?.children || []) as HTMLElement[];
@@ -53,43 +55,30 @@ export class MagicLayoutToolbar extends LitElement {
         let breakpoint = -1;
 
         // 确定要监测的属性（水平布局监测top，垂直布局监测left）
-        const offsetProperty = this.direction === 'hori' ? 'offsetTop' : 'offsetLeft';
-
-        // 获取第一个元素的位置作为基准
-        const baseOffset = actions[0][offsetProperty];
-
+        const offsetProp = this.direction === 'hori' ? 'offsetTop' : 'offsetLeft';
+        const offsetSizeProp = this.direction === 'hori' ? 'offsetHeight' : 'offsetWidth';
+        const baseAction = actions[0]
         // 遍历所有元素，检测位置变化
         for (let i = 1; i < actions.length; i++) {
             const action = actions[i];
 
-            // 如果当前元素的位置与基准位置不同，说明发生了换行
-            if (action[offsetProperty] !== baseOffset) {
-                breakpoint = i;
+            if (action[offsetProp] > baseAction[offsetProp] + baseAction[offsetSizeProp] / 2) {
+                breakpoint = i - 2;
                 break;
             }
         }
 
         // 只有当breakpoint发生变化时才更新状态并触发重新渲染
-        if (this.breakpoint !== breakpoint) {
+        if (this.breakpoint !== breakpoint && breakpoint !== -1) {
             this.breakpoint = breakpoint;
             this.requestUpdate();
         }
     }
 
-    onResize = () => {
-        // 如果正在渲染过程中，忽略resize事件
-        if (this.isRendering) return;
-        this._breakItems()
-    }
-    protected willUpdate(): void {
-        this.isRendering = true;
-    }
 
-    protected updated(_changedProperties: PropertyValues): void {
-        super.updated(_changedProperties)
+
+    onResize = () => {
         this._breakItems()
-        // 标记更新完成
-        this.isRendering = false;
     }
 
     _renderMoreMenu() {
@@ -99,15 +88,24 @@ export class MagicLayoutToolbar extends LitElement {
                     </magic-action-button>
                     <sl-menu>
                         ${repeat(this.items, (item, index) => {
-            if (index < this.breakpoint) return null
+            if (index <= this.breakpoint) return null
             return html`${choose(item.type, [
                 ['divider', () => this.renderDivider()]
             ], () => {
                 return this.renderMenuItem(item)
             })}`
         })}            
-                    </sl-menu>
-                </sl-dropdown>`
+                </sl-menu>
+            </sl-dropdown>`
+    }
+
+    _getTotalSize() {
+        const actions = Array.from(this.shadowRoot?.children || []) as HTMLElement[];
+        if (actions.length === 0) return 0
+        const sizeProp = this.direction === 'hori' ? 'offsetWidth' : 'offsetHeight';
+        return actions.reduce((total, action) => {
+            return total + action[sizeProp]
+        }, 0)
     }
 
     renderMenuItem(item: MagicToolbarAction) {
@@ -117,11 +115,15 @@ export class MagicLayoutToolbar extends LitElement {
                 </sl-menu-item>`
     }
 
+    protected updated(_changedProperties: PropertyValues): void {
+
+    }
+
     renderDivider() {
         return html`<sl-divider .vertical=${this.direction === 'hori'}></sl-divider>`
     }
 
-    _renderAction(action: MagicToolbarAction) {
+    _renderAction(action: MagicToolbarAction, index: number) {
         const extraStyles = action.styles
         const widget = action.type || 'button'
         let actionEle: HTMLElement
@@ -133,13 +135,16 @@ export class MagicLayoutToolbar extends LitElement {
         // @ts-ignore
         actionEle.action = action
         applyCustomStyles(actionEle, extraStyles)
+        if (this.breakpoint > -1 && index > this.breakpoint) {
+            actionEle.style.display = 'none'
+        }
         return actionEle
     }
 
     renderActions() {
         return html`${repeat(this.items, (item, index) => {
-            if (this.breakpoint > -1 && index > this.breakpoint) return null
-            return this._renderAction(item)
+            // if (this.breakpoint > -1 && index > this.breakpoint) return null
+            return this._renderAction(item, index)
         })} `
     }
     render() {

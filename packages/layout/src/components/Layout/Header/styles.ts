@@ -52,11 +52,11 @@ export default css`
                 align-items: center;         
                 padding: 0px 0.5rem ;
                 min-width: 40%;
-                flex-grow: 1;
                 min-width: 0;
             }
-            &>magic-layout-toolbar{
-                max-width: 60%;
+            &>magic-layout-toolbar{        
+                flex-grow: 1;
+                text-align: end;
             }
 
         }

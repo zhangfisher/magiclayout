@@ -25,13 +25,6 @@ export class MagicLayoutHeader extends MagicElement<MagicLayoutOptions['header']
         <sl-button slot="footer" variant="primary" @click=${this._onCloseSidebar.bind(this)}>Close</sl-button>
         </sl-drawer>`
     }
-    /**
-     * 当屏幕尺寸变化时触发
-     * @param value 
-     */
-    onScreenSize(value: any) {
-
-    }
 
     _onOpenSidebar() {
         this.drawer?.show()

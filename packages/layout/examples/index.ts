@@ -46,7 +46,7 @@ export class MagicLayoutExamples extends LitElement {
                         { icon: 'bug', label: 'Bug管理' },
                         { icon: 'chrome', label: '浏览器' },
                         { icon: 'message-square-more', label: '更多...' },
-                        { icon: 'rotate-cw' },
+                        { icon: 'rotate-cw', label: '刷新' },
                     ]
                 }
             }
