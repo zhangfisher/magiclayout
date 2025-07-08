@@ -51,12 +51,11 @@ export default css`
                 display: flex;
                 align-items: center;         
                 padding: 0px 0.5rem ;
-                min-width: 40%;
                 min-width: 0;
             }
             &>magic-layout-toolbar{        
                 flex-grow: 1;
-                text-align: end;
+                justify-content: end;
             }
 
         }

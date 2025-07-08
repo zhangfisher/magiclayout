@@ -2,13 +2,15 @@ import { css } from "lit";
 
 export default css`
     :host{
-        display: inline-block;
+        display: flex;
         position: relative;
         flex-direction: row;
         padding: 4px;
+        align-items: center;
+        flex-wrap: nowrap;
     }   
     .toolbar{
-        display: inline-block;
+        display: flex;
         position: relative;
         flex-direction: row;
         align-items: center;              

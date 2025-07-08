@@ -39,56 +39,23 @@ export class MagicLayoutToolbar extends LitElement {
     @property({ type: String })
     align: 'start' | 'end' = 'start'
 
-    @state()
-    breakpoint: number = -1
 
-    totalSize: number = 0
-
-    connectedCallback(): void {
-        super.connectedCallback()
-    }
-
-    _breakItems() {
-        const actions = Array.from(this.shadowRoot?.children || []) as HTMLElement[];
-        if (actions.length === 0) return;
-
-        let breakpoint = -1;
-
-        // 确定要监测的属性（水平布局监测top，垂直布局监测left）
-        const offsetProp = this.direction === 'hori' ? 'offsetTop' : 'offsetLeft';
-        const offsetSizeProp = this.direction === 'hori' ? 'offsetHeight' : 'offsetWidth';
-        const baseAction = actions[0]
-        // 遍历所有元素，检测位置变化
-        for (let i = 1; i < actions.length; i++) {
-            const action = actions[i];
-
-            if (action[offsetProp] > baseAction[offsetProp] + baseAction[offsetSizeProp] / 2) {
-                breakpoint = i - 2;
-                break;
-            }
-        }
-
-        // 只有当breakpoint发生变化时才更新状态并触发重新渲染
-        if (this.breakpoint !== breakpoint && breakpoint !== -1) {
-            this.breakpoint = breakpoint;
-            this.requestUpdate();
-        }
-    }
-
+    itemSize: number = 42
 
 
     onResize = () => {
-        this._breakItems()
+        this.requestUpdate()
     }
 
     _renderMoreMenu() {
-        if (this.breakpoint == -1) return
+        const breakpoint = this._getBreakpoint()
+        if (breakpoint >= this.items.length) return null
         return html`<sl-dropdown distance="25" class="more">
                     <magic-action-button slot="trigger" .action=${{ icon: "more" } as any}>
                     </magic-action-button>
                     <sl-menu>
                         ${repeat(this.items, (item, index) => {
-            if (index <= this.breakpoint) return null
+            if (index < breakpoint) return null
             return html`${choose(item.type, [
                 ['divider', () => this.renderDivider()]
             ], () => {
@@ -99,31 +66,19 @@ export class MagicLayoutToolbar extends LitElement {
             </sl-dropdown>`
     }
 
-    _getTotalSize() {
-        const actions = Array.from(this.shadowRoot?.children || []) as HTMLElement[];
-        if (actions.length === 0) return 0
-        const sizeProp = this.direction === 'hori' ? 'offsetWidth' : 'offsetHeight';
-        return actions.reduce((total, action) => {
-            return total + action[sizeProp]
-        }, 0)
-    }
 
     renderMenuItem(item: MagicToolbarAction) {
         return html`<sl-menu-item aria-hidden="false">
-                    <magic-icon  slot="prefix"  .name="${item.icon}"></magic-icon>
+                    <magic-icon  slot="prefix" .name="${item.icon}"></magic-icon>
                     ${item.label}                
                 </sl-menu-item>`
-    }
-
-    protected updated(_changedProperties: PropertyValues): void {
-
     }
 
     renderDivider() {
         return html`<sl-divider .vertical=${this.direction === 'hori'}></sl-divider>`
     }
 
-    _renderAction(action: MagicToolbarAction, index: number) {
+    _renderAction(action: MagicToolbarAction) {
         const extraStyles = action.styles
         const widget = action.type || 'button'
         let actionEle: HTMLElement
@@ -135,16 +90,18 @@ export class MagicLayoutToolbar extends LitElement {
         // @ts-ignore
         actionEle.action = action
         applyCustomStyles(actionEle, extraStyles)
-        if (this.breakpoint > -1 && index > this.breakpoint) {
-            actionEle.style.display = 'none'
-        }
         return actionEle
     }
 
+    _getBreakpoint() {
+        return Math.floor(this.offsetWidth / this.itemSize) - 1
+    }
     renderActions() {
+        const breakpoint = this._getBreakpoint()
+        if (breakpoint === 0) return
         return html`${repeat(this.items, (item, index) => {
-            // if (this.breakpoint > -1 && index > this.breakpoint) return null
-            return this._renderAction(item, index)
+            if (index >= breakpoint) return null
+            return this._renderAction(item)
         })} `
     }
     render() {
@@ -152,16 +109,6 @@ export class MagicLayoutToolbar extends LitElement {
             ${this.renderActions()}
             ${this._renderMoreMenu()}
         `
-        // return html`
-        //     <div class="toolbar fit ${classMap({
-        //     [this.direction]: true,
-        //     [`${this.labelPos}-label`]: true,
-        //     [`align-${this.align}`]: true
-        // })}">
-        //     ${this.renderActions()}
-        //     ${this._renderMoreMenu()}
-        // </div>
-        // `
     }
 
 
