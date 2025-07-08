@@ -11,15 +11,19 @@ export class MagicLayoutWorkspace extends MagicElement<MagicLayoutOptions['works
 
     render() {
         return html` 
-         <div style="margin:2rem;border:1px solid red;">
-            <magic-layout-logo direction="col"></magic-layout-logo>
-            <magic-layout-logo direction="row"></magic-layout-logo>
-            <magic-layout-toolbar
-                class="toolbar"
-                part="header-toolbar"
-                .items=${this.store.state.header.toolbar.items || []}             
-            ></magic-layout-toolbar>
-            <magic-icon></magic-icon>
+         <div style="margin:2rem;border:1px solid red;display:flex;height:400px;" >
+            <div style="width:80px;display:flex;justify-content: center;position: relative;">
+                <magic-layout-toolbar 
+                    class="fit"
+                    vertical
+                    .items=${this.store.state.header.toolbar.items || []}
+                ></magic-layout-toolbar>
+            </div>
+            <div style="flex-grow:1;">
+                <magic-layout-logo direction="col"></magic-layout-logo>
+                <magic-layout-logo direction="row"></magic-layout-logo>
+                <magic-icon></magic-icon>
+            </div>
          </div>
         `
     }

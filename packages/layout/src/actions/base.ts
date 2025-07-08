@@ -6,7 +6,7 @@ import { property } from "lit/decorators.js";
 export class MagicLayoutActionBase extends LitElement {
     static styles = css`
         sl-icon::part(svg){
-                stroke-width: 1px!important;
+            stroke-width: 1px!important;
         }
         sl-button::part(label){
             padding: 0px ;
@@ -16,8 +16,8 @@ export class MagicLayoutActionBase extends LitElement {
     @property({ type: Object, reflect: true, attribute: false })
     action!: MagicLayoutAction
 
-    @property({ type: String })
-    direction: 'hori' | 'vert' = 'hori'
+    @property({ type: Boolean, reflect: true, useDefault: true })
+    vertical?: boolean
 
 
     get shadow() {
@@ -38,7 +38,7 @@ export class MagicLayoutActionBase extends LitElement {
         return html`
             ${toggleWrapper(!!this.action.tips, this.renderWidget(), (content) => {
             return html`<sl-tooltip 
-                placement="${this.direction.startsWith('hori') ? 'bottom' : 'right'}"
+                placement="${this.vertical ? 'right' : 'bottom'}"
                 content="${this.action.tips!}">
                     ${content}
             </sl-tooltip>`

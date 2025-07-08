@@ -8,21 +8,13 @@ export default css`
         padding: 4px;
         align-items: center;
         flex-wrap: nowrap;
-    }   
-    .toolbar{
-        display: flex;
-        position: relative;
-        flex-direction: row;
-        align-items: center;              
-        width: 100%;
-        &.align-end{
-            justify-content: flex-end;
-        }
-        &.vert{
-            flex-direction: column;
-        }    
     }
-    
+    :host([vertical]){    
+        flex-direction: column;        
+    }   
+    :host([vertical])::part(widget){    
+        width: 100%;
+    }
     sl-menu{
         min-width: 12em;
         & sl-menu-item::part(label){

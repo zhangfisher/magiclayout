@@ -39,8 +39,10 @@ export class MagicLayoutToolbar extends LitElement {
     @property({ type: String })
     align: 'start' | 'end' = 'start'
 
+    @property({ type: Boolean, reflect: true, useDefault: true })
+    vertical?: boolean
 
-    itemSize: number = 42
+    itemSize: number = 50
 
 
     onResize = () => {
@@ -50,8 +52,10 @@ export class MagicLayoutToolbar extends LitElement {
     _renderMoreMenu() {
         const breakpoint = this._getBreakpoint()
         if (breakpoint >= this.items.length) return null
-        return html`<sl-dropdown distance="25" class="more">
-                    <magic-action-button slot="trigger" .action=${{ icon: "more" } as any}>
+        return html`<sl-dropdown distance="25" class="more"
+                    placement="${this.vertical ? 'right-end' : 'bottom-end'}"
+                >
+                    <magic-action-button part='action' slot="trigger" .action=${{ icon: "more" } as any}>
                     </magic-action-button>
                     <sl-menu>
                         ${repeat(this.items, (item, index) => {
@@ -75,7 +79,7 @@ export class MagicLayoutToolbar extends LitElement {
     }
 
     renderDivider() {
-        return html`<sl-divider .vertical=${this.direction === 'hori'}></sl-divider>`
+        return html`<sl-divider .vertical=${this.vertical === true}></sl-divider>`
     }
 
     _renderAction(action: MagicToolbarAction) {
@@ -87,6 +91,8 @@ export class MagicLayoutToolbar extends LitElement {
         } catch {
             actionEle = document.createElement('magic-action-button')
         }
+        actionEle.setAttribute('part', 'action')
+        actionEle.setAttribute('exportparts', 'widget')
         // @ts-ignore
         actionEle.action = action
         applyCustomStyles(actionEle, extraStyles)
@@ -94,7 +100,12 @@ export class MagicLayoutToolbar extends LitElement {
     }
 
     _getBreakpoint() {
-        return Math.floor(this.offsetWidth / this.itemSize) - 1
+        if (this.vertical) {
+            return Math.floor(this.offsetHeight / this.itemSize) - 1
+        } else {
+            return Math.floor(this.offsetWidth / this.itemSize) - 1
+        }
+
     }
     renderActions() {
         const breakpoint = this._getBreakpoint()

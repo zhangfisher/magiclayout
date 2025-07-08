@@ -22,7 +22,7 @@ export class MagicLayoutActionButton extends MagicLayoutActionBase {
     `] as any
 
     renderWidget() {
-        return html`<sl-button size="large">
+        return html`<sl-button size="large" part="widget">
             <sl-icon name="${this.action.icon || 'settings'}" slot="prefix"></sl-icon>
             ${when(this.action.showLabel, () => html`<span slot="label">${this.action.label}</span>`)}
         </sl-button>`
