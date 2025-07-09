@@ -19,6 +19,9 @@ export class MagicLayoutActionButton extends MagicLayoutActionBase {
         :host::part(label){
             font-size: var(--ml-font-size);
         }
+        sl-button::part(base){
+            border-radius: 0;
+        }
     `] as any
 
     renderWidget() {

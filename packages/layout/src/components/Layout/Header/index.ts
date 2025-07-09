@@ -2,7 +2,7 @@ import { html } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import styles from "./styles";
 import { MagicElement } from "@/components/MagicElement";
-import { MagicLayoutOptions } from "@/context/types";
+import type { MagicLayoutOptions } from "@/context/types";
 import { HostStyles } from "@/controllers/hostStyles";
 import { when } from "lit/directives/when.js";
 import type { SlDrawer } from "@shoelace-style/shoelace";
@@ -41,7 +41,7 @@ export class MagicLayoutHeader extends MagicElement<MagicLayoutOptions['header']
         return html` 
         ${this.renderSidebar()}
         <div part="header-base" class="header fit flex-row" >         
-            ${when(this.store.state.logo.position === 'header', () => html`
+            ${when(this.store.state.logo.pos === 'header', () => html`
                 <magic-layout-logo direction="row" shape="circle"></magic-layout-logo>`)
             }
             <span part="header-title" class="title">

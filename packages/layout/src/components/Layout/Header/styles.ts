@@ -56,8 +56,8 @@ export default css`
             &>magic-layout-toolbar{        
                 flex-grow: 1;
                 justify-content: end;
-            }
-
+                align-items: stretch;
+            } 
         }
         sl-drawer::part(body){
             padding: 0px;            

@@ -5,28 +5,24 @@
  * 
  */
 
-import { LitElement, PropertyValues, html } from 'lit'
-import { customElement, property, state } from 'lit/decorators.js';
-import styles from './styles'
+
+import { customElement, property } from 'lit/decorators.js';
+import { LitElement, html } from 'lit'
+import type { MagicLayoutAction } from '@/context/types';
 import { repeat } from 'lit/directives/repeat.js';
 import { choose } from 'lit/directives/choose.js';
-import { classMap } from 'lit/directives/class-map.js';
-import { MagicToolbarAction } from './types';
-import '../../actions'
 import { applyCustomStyles } from '../../utils/applyCustomStyles';
-import { when } from 'lit/directives/when.js';
 import { ResizeObserver } from '../../controllers/resizeObserver';
+import '../../actions'
+import styles from './styles'
 
-export type MagicToolbarOptions = {
-
-}
 
 @customElement('magic-layout-toolbar')
 export class MagicLayoutToolbar extends LitElement {
     static styles = styles
 
     @property({ type: Array, reflect: true, attribute: false })
-    items: MagicToolbarAction[] = []
+    items: MagicLayoutAction[] = []
 
     resizeObserver = new ResizeObserver(this)
 
@@ -52,10 +48,13 @@ export class MagicLayoutToolbar extends LitElement {
     _renderMoreMenu() {
         const breakpoint = this._getBreakpoint()
         if (breakpoint >= this.items.length) return null
-        return html`<sl-dropdown distance="25" class="more"
+        return html`<sl-dropdown 
+                    class="more"
+                    distance="${this.vertical ? 0 : 25}" 
+                    skidding="20"
                     placement="${this.vertical ? 'right-end' : 'bottom-end'}"
                 >
-                    <magic-action-button part='action' slot="trigger" .action=${{ icon: "more" } as any}>
+                    <magic-action-button class="fit" part='action' slot="trigger" .action=${{ icon: "more" } as any}>
                     </magic-action-button>
                     <sl-menu>
                         ${repeat(this.items, (item, index) => {
@@ -71,7 +70,7 @@ export class MagicLayoutToolbar extends LitElement {
     }
 
 
-    renderMenuItem(item: MagicToolbarAction) {
+    renderMenuItem(item: MagicLayoutAction) {
         return html`<sl-menu-item aria-hidden="false">
                     <magic-icon  slot="prefix" .name="${item.icon}"></magic-icon>
                     ${item.label}                
@@ -82,7 +81,7 @@ export class MagicLayoutToolbar extends LitElement {
         return html`<sl-divider .vertical=${this.vertical === true}></sl-divider>`
     }
 
-    _renderAction(action: MagicToolbarAction) {
+    _renderAction(action: MagicLayoutAction) {
         const extraStyles = action.styles
         const widget = action.type || 'button'
         let actionEle: HTMLElement
@@ -93,9 +92,17 @@ export class MagicLayoutToolbar extends LitElement {
         }
         actionEle.setAttribute('part', 'action')
         actionEle.setAttribute('exportparts', 'widget')
+        if (this.vertical) actionEle.setAttribute('vertical', '')
         // @ts-ignore
         actionEle.action = action
         applyCustomStyles(actionEle, extraStyles)
+        if (action.divider) {
+            if (this.vertical) {
+                actionEle.style.borderTop = '1px solid #e8e8e8';
+            } else {
+                actionEle.style.borderLeft = '1px solid #e8e8e8';
+            }
+        }
         return actionEle
     }
 
@@ -106,6 +113,14 @@ export class MagicLayoutToolbar extends LitElement {
             return Math.floor(this.offsetWidth / this.itemSize) - 1
         }
 
+    }
+
+    _renderDivider(action: MagicLayoutAction) {
+        if (action.divider) {
+            return html`<sl-divider .vertical=${!this.vertical}></sl-divider>`
+        } else {
+            return ''
+        }
     }
     renderActions() {
         const breakpoint = this._getBreakpoint()

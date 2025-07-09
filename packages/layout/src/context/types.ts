@@ -1,10 +1,12 @@
-import { MagicMenubarOptions } from "../components/Menu/types"
-import { MagicToolbarOptions } from "../components/Toolbar/types"
+import type { MagicMenubarOptions } from "../components/Menu/types"
+
 
 
 export type HTMLElementCustomStyles = Record<string, string | Record<string, string>>
+export type HTMLElementCustomClasss = Record<string, string>
 
-export type MagicActionTypes =
+
+export type MagicLayoutActionTypes =
     'button'
     | 'dropdown'
     | 'divider'
@@ -16,6 +18,35 @@ export type MagicActionTypes =
     | 'popup-panel'
     | 'avator'
 
+
+export type MagicLayoutAction = {
+    id?: string
+    type?: MagicLayoutActionTypes
+    icon?: string
+    label?: string
+    showLabel?: boolean
+    labelPos?: 'none' | 'bottom' | 'right',
+    checked?: boolean
+    disabled?: boolean
+    badge?: number
+    value?: any
+    tips?: string
+    group?: string
+    order?: number
+    divider?: boolean
+    onClick?: (action: MagicLayoutAction, e: MouseEvent) => void
+    onChange?: (action: MagicLayoutAction, e: MouseEvent) => void
+    onPopup?: (action: MagicLayoutAction, e: MouseEvent) => void
+    styles?: HTMLElementCustomStyles
+    classs?: HTMLElementCustomClasss
+}
+
+export type MagicLayoutToolbarOptions = {
+    visible?: boolean
+    items?: MagicLayoutAction[]
+    styles?: HTMLElementCustomStyles
+    classs?: HTMLElementCustomClasss
+}
 
 export type MagicLayoutThemeOptions = {
     theme?: 'light' | 'dark'
@@ -35,8 +66,9 @@ export type MagicLayoutHeaderOptions = {
     height?: number | string                // 高度    
     border?: string      // 是否显示下边框
     shadow?: string
-    toolbar: MagicToolbarOptions
+    toolbar: MagicLayoutToolbarOptions
     styles?: HTMLElementCustomStyles
+    classs?: HTMLElementCustomClasss
 }
 
 // 侧边栏
@@ -59,6 +91,7 @@ export type MagicLayoutSidebarOptions = {
         items?: (string | MagicLayoutAction)[]
     }
     styles?: HTMLElementCustomStyles
+    classs?: HTMLElementCustomClasss
 }
 
 export type MagicLayoutLogoOptions = {
@@ -67,7 +100,7 @@ export type MagicLayoutLogoOptions = {
     image: string              // Logo图片地址
     imageSize: string          // Logo在小，默认是50*50
     showTitle?: boolean        // 是否显示标题
-    position?: 'sidebar' | 'header' | 'none'
+    pos?: 'sidebar' | 'header' | 'none'
     title: string
     subtitle?: string
     radius: string | number     // 是否为Logo图片启用圆角
@@ -78,20 +111,24 @@ export type MagicLayoutLogoOptions = {
     direction?: 'row' | 'col'
     shape?: 'radius' | 'circle'
     styles?: HTMLElementCustomStyles
+    classs?: HTMLElementCustomClasss
 }
 
 export type MagicLayoutWorkspaceOptions = {
     bgColor?: string
     styles?: HTMLElementCustomStyles
+    classs?: HTMLElementCustomClasss
 }
 
 export type MagicLayoutDrawerOptions = {
     visible: boolean
     styles?: HTMLElementCustomStyles
+    classs?: HTMLElementCustomClasss
 }
 export type MagicLayoutPanelsOptions = {
     visible: boolean
     styles?: HTMLElementCustomStyles
+    classs?: HTMLElementCustomClasss
 }
 
 
@@ -101,25 +138,8 @@ export type MagicLayoutFooterOptions = {
     bgColor?: string
     color?: string
     items?: (string | MagicLayoutAction)[]
-}
-
-export type MagicLayoutAction = {
-    id?: string
-    type?: MagicActionTypes
-    icon?: string
-    label?: string
-    showLabel?: boolean
-    checked?: boolean
-    disabled?: boolean
-    badge?: number
-    value?: any
-    tips?: string
-    group?: string
-    order?: number
-    onClick?: (action: MagicLayoutAction, e: MouseEvent) => void
-    onChange?: (action: MagicLayoutAction, e: MouseEvent) => void
-    onPopup?: (action: MagicLayoutAction, e: MouseEvent) => void
     styles?: HTMLElementCustomStyles
+    classs?: HTMLElementCustomClasss
 }
 
 export type MagicLayoutScreenOptions = {
@@ -139,6 +159,7 @@ export type MagicLayoutOptions = {
     panels: MagicLayoutPanelsOptions
     actions: MagicLayoutAction[]
     styles?: HTMLElementCustomStyles
+    classs?: HTMLElementCustomClasss
 }
 
 

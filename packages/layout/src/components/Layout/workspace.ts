@@ -19,7 +19,7 @@ export class MagicLayoutWorkspace extends MagicElement<MagicLayoutOptions['works
                     .items=${this.store.state.header.toolbar.items || []}
                 ></magic-layout-toolbar>
             </div>
-            <div style="flex-grow:1;">
+            <div style="flex-grow:1;padding: 1em;">
                 <magic-layout-logo direction="col"></magic-layout-logo>
                 <magic-layout-logo direction="row"></magic-layout-logo>
                 <magic-icon></magic-icon>

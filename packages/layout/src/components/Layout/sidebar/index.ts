@@ -91,7 +91,7 @@ export class MagicLayoutSidebar extends MagicElement<RequiredMagicLayoutOptions[
                 align="stretch"  
                 class="fit"
             >
-                ${when(this.store.state.logo.position === 'sidebar', () => html`<magic-layout-logo ?collapsed=${this.state.collapsed}> </magic-layout-logo>`)}
+                ${when(this.store.state.logo.pos === 'sidebar', () => html`<magic-layout-logo ?collapsed=${this.state.collapsed}> </magic-layout-logo>`)}
                 <magic-sidebar-header> </magic-sidebar-header>
                 <magic-sidebar-menu></magic-sidebar-menu> 
                 <magic-sidebar-footer> </magic-sidebar-footer>

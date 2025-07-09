@@ -85,7 +85,7 @@ export const defaultState = {
         image: 'https://ui.shadcn.com/avatars/shadcn.jpg',
         imageSize: '52px',
         url: 'http://www.homekylin.com',
-        position: 'sidebar',
+        pos: 'sidebar',
         bgColor: '#2f9dff',
         color: 'white',
         colorized: false,

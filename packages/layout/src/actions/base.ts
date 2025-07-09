@@ -34,12 +34,17 @@ export class MagicLayoutActionBase extends LitElement {
         return html``
     }
 
+    _renderDivider() {
+        if (this.action.divider) {
+            return html`<sl-divider .vertical=${!this.vertical}></sl-divider>`
+        }
+    }
     render() {
         return html`
             ${toggleWrapper(!!this.action.tips, this.renderWidget(), (content) => {
             return html`<sl-tooltip 
                 placement="${this.vertical ? 'right' : 'bottom'}"
-                content="${this.action.tips!}">
+                content="${this.action.tips!}">  
                     ${content}
             </sl-tooltip>`
         })}
