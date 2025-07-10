@@ -38,23 +38,34 @@ export class MagicLayoutToolbar extends LitElement {
     @property({ type: Boolean, reflect: true, useDefault: true })
     vertical?: boolean
 
+    @property({ type: String, reflect: true })
+    size: 'small' | 'medium' | 'large' = 'medium'
+
+
     itemSize: number = 50
 
 
     onResize = () => {
         this.requestUpdate()
     }
+    _getMoreMenuPosition() {
 
+    }
     _renderMoreMenu() {
         const breakpoint = this._getBreakpoint()
         if (breakpoint >= this.items.length) return null
         return html`<sl-dropdown 
                     class="more"
-                    distance="${this.vertical ? 0 : 25}" 
+                    distance="${this.vertical ? 0 : 20}" 
                     skidding="20"
                     placement="${this.vertical ? 'right-end' : 'bottom-end'}"
+                    style="display:block;"
                 >
-                    <magic-action-button class="fit" part='action' slot="trigger" .action=${{ icon: "more" } as any}>
+                    <magic-action-button 
+                        class="fit" 
+                        part='action' 
+                        slot="trigger" 
+                        .action=${{ icon: "more" }}>
                     </magic-action-button>
                     <sl-menu>
                         ${repeat(this.items, (item, index) => {
@@ -72,9 +83,9 @@ export class MagicLayoutToolbar extends LitElement {
 
     renderMenuItem(item: MagicLayoutAction) {
         return html`<sl-menu-item aria-hidden="false">
-                    <magic-icon  slot="prefix" .name="${item.icon}"></magic-icon>
-                    ${item.label}                
-                </sl-menu-item>`
+                <magic-icon  slot="prefix" .name="${item.icon}"></magic-icon>
+                ${item.label}                
+            </sl-menu-item>`
     }
 
     renderDivider() {
@@ -93,9 +104,15 @@ export class MagicLayoutToolbar extends LitElement {
         actionEle.setAttribute('part', 'action')
         actionEle.setAttribute('exportparts', 'widget')
         if (this.vertical) actionEle.setAttribute('vertical', '')
+
         // @ts-ignore
         actionEle.action = action
+        // @ts-ignore
+        if (!action.labelPos) actionEle.labelPos = this.labelPos
+
         applyCustomStyles(actionEle, extraStyles)
+
+        // 显示分割线
         if (action.divider) {
             if (this.vertical) {
                 actionEle.style.borderTop = '1px solid #e8e8e8';

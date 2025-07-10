@@ -1,7 +1,8 @@
 import { css, html } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import { MagicLayoutActionBase } from "./base";
 import { when } from "lit/directives/when.js";
+import { classMap } from "lit/directives/class-map.js";
 
 @customElement('magic-action-button')
 export class MagicLayoutActionButton extends MagicLayoutActionBase {
@@ -22,12 +23,30 @@ export class MagicLayoutActionButton extends MagicLayoutActionBase {
         sl-button::part(base){
             border-radius: 0;
         }
+        sl-button.bottom::part(base){
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
     `] as any
 
+    @property({ type: String, reflect: true })
+    size: 'small' | 'medium' | 'large' = 'medium'
+
+    @property({ type: String })
+    labelPos: 'none' | 'bottom' | 'right' = 'none'
+
     renderWidget() {
-        return html`<sl-button size="large" part="widget">
-            <sl-icon name="${this.action.icon || 'settings'}" slot="prefix"></sl-icon>
-            ${when(this.action.showLabel, () => html`<span slot="label">${this.action.label}</span>`)}
+        return html`<sl-button 
+            size="${this.size}" 
+            part="widget" 
+            class="${classMap({
+            [this.labelPos]: true
+        })}">
+            <sl-icon name="${this.action.icon || 'file'}" slot="prefix"></sl-icon>            
+            ${when(this.labelPos !== 'none', () => {
+            return html`<span>${this.action.label}</span>`
+        })}
         </sl-button>`
     }
 }

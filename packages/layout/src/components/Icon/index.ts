@@ -29,6 +29,7 @@ export class MagicIcon extends LitElement {
     `
     @property({ type: String })
     size: 'small' | 'medium' | 'large' = 'medium';
+
     @property({ type: String })
     name?: string
 
