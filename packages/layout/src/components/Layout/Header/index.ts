@@ -48,11 +48,11 @@ export class MagicLayoutHeader extends MagicElement<MagicLayoutOptions['header']
                 <sl-icon-button class="sidebar-tigger" name="menu" @click=${this._onOpenSidebar.bind(this)}></sl-icon-button> 
                 ${this.state.title}
             </span>          
-            <!-- <magic-layout-toolbar
+            <magic-layout-toolbar
                 class="toolbar" 
                 part="header-toolbar"
                 .items=${this.state.toolbar.items || []}             
-            ></magic-layout-toolbar>   -->
+            ></magic-layout-toolbar>  
         </div>
         `
     }

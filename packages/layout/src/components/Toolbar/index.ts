@@ -6,7 +6,7 @@
  */
 
 
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { LitElement, html } from 'lit'
 import type { MagicLayoutAction } from '@/context/types';
 import { repeat } from 'lit/directives/repeat.js';
@@ -41,16 +41,33 @@ export class MagicLayoutToolbar extends LitElement {
     @property({ type: String, reflect: true })
     size: 'small' | 'medium' | 'large' = 'medium'
 
-
+    @state()
     itemSize: number = 50
 
-
+    connectedCallback(): void {
+        super.connectedCallback()
+        this.itemSize = this.vertical ? 56 : 50
+    }
     onResize = () => {
         this.requestUpdate()
     }
     _getMoreMenuPosition() {
 
     }
+    get shadow() {
+        // biome-ignore lint/style/noNonNullAssertion: <explanation>
+        return this.shadowRoot!
+    }
+    _measureSize() {
+        const items = Array.from(this.shadow.querySelectorAll("*")) as HTMLElement[]
+        let size: number = 0
+        items.forEach(item => {
+            size += this.vertical ? item.offsetHeight : item.offsetWidth
+        })
+
+        console.log(this.vertical, 'size=', size)
+    }
+
     _renderMoreMenu() {
         const breakpoint = this._getBreakpoint()
         if (breakpoint >= this.items.length) return null
@@ -107,6 +124,7 @@ export class MagicLayoutToolbar extends LitElement {
 
         // @ts-ignore
         actionEle.action = action
+
         // @ts-ignore
         if (!action.labelPos) actionEle.labelPos = this.labelPos
 
@@ -114,22 +132,35 @@ export class MagicLayoutToolbar extends LitElement {
 
         // 显示分割线
         if (action.divider) {
-            if (this.vertical) {
-                actionEle.style.borderTop = '1px solid #e8e8e8';
-            } else {
-                actionEle.style.borderLeft = '1px solid #e8e8e8';
-            }
+            actionEle.classList.add('divider')
+            // if (this.vertical) {
+            //     actionEle.style.borderTop = '1px solid #e8e8e8';
+            // } else {
+            //     actionEle.style.borderLeft = '1px solid #e8e8e8';
+            // }
         }
         return actionEle
     }
-
     _getBreakpoint() {
         if (this.vertical) {
             return Math.floor(this.offsetHeight / this.itemSize) - 1
         } else {
             return Math.floor(this.offsetWidth / this.itemSize) - 1
         }
+    }
 
+    _getItemSize() {
+        if (this.vertical) {
+            return this.labelPos === 'bottom' ? 80 : 50
+        } else {
+            return this.itemSize + this.labelPos === 'right' ? 10 : 0
+        }
+    }
+
+    firstUpdated() {
+        setTimeout(() => {
+            this._measureSize()
+        })
     }
 
     _renderDivider(action: MagicLayoutAction) {
