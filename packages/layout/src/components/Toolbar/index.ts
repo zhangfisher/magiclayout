@@ -20,14 +20,18 @@ import styles from './styles'
 @customElement('magic-layout-toolbar')
 export class MagicLayoutToolbar extends LitElement {
     static styles = styles
+    resizeObserver = new ResizeObserver(this)
 
     @property({ type: Array, reflect: true, attribute: false })
     items: MagicLayoutAction[] = []
 
-    resizeObserver = new ResizeObserver(this)
-
+    /**
+     * 声明工具栏位置
+     * 决定工具栏是显示在顶部还是底部，或者显示在左边还是右边
+     * 当显示tooltip时用于决定tooltip的显示位置
+     */
     @property({ type: String })
-    direction: 'hori' | 'vert' = 'hori'
+    location: 'top' | 'bottom' | 'left' | 'right' = 'top'
 
     @property({ type: String })
     labelPos: 'none' | 'bottom' | 'right' = 'none'
@@ -44,6 +48,11 @@ export class MagicLayoutToolbar extends LitElement {
     @state()
     itemSize: number = 50
 
+    @state()
+    itemSizes: number[] = []
+
+    _isMeasured: boolean = false
+
     connectedCallback(): void {
         super.connectedCallback()
         this.itemSize = this.vertical ? 56 : 50
@@ -51,21 +60,18 @@ export class MagicLayoutToolbar extends LitElement {
     onResize = () => {
         this.requestUpdate()
     }
-    _getMoreMenuPosition() {
-
-    }
     get shadow() {
         // biome-ignore lint/style/noNonNullAssertion: <explanation>
         return this.shadowRoot!
     }
     _measureSize() {
-        const items = Array.from(this.shadow.querySelectorAll("*")) as HTMLElement[]
+        const items = Array.from(this.shadow.children) as HTMLElement[]
         let size: number = 0
         items.forEach(item => {
             size += this.vertical ? item.offsetHeight : item.offsetWidth
+            this.itemSizes.push(size)
         })
-
-        console.log(this.vertical, 'size=', size)
+        this._isMeasured = true
     }
 
     _renderMoreMenu() {
@@ -76,15 +82,14 @@ export class MagicLayoutToolbar extends LitElement {
                     distance="${this.vertical ? 0 : 20}" 
                     skidding="20"
                     placement="${this.vertical ? 'right-end' : 'bottom-end'}"
-                    style="display:block;"
                 >
                     <magic-action-button 
                         class="fit" 
                         part='action' 
-                        slot="trigger" 
-                        .action=${{ icon: "more" }}>
+                        slot="trigger"                         
+                        .action=${{ icon: "more", labelPos: 'none' } as any}>
                     </magic-action-button>
-                    <sl-menu>
+                    <sl-menu >
                         ${repeat(this.items, (item, index) => {
             if (index < breakpoint) return null
             return html`${choose(item.type, [
@@ -93,14 +98,14 @@ export class MagicLayoutToolbar extends LitElement {
                 return this.renderMenuItem(item)
             })}`
         })}            
-                </sl-menu>
-            </sl-dropdown>`
+            </sl-menu>
+        </sl-dropdown>`
     }
 
 
     renderMenuItem(item: MagicLayoutAction) {
-        return html`<sl-menu-item aria-hidden="false">
-                <magic-icon  slot="prefix" .name="${item.icon}"></magic-icon>
+        return html`<sl-menu-item >
+                <magic-icon slot="prefix" .name="${item.icon}"></magic-icon>
                 ${item.label}                
             </sl-menu-item>`
     }
@@ -124,7 +129,7 @@ export class MagicLayoutToolbar extends LitElement {
 
         // @ts-ignore
         actionEle.action = action
-
+        if (!this._isMeasured) actionEle.style.visibility = 'hidden'
         // @ts-ignore
         if (!action.labelPos) actionEle.labelPos = this.labelPos
 
@@ -142,18 +147,22 @@ export class MagicLayoutToolbar extends LitElement {
         return actionEle
     }
     _getBreakpoint() {
-        if (this.vertical) {
-            return Math.floor(this.offsetHeight / this.itemSize) - 1
-        } else {
-            return Math.floor(this.offsetWidth / this.itemSize) - 1
+        const totalSize = this.vertical ? this.offsetHeight : this.offsetWidth
+        if (this.itemSizes.length > 0) {
+            for (let i = 0; i < this.itemSizes.length; i++) {
+                if (totalSize < this.itemSizes[i]) {
+                    return i - 1
+                }
+            }
         }
+        return this.items.length
     }
 
     _getItemSize() {
         if (this.vertical) {
             return this.labelPos === 'bottom' ? 80 : 50
         } else {
-            return this.itemSize + this.labelPos === 'right' ? 10 : 0
+            return 50
         }
     }
 

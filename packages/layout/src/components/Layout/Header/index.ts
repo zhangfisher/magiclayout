@@ -7,6 +7,7 @@ import { HostStyles } from "@/controllers/hostStyles";
 import { when } from "lit/directives/when.js";
 import type { SlDrawer } from "@shoelace-style/shoelace";
 import './trigger'
+import { ifDefined } from "lit/directives/if-defined.js";
 
 @customElement('magic-layout-header')
 export class MagicLayoutHeader extends MagicElement<MagicLayoutOptions['header']> {
@@ -51,6 +52,7 @@ export class MagicLayoutHeader extends MagicElement<MagicLayoutOptions['header']
             <magic-layout-toolbar
                 class="toolbar" 
                 part="header-toolbar"
+                labelPos="${ifDefined(this.state.toolbar.labelPos)}"
                 .items=${this.state.toolbar.items || []}             
             ></magic-layout-toolbar>  
         </div>

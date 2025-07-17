@@ -1,6 +1,6 @@
 import { createContext } from '@lit/context';
 import type { AutoStore } from 'autostore';
-import { MagicLayoutOptions } from './types';
+import type { MagicLayoutOptions } from './types';
 import type { MagicLayout } from '@/components';
 
 

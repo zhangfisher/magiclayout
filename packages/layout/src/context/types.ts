@@ -43,6 +43,7 @@ export type MagicLayoutAction = {
 
 export type MagicLayoutToolbarOptions = {
     visible?: boolean
+    labelPos?: 'none' | 'bottom' | 'right',
     items?: MagicLayoutAction[]
     styles?: HTMLElementCustomStyles
     classs?: HTMLElementCustomClasss

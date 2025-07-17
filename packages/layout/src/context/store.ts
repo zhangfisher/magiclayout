@@ -1,5 +1,5 @@
 import { AutoStore } from "autostore";
-import { MagicLayoutOptions } from "./types";
+import type { MagicLayoutOptions } from "./types";
 import type { MagicLayoutStore } from ".";
 
 

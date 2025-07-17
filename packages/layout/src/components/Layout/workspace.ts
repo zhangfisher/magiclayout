@@ -11,7 +11,8 @@ export class MagicLayoutWorkspace extends MagicElement<MagicLayoutOptions['works
 
     render() {
         return html` 
-         <div style="margin:2rem;border:1px solid red;display:flex;height:400px;box-siz" >
+        <div style="margin:2rem;border:1px solid blue;display:flex;height:400px;flex-direction:column;box-sizing: border-box;" >
+         <div style="display:flex;height:400px;box-sizing: border-box;" >
             <div style="width:80px;display:flex;justify-content: center;position: relative;">
                 <magic-layout-toolbar 
                     class="fit"
@@ -26,14 +27,21 @@ export class MagicLayoutWorkspace extends MagicElement<MagicLayoutOptions['works
                 <magic-layout-logo direction="row"></magic-layout-logo>
                 <magic-icon></magic-icon>
             </div>
-            <!-- <div style="width:60px;display:flex;justify-content: center;position: relative;">
+            <div style="width:60px;display:flex;justify-content: center;position: relative;">
                 <magic-layout-toolbar 
                     class="fit"
                     vertical                    
                     .items=${this.store.state.header.toolbar.items || []}
                 ></magic-layout-toolbar>
-            </div> -->
-
+            </div>  
+         </div>
+         <div>
+                <!-- <magic-layout-toolbar 
+                    class="fit"   
+                         
+                    .items=${this.store.state.header.toolbar.items || []}
+                ></magic-layout-toolbar> -->
+         </div>
          </div>
         `
     }

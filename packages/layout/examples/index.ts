@@ -37,6 +37,7 @@ export class MagicLayoutExamples extends LitElement {
                 title: "管理系统",
                 logo: true,
                 toolbar: {
+                    // labelPos: 'right',
                     items: [
                         { icon: 'settings', label: "设置", tips: '设置' },
                         { icon: 'file', label: "打开文件", tips: '文件' },
@@ -56,10 +57,7 @@ export class MagicLayoutExamples extends LitElement {
 
     render() {
         return html`
-
-        <magic-layout .options=${this.getOptions()}>
-             
-        </magic-layout> 
+        <magic-layout .options=${this.getOptions()}></magic-layout> 
         `
     }
 

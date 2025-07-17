@@ -20,8 +20,13 @@ export class MagicLayoutActionButton extends MagicLayoutActionBase {
         }
 
         :host::part(label){
+            display: inline-block;
             font-size: var(--ml-font-size);
             line-height: 150%;
+            width: 100%;
+            overflow: hidden;            
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         sl-button::part(base){
@@ -31,18 +36,19 @@ export class MagicLayoutActionButton extends MagicLayoutActionBase {
         sl-button.bottom::part(base){
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap:0.2em;            
-            padding-top: 0.2em;
+            align-items: center;    
+            padding: 0.2em ;
         }
-
-
         sl-button.right::part(base){
             display: flex;
             flex-direction: row;
             align-items: center;
             gap:0.2em;
         }
+        sl-button.none::part(label){
+            display: none;
+        }
+
     `] as any
 
     @property({ type: String, reflect: true })
@@ -61,9 +67,9 @@ export class MagicLayoutActionButton extends MagicLayoutActionBase {
             [labelPos]: true
         })}">
             <sl-icon name="${this.action.icon || 'file'}" slot="prefix"></sl-icon>            
-            ${when(labelPos !== 'none', () => {
-            return html`<span>${this.action.label}</span>`
-        })}
+            ${when(labelPos !== 'none',
+            () => html`<span>${this.action.label}</span>`
+        )}
         </sl-button>`
     }
 }

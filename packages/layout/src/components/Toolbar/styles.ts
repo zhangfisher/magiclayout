@@ -7,6 +7,7 @@ export default css`
         flex-direction: row;
         align-items: center;
         flex-wrap: nowrap;
+        box-sizing: border-box;
         & > *{
             display: flex;
             align-items: center;
@@ -17,6 +18,9 @@ export default css`
         width: 100%;
         &>*{
             width: 100%;
+        }
+        & > sl-dropdown{
+            display: block    
         }
     }   
     :host([vertical])::part(widget){    
@@ -37,5 +41,6 @@ export default css`
     sl-dropdown::slotted(*){
         width: 100%;
     }
+    
 
 `
