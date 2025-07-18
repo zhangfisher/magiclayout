@@ -18,7 +18,15 @@ export type MagicLayoutActionTypes =
     | 'popup-panel'
     | 'avator'
 
-
+export type MagicLayoutActionSelect = {
+    id?: string
+    label: string
+    icon?: string
+    value?: any
+    checked?: boolean
+    divider?: boolean
+    onClick?: (action: MagicLayoutAction, e: MouseEvent) => void
+}
 export type MagicLayoutAction = {
     id?: string
     type?: MagicLayoutActionTypes
@@ -37,6 +45,7 @@ export type MagicLayoutAction = {
     onClick?: (action: MagicLayoutAction, e: MouseEvent) => void
     onChange?: (action: MagicLayoutAction, e: MouseEvent) => void
     onPopup?: (action: MagicLayoutAction, e: MouseEvent) => void
+    select?: MagicLayoutActionSelect[]
     styles?: HTMLElementCustomStyles
     classs?: HTMLElementCustomClasss
 }

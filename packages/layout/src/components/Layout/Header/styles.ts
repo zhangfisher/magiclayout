@@ -52,11 +52,14 @@ export default css`
                 align-items: center;         
                 padding: 0px 0.5rem ;
                 min-width: 0;
+                flex-shrink: 0;
             }
             &>magic-layout-toolbar{        
                 flex-grow: 1;
                 justify-content: end;
                 align-items: stretch;
+                border:1px solid red;
+                min-width: 0;
             } 
         }
         sl-drawer::part(body){

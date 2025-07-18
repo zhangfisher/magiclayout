@@ -11,7 +11,7 @@ export class MagicLayoutActionButton extends MagicLayoutActionBase {
         :host::part(base){
             border:none;
             padding:0px 8px;
-            font-size: 24px;
+            font-size: calc(1.5 * var(--ml-font-size));
             & sl-icon{ 
                 & .lucide{
                     stroke-width: 1;

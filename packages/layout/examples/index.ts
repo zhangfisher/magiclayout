@@ -45,7 +45,17 @@ export class MagicLayoutExamples extends LitElement {
                         { icon: 'bell-ring', label: '我的通知', fixed: true, tips: '通知', divider: true },
                         { icon: 'camera', label: '我的相机', tips: '相机' },
                         { icon: 'bug', label: 'Bug管理' },
-                        { icon: 'chrome', label: '浏览器' },
+                        {
+                            type: 'dropdown',
+                            icon: 'chrome', label: '浏览器',
+                            select: [
+                                { icon: 'chrome', label: 'Chrome' },
+                                { icon: 'firefox', label: 'Firefox' },
+                                { icon: 'safari', label: 'Safari' },
+                                { icon: 'edge', label: 'Edge' },
+                                { icon: 'ie', label: 'IE' }
+                            ]
+                        },
                         { icon: 'message-square-more', label: '更多...' },
                         { icon: 'rotate-cw', label: '刷新' },
                     ]
