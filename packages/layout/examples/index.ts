@@ -24,7 +24,7 @@ export class MagicLayoutExamples extends LitElement {
     `
 
     @query('magic-layout')
-    layout?: HTMLElement
+    layout?: any
 
     protected updated(_changedProperties: PropertyValues): void {
         super.updated(_changedProperties)
@@ -44,6 +44,15 @@ export class MagicLayoutExamples extends LitElement {
                         { icon: 'aperture', label: "滤镜", tips: '滤镜', labelPos: 'right' },
                         { icon: 'bell-ring', label: '我的通知', fixed: true, tips: '通知', divider: true },
                         { icon: 'camera', label: '我的相机', tips: '相机' },
+                        {
+                            type: "search",
+                            placeholder: "搜索",
+                            tips: '搜索关键',
+                            value: '',
+                            onChange: (action, e) => {
+                                console.log('search', action, e)
+                            }
+                        },
                         { icon: 'bug', label: 'Bug管理' },
                         {
                             type: 'dropdown',

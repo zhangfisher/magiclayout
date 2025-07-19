@@ -39,6 +39,7 @@ export type MagicLayoutAction = {
     badge?: number
     value?: any
     tips?: string
+    placeholder?: string
     group?: string
     order?: number
     divider?: boolean

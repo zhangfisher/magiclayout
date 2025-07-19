@@ -11,6 +11,14 @@ export class MagicLayoutActionBase extends LitElement {
         sl-button::part(label){
             padding: 0px ;
         }
+        sl-input::part(base){
+            outline: none!important;
+            box-shadow: none!important;
+        }
+        sl-textarea::part(base){
+            outline: none!important;
+            box-shadow: none!important;
+        }
     `
 
     @property({ type: Object, reflect: true, attribute: false })

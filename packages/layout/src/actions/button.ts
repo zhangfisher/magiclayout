@@ -6,8 +6,7 @@ import { classMap } from "lit/directives/class-map.js";
 
 @customElement('magic-action-button')
 export class MagicLayoutActionButton extends MagicLayoutActionBase {
-    static styles = [MagicLayoutActionBase.styles, css`
-        
+    static styles = [MagicLayoutActionBase.styles, css`        
         :host::part(base){
             border:none;
             padding:0px 8px;
@@ -18,7 +17,6 @@ export class MagicLayoutActionButton extends MagicLayoutActionBase {
                 }
             }            
         }
-
         :host::part(label){
             display: inline-block;
             font-size: var(--ml-font-size);

@@ -4,6 +4,7 @@ import { MagicLayoutActionBase } from "./base";
 import { when } from "lit/directives/when.js";
 import { repeat } from "lit/directives/repeat.js";
 import { MagicLayoutActionSelect } from "@/context/types";
+import { classMap } from "lit/directives/class-map.js";
 
 @customElement('magic-action-dropdown')
 export class MagicLayoutActionDropdown extends MagicLayoutActionBase {
@@ -33,8 +34,9 @@ export class MagicLayoutActionDropdown extends MagicLayoutActionBase {
             sl-menu{
                 min-width: 12em;
                 & sl-menu-item::part(label){
-                    text-align: left;
-                    padding-left: 0.5em;  
+                    text-align: left;                    
+                    padding: 0.5em;
+                    padding-left: 0;  
                 }
                 & sl-menu-item::part(base){
                     display: flex;
@@ -42,14 +44,18 @@ export class MagicLayoutActionDropdown extends MagicLayoutActionBase {
                 }
                 & sl-menu-item::part(checked-icon){
                     display: none;
-                }
-
-                
+                } 
             }
-            sl-dropdown::slotted(*){
+            sl-dropdown{
                 width: 100%;
             }
-
+            [slot=trigger]{
+                align-items: center;
+                display: flex;
+            } 
+            sl-button.none::part(label){
+                display: none;
+            }
     `] as any
 
     @property({ type: String, reflect: true })
@@ -73,7 +79,10 @@ export class MagicLayoutActionDropdown extends MagicLayoutActionBase {
                 skidding="20"
                 placement="${this.vertical ? 'right-end' : 'bottom-end'}"
             >
-                <sl-button slot="trigger" >
+                <sl-button slot="trigger" 
+                    class="${classMap({
+            [labelPos]: true
+        })}">
                     ${when(this.action.icon, () => html`<sl-icon name="${this.action.icon!}" slot="prefix"></sl-icon>`)}
                     ${when(labelPos !== 'none', () => html`<span>${this.action.label}</span>`)}
                 </sl-button>

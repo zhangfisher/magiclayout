@@ -184,6 +184,7 @@ export class MagicLayoutToolbar extends LitElement {
         if (breakpoint === 0) return
         return html`${repeat(this.items, (item, index) => {
             if (index >= breakpoint) return null
+            if (this.vertical && ['search'].includes(item.type!)) return
             return this._renderAction(item)
         })} `
     }
