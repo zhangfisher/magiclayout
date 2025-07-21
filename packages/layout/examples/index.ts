@@ -51,6 +51,9 @@ export class MagicLayoutExamples extends LitElement {
                             value: '',
                             onChange: (action, e) => {
                                 console.log('search', action, e)
+                            },
+                            onSearch: (action, e) => {
+                                console.log('onSeatch', action, e)
                             }
                         },
                         { icon: 'bug', label: 'Bug管理' },

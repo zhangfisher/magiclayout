@@ -1,55 +1,8 @@
+import { HTMLElementCustomClasss, HTMLElementCustomStyles } from "@/types"
 import type { MagicMenubarOptions } from "../components/Menu/types"
+import type { MagicLayoutAction } from "@/actions/types"
 
 
-
-export type HTMLElementCustomStyles = Record<string, string | Record<string, string>>
-export type HTMLElementCustomClasss = Record<string, string>
-
-
-export type MagicLayoutActionTypes =
-    'button'
-    | 'dropdown'
-    | 'divider'
-    | 'checkbox'
-    | 'input'
-    | 'search'
-    | 'switch'
-    | 'popup-menu'
-    | 'popup-panel'
-    | 'avator'
-
-export type MagicLayoutActionSelect = {
-    id?: string
-    label: string
-    icon?: string
-    value?: any
-    checked?: boolean
-    divider?: boolean
-    onClick?: (action: MagicLayoutAction, e: MouseEvent) => void
-}
-export type MagicLayoutAction = {
-    id?: string
-    type?: MagicLayoutActionTypes
-    icon?: string
-    label?: string
-    showLabel?: boolean
-    labelPos?: 'none' | 'bottom' | 'right',
-    checked?: boolean
-    disabled?: boolean
-    badge?: number
-    value?: any
-    tips?: string
-    placeholder?: string
-    group?: string
-    order?: number
-    divider?: boolean
-    onClick?: (action: MagicLayoutAction, e: MouseEvent) => void
-    onChange?: (action: MagicLayoutAction, e: MouseEvent) => void
-    onPopup?: (action: MagicLayoutAction, e: MouseEvent) => void
-    select?: MagicLayoutActionSelect[]
-    styles?: HTMLElementCustomStyles
-    classs?: HTMLElementCustomClasss
-}
 
 export type MagicLayoutToolbarOptions = {
     visible?: boolean

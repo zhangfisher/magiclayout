@@ -5,7 +5,7 @@ import { when } from "lit/directives/when.js";
 import { classMap } from "lit/directives/class-map.js";
 
 @customElement('magic-action-button')
-export class MagicLayoutActionButton extends MagicLayoutActionBase {
+export class MagicLayoutActionButton extends MagicLayoutActionBase<'button'> {
     static styles = [MagicLayoutActionBase.styles, css`        
         :host::part(base){
             border:none;

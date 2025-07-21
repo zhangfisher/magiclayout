@@ -3,11 +3,11 @@ import { customElement, property } from "lit/decorators.js";
 import { MagicLayoutActionBase } from "./base";
 import { when } from "lit/directives/when.js";
 import { repeat } from "lit/directives/repeat.js";
-import { MagicLayoutActionSelect } from "@/context/types";
+import type { MagicLayoutActionSelect } from "@/actions/types";
 import { classMap } from "lit/directives/class-map.js";
 
 @customElement('magic-action-dropdown')
-export class MagicLayoutActionDropdown extends MagicLayoutActionBase {
+export class MagicLayoutActionDropdown extends MagicLayoutActionBase<'dropdown'> {
 
     static styles = [
         MagicLayoutActionBase.styles,
@@ -53,6 +53,12 @@ export class MagicLayoutActionDropdown extends MagicLayoutActionBase {
                 align-items: center;
                 display: flex;
             } 
+            [slot=trigger]::part(caret){
+                color:var(--ml-text-color);
+                font-size: var(--ml-font-size);
+
+            }
+
             sl-button.none::part(label){
                 display: none;
             }
@@ -64,7 +70,7 @@ export class MagicLayoutActionDropdown extends MagicLayoutActionBase {
     @property({ type: String })
     labelPos: 'none' | 'bottom' | 'right' = 'none'
 
-    _renderMenuItem(item: MagicLayoutActionSelect) {
+    _renderMenuItem(item: MagicLayoutActionSelect) {        
         return html`<sl-menu-item 
             .value=${item.value || item.id || item.label}
         > 
@@ -80,11 +86,13 @@ export class MagicLayoutActionDropdown extends MagicLayoutActionBase {
                 placement="${this.vertical ? 'right-end' : 'bottom-end'}"
             >
                 <sl-button slot="trigger" 
+                caret
                     class="${classMap({
             [labelPos]: true
         })}">
                     ${when(this.action.icon, () => html`<sl-icon name="${this.action.icon!}" slot="prefix"></sl-icon>`)}
-                    ${when(labelPos !== 'none', () => html`<span>${this.action.label}</span>`)}
+                    ${when(labelPos !== 'none', () => html`<span>${this.action.label}</span>`)}                                                
+                
                 </sl-button>
                 <sl-menu>
                     ${repeat(this.action.select || [], (item) => this._renderMenuItem(item))}        

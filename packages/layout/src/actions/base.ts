@@ -1,9 +1,10 @@
-import { MagicLayoutAction } from "@/context/types";
+import type { MagicLayoutAction, MagicLayoutActionTypes } from "@/actions/types";
+import type { RequiredKeys } from "@/types";
 import { toggleWrapper } from "@/utils/toggleWrapper";
 import { css, html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 
-export class MagicLayoutActionBase extends LitElement {
+export class MagicLayoutActionBase<T extends MagicLayoutActionTypes = 'button'> extends LitElement {
     static styles = css`
         sl-icon::part(svg){
             stroke-width: 1px!important;
@@ -22,13 +23,15 @@ export class MagicLayoutActionBase extends LitElement {
     `
 
     @property({ type: Object, reflect: true, attribute: false })
-    action!: MagicLayoutAction
+    action!: MagicLayoutAction<T>
+ 
 
     @property({ type: Boolean, reflect: true, useDefault: true })
     vertical?: boolean
 
 
     get shadow() {
+        // biome-ignore lint/style/noNonNullAssertion: <explanation>
         return this.shadowRoot!
     }
 

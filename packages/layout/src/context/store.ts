@@ -104,5 +104,7 @@ export const defaultState = {
 
 
 export function createLayoutStore(options?: MagicLayoutOptions) {
-    return new AutoStore<MagicLayoutOptions>(Object.assign({}, defaultState, options)) as MagicLayoutStore
+    return new AutoStore<MagicLayoutOptions>(Object.assign({}, defaultState, options),{
+        
+    }) as MagicLayoutStore
 }
