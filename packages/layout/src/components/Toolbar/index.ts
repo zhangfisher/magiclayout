@@ -8,16 +8,17 @@
 
 import { customElement, property, state } from 'lit/decorators.js';
 import { LitElement, html } from 'lit'
-import type { MagicLayoutAction } from '@/context/types';
+import type { MagicLayoutAction } from '@/actions/types';
 import { repeat } from 'lit/directives/repeat.js';
 import { choose } from 'lit/directives/choose.js';
 import { applyCustomStyles } from '../../utils/applyCustomStyles';
 import { ResizeObserver } from '../../controllers/resizeObserver';
 import '../../actions'
 import styles from './styles'
+import { tag } from '@/utils/tag';
 
 
-@customElement('magic-layout-toolbar')
+@tag('magic-layout-toolbar')
 export class MagicLayoutToolbar extends LitElement {
     static styles = styles
     resizeObserver = new ResizeObserver(this)
@@ -61,7 +62,6 @@ export class MagicLayoutToolbar extends LitElement {
         this.requestUpdate()
     }
     get shadow() {
-        // biome-ignore lint/style/noNonNullAssertion: <explanation>
         return this.shadowRoot!
     }
     _measureSize() {

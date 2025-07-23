@@ -1,9 +1,9 @@
 import { html, LitElement } from "lit";
-import { customElement } from "lit/decorators.js";
 import * as styles from "./styles";
+import { tag } from "@/utils/tag";
 
 
-@customElement('magic-sidebar-footer')
+@tag('magic-sidebar-footer')
 export class MagicSidebarFooter extends LitElement {
     static styles = styles.footer
     render() {

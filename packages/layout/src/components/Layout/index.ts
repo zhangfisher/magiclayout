@@ -4,7 +4,7 @@
  */
 
 import { LitElement, html } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { property } from 'lit/decorators.js'
 import '@shoelace-style/shoelace/dist/components/button/button.js';
 import '@shoelace-style/shoelace/dist/components/tab/tab.js';
 import '@shoelace-style/shoelace/dist/components/input/input.js';
@@ -21,7 +21,7 @@ import '@shoelace-style/shoelace/dist/components/spinner/spinner.js';
 import '@shoelace-style/shoelace/dist/components/icon/icon.js';
 import '@shoelace-style/shoelace/dist/components/dropdown/dropdown.js';
 import '@shoelace-style/shoelace/dist/components/split-panel/split-panel.js';
-import { IconLibrary, IconLibraryResolver } from '@shoelace-style/shoelace/dist/components/icon/library.js';
+import type { IconLibrary, IconLibraryResolver } from '@shoelace-style/shoelace/dist/components/icon/library.js';
 import { createLayoutStore } from '@/context/store';
 import { root as rootStyles } from './styles/root'
 import { provide } from '@lit/context';
@@ -36,17 +36,18 @@ import './panels'
 import './Header'
 import './pages'
 import './workspace'
-import { MagicLayoutOptions } from '@/context/types';
+import type { MagicLayoutOptions } from '@/context/types';
 import { deepMerge } from 'flex-tools/object';
 import type { MagicLayoutSidebar } from './Sidebar';
 import { toggleWrapper } from '@/utils/toggleWrapper';
 import { when } from 'lit/directives/when.js';
-import { MediaQuery, MediaQueryResult } from '@/controllers/mediaQuery';
+import { MediaQuery } from '@/controllers/mediaQuery';
 import { HostClasses } from '@/controllers/hostClasss';
+import { tag } from '@/utils/tag';
+import '../My'
 
 
-
-@customElement('magic-layout')
+@tag('magic-layout')
 export class MagicLayout extends LitElement {
     static styles = rootStyles
 

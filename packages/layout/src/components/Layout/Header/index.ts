@@ -1,5 +1,5 @@
 import { html } from "lit";
-import { customElement, query } from "lit/decorators.js";
+import {  query } from "lit/decorators.js";
 import styles from "./styles";
 import { MagicElement } from "@/components/MagicElement";
 import type { MagicLayoutOptions } from "@/context/types";
@@ -8,8 +8,9 @@ import { when } from "lit/directives/when.js";
 import type { SlDrawer } from "@shoelace-style/shoelace";
 import './trigger'
 import { ifDefined } from "lit/directives/if-defined.js";
+import { tag } from "@/utils/tag";
 
-@customElement('magic-layout-header')
+@tag('magic-layout-header')
 export class MagicLayoutHeader extends MagicElement<MagicLayoutOptions['header']> {
     static styles = styles
     stateKey: string = 'header'
@@ -55,6 +56,7 @@ export class MagicLayoutHeader extends MagicElement<MagicLayoutOptions['header']
                 labelPos="${ifDefined(this.state.toolbar.labelPos)}"
                 .items=${this.state.toolbar.items || []}             
             ></magic-layout-toolbar>  
+            <magic-layout-user></magic-layout-user>
         </div>
         `
     }

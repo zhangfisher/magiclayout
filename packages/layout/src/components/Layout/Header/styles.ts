@@ -1,6 +1,4 @@
-import { flexCol, flexRow } from './../../../styles/utils';
-import { drawer } from './../styles/drawer';
-import { fit } from "@/styles/utils";
+import { fit,flexCol, flexRow  } from "@/styles/utils";
 import { css } from "lit";
 
 
@@ -57,8 +55,7 @@ export default css`
             &>magic-layout-toolbar{        
                 flex-grow: 1;
                 justify-content: end;
-                align-items: stretch;
-                border:1px solid red;
+                align-items: stretch; 
                 min-width: 0;
             } 
         }

@@ -5,14 +5,14 @@
  */
 
 import { MagicElement } from "@/components/MagicElement";
+import { tag } from "@/utils/tag";
 import { css, html } from "lit";
-import { customElement } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 
 
 export type MagicSidebarTriggerOptions = boolean
 
-@customElement('magic-sidebar-trigger')
+@tag('magic-sidebar-trigger')
 export class MagicSidebarTrigger extends MagicElement<MagicSidebarTriggerOptions> {
     static styles = css`
         sl-button::part(base){

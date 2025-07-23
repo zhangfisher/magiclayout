@@ -12,7 +12,7 @@ export type MagicLayoutActionTypes =
     | 'avatar'
 
 export type MagicLayoutActionButtonOptions = {
-    a: number
+    
 }
 
 export type MagicLayoutActionDividerOptions = {
@@ -74,7 +74,7 @@ export type MagicLayoutActionBaseOptions = {
 
 
 
-export type MagicLayoutAction<T extends MagicLayoutActionTypes='button'> = MutableRecord<{
+export type MagicLayoutAction<T extends MagicLayoutActionTypes=MagicLayoutActionTypes> = MutableRecord<{
     button: MagicLayoutActionButtonOptions,
     dropdown: MagicLayoutActionDropdownOptions,
     avatar: MagicLayoutActionAvatarOptions,

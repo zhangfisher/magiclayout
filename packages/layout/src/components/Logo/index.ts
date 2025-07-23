@@ -8,18 +8,19 @@
  * 
  */
 
-import { html, PropertyValues } from 'lit'
-import { customElement, property, query } from 'lit/decorators.js'
+import { html, type PropertyValues } from 'lit'
+import { property, query } from 'lit/decorators.js'
 import styles from './styles'
 import { MagicElement } from '../MagicElement';
-import { RequiredMagicLayoutOptions } from '@/context/types';
+import type { RequiredMagicLayoutOptions } from '@/context/types';
 import { when } from 'lit/directives/when.js';
 import { toggleWrapper } from '@/utils/toggleWrapper';
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { getCssSize } from '../../utils/getCssSize';
-
-@customElement('magic-layout-logo')
+import { tag } from '@/utils/tag';
+ 
+@tag('magic-layout-logo') 
 export class MagicLayoutLogo extends MagicElement<RequiredMagicLayoutOptions['logo']> {
     static styles = styles
     stateKey = 'logo'

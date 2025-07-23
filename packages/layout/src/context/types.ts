@@ -1,4 +1,4 @@
-import { HTMLElementCustomClasss, HTMLElementCustomStyles } from "@/types"
+import type { HTMLElementCustomClasss, HTMLElementCustomStyles } from "@/types"
 import type { MagicMenubarOptions } from "../components/Menu/types"
 import type { MagicLayoutAction } from "@/actions/types"
 
@@ -111,8 +111,35 @@ export type MagicLayoutScreenOptions = {
     size: string    // 尺寸，媒体查询断点尺寸
 }
 
+export type MagicLayoutUserOptions = {
+    visible:boolean
+    /**
+     * 用户名
+     */
+    username:string
+    /**
+     * 友好名称
+     */
+    title?:string
+    description?:string
+    /**
+     * 头像
+     */
+    avatar?:string
+    status: 'idle' | 'logging' | 'online' | 'offline'
+    /**
+     * 登录时间
+     */
+    loginAt: number
+    menu?: MagicMenubarOptions
+    toolbar?: MagicLayoutToolbarOptions 
+    styles?: HTMLElementCustomStyles
+    classs?: HTMLElementCustomClasss
+}
+
 
 export type MagicLayoutOptions = {
+    my:MagicLayoutUserOptions
     screen: MagicLayoutScreenOptions
     theme: MagicLayoutThemeOptions
     breakpoints: Record<string, string>

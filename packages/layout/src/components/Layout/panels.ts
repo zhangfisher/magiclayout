@@ -1,9 +1,9 @@
-import { html, LitElement } from "lit";
-import { customElement } from "lit/decorators.js";
+import { html, LitElement } from "lit"; 
 import * as styles from "./styles";
 import '@/components/Logo'
+import { tag } from "@/utils/tag";
 
-@customElement('magic-layout-panels')
+@tag('magic-layout-panels')
 export class MagicLayoutPanels extends LitElement {
     static styles = styles.panels
 

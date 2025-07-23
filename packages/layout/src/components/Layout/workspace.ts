@@ -1,11 +1,11 @@
 import { html } from "lit";
-import { customElement } from "lit/decorators.js";
 import * as styles from "./styles";
 import '@/components/Logo'
 import { MagicElement } from "../MagicElement";
 import type { MagicLayoutOptions } from "@/context/types";
+import { tag } from "@/utils/tag";
 
-@customElement('magic-layout-workspace')
+@tag('magic-layout-workspace')
 export class MagicLayoutWorkspace extends MagicElement<MagicLayoutOptions['workspace']> {
     static styles = styles.workspace
 

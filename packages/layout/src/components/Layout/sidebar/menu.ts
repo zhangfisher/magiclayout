@@ -1,8 +1,8 @@
 import { html, LitElement } from "lit";
-import { customElement } from "lit/decorators.js";
 import * as styles from "./styles";
+import { tag } from "@/utils/tag";
 
-@customElement('magic-sidebar-menu')
+@tag('magic-sidebar-menu')
 export class MagicSidebarMenu extends LitElement {
     static styles = styles.menu
     render() {

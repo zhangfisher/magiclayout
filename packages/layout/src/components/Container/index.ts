@@ -7,20 +7,15 @@
  * 
  */
 
-import { CSSResult, LitElement, html } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
-import styles from './styles'
-import { consume } from '@lit/context';
-import { MagicLayoutContextManager, MagicLayoutContext } from '@/context';
+import { LitElement, html } from 'lit' 
+import styles from './styles' 
+import { tag } from '@/utils/tag'; 
 
+@tag('magic-layout-container')
+export class MagicLayoutContainer extends LitElement {
+    static styles = styles  
 
-@customElement('magic-container')
-export class MagicContainer extends LitElement {
-    static styles = styles as CSSResult
-
-    @consume({ context: MagicLayoutContext })
-    @property({ attribute: false })
-    public context?: MagicLayoutContextManager;
+   
     render() {
         return html`
             <slot></slot>
@@ -32,6 +27,6 @@ export class MagicContainer extends LitElement {
 
 declare global {
     interface HTMLElementTagNameMap {
-        'magic-container': MagicContainer
+        'magic-layout-container': MagicLayoutContainer
     }
 }

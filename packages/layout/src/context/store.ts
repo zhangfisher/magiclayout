@@ -4,6 +4,21 @@ import type { MagicLayoutStore } from ".";
 
 
 export const defaultState = {
+    my:{
+        visible:true,
+        username: 'admin',
+        title: '管理员',
+        avatar: 'https://ui.shadcn.com/avatars/shadcn.jpg',
+        status: 'idle',
+        loginAt: Date.now(),
+        toolbar:{
+            labelPos:'right',
+            items:[
+                { type:'button' ,icon: 'settings', label: "设置"},
+                { type:'button',icon: 'user', label: "注销"},
+            ]
+        }
+    },
     screen: {
         full: true,
         size: ''

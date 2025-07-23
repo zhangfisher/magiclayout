@@ -1,8 +1,9 @@
 import { HostClasses } from "@/controllers/hostClasss";
+import { tag } from "@/utils/tag";
 import { css, html, LitElement } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 
-@customElement('magic-card')
+@tag('magic-card')
 export class MagicCard extends LitElement {
     classs = new HostClasses(this)
     static styles = css`
@@ -128,12 +129,10 @@ export class MagicCard extends LitElement {
     updateStyles() {
         const gap = String(parseInt(this.gap)) === String(this.gap) ? `${this.gap}px` : this.gap
         this.style.gap = gap
-        if (this.grow) {
-            Array.from<HTMLElement>(this.querySelectorAll(this.grow)).forEach(ele => ele.style.flexGrow = '1')
-        }
-        if (this.shrink) {
-            Array.from<HTMLElement>(this.querySelectorAll(this.shrink)).forEach(ele => ele.style.flexShrink = '1')
-        }
+        const growElements = this.grow ? Array.from<HTMLElement>(this.querySelectorAll(this.grow)) : []
+        const shrinkElements = this.shrink ? Array.from<HTMLElement>(this.querySelectorAll(this.shrink)) : []
+        growElements.forEach(ele => {ele.style.flexGrow = '1'})
+        shrinkElements.forEach(ele =>{ele.style.flexShrink = '1'})
         if (this.border === 'inline') {
             this.classList.add('inline-border')
         } else if (this.border === 'full') {

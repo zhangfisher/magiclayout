@@ -7,11 +7,12 @@
  */
 
 import { LitElement, html } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { property } from 'lit/decorators.js'
 import styles from './styles'
 import "@shoelace-style/shoelace/dist/components/button/button.js";
+import { tag } from '@/utils/tag';
 
-@customElement('magic-menubar')
+@tag('magic-layout-menubar')
 export class MagicMenubar extends LitElement {
     static styles = styles
 

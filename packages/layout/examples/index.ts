@@ -33,6 +33,14 @@ export class MagicLayoutExamples extends LitElement {
 
     getOptions() {
         return {
+            my:{
+                visible:true,
+                username: 'admin',
+                title: '管理员',
+                avatar: 'https://ui.shadcn.com/avatars/shadcn.jpg',
+                status: 'idle',
+                loginAt: Date.now()
+            },
             header: {
                 title: "管理系统",
                 logo: true,

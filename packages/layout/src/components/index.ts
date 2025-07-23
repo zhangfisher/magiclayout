@@ -1,5 +1,5 @@
 export * from './Flex'
 export * from './Container'
-export * from './Box'
+export * from './Card'
 export * from './Toolbar'
 export * from './Layout'

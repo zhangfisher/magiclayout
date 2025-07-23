@@ -1,11 +1,11 @@
 import { html } from "lit";
-import { customElement } from "lit/decorators.js";
 import * as styles from "./styles";
-import { MagicLayoutOptions } from "@/context/types";
+import type { MagicLayoutOptions } from "@/context/types";
 import { MagicElement } from "@/components/MagicElement";
+import { tag } from "@/utils/tag";
 
 
-@customElement('magic-sidebar-header')
+@tag('magic-sidebar-header')
 export class MagicSidebarHeader extends MagicElement<MagicLayoutOptions['header']> {
     static styles = styles.header
     stateKey: string = 'header'
