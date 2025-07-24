@@ -36,7 +36,7 @@ export class MagicLayoutExamples extends LitElement {
             my:{
                 visible:true,
                 username: 'admin',
-                title: '管理员',
+                title: '管理员d',
                 avatar: 'https://ui.shadcn.com/avatars/shadcn.jpg',
                 status: 'idle',
                 loginAt: Date.now()
@@ -49,7 +49,7 @@ export class MagicLayoutExamples extends LitElement {
                     items: [
                         { icon: 'settings', label: "设置", tips: '设置' },
                         { icon: 'file', label: "打开文件", tips: '文件' },
-                        { icon: 'aperture', label: "滤镜", tips: '滤镜', labelPos: 'right' },
+                        { icon: 'aperture', label: "滤镜", tips: '滤镜',badge:8, labelPos: 'right' },
                         { icon: 'bell-ring', label: '我的通知', fixed: true, tips: '通知', divider: true },
                         { icon: 'camera', label: '我的相机', tips: '相机' },
                         {

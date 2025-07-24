@@ -15,7 +15,10 @@ export const defaultState = {
             labelPos:'right',
             items:[
                 { type:'button' ,icon: 'settings', label: "设置"},
-                { type:'button',icon: 'user', label: "注销"},
+                { type:'button',icon: 'user', label: "注销",onClick:(action)=>{
+                    console.log('logout')
+                    action.label = '登录'
+                }},
             ]
         }
     },
@@ -120,6 +123,8 @@ export const defaultState = {
 
 export function createLayoutStore(options?: MagicLayoutOptions) {
     return new AutoStore<MagicLayoutOptions>(Object.assign({}, defaultState, options),{
-        
+        onForEachObject({path, value, parent}) {
+            
+        }
     }) as MagicLayoutStore
 }

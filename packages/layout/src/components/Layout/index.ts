@@ -111,10 +111,6 @@ export class MagicLayout extends LitElement {
         }
     }
 
-
-
-
-
     renderContainer() {
         return html`
             ${when(!this.state.header.fullRow, () => {

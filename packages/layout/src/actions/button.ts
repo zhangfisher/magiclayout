@@ -21,7 +21,6 @@ export class MagicLayoutActionButton extends MagicLayoutActionBase<'button'> {
             display: inline-block;
             font-size: var(--ml-font-size);
             line-height: 150%;
-            width: 100%;
             overflow: hidden;            
             white-space: nowrap;
             text-overflow: ellipsis;

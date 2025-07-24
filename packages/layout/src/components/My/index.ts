@@ -4,8 +4,6 @@ import { MagicElement } from "@/components/MagicElement";
 import type { MagicLayoutOptions } from "@/context/types";
 import { HostStyles } from "@/controllers/hostStyles"; 
 import { tag } from "@/utils/tag";
-import { classMap } from "lit/directives/class-map.js";
-import { when } from "lit/directives/when.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
 @tag('magic-layout-user')
@@ -43,6 +41,7 @@ export class MagicLayoutUser extends MagicElement<MagicLayoutOptions['my']> {
         return html`<magic-layout-toolbar
                 class="toolbar" 
                 part="my-toolbar"
+                evenly
                 labelPos="${ifDefined(this.state.toolbar.labelPos)}"
                 .items=${this.state.toolbar.items || []}       
         ></magic-layout-toolbar>`

@@ -27,6 +27,22 @@ export default css`
         width: 100%;
     }
 
+    :host([evenly]){
+        width: 100%;
+        justify-content: space-evenly;
+        & > *{
+            flex-grow: 1;
+        }        
+    }
+    :host([evenly])::part(widget){
+        width: 100%;
+    }
+
+    :host([block])::part(label){
+        width: auto;
+    }
+    
+
     sl-menu{
         min-width: 12em;
         & sl-menu-item::part(label){
