@@ -1,18 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/**
- * 
- *
+/** 
  *  <maic-flex>
  *      
- *  </magic-flex>
- * 
+ *  </magic-flex> 
  */
 
 import { LitElement, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import styles from './styles'
 import { HostClasses } from '@/controllers/hostClasss'
-import type { FlexAlign, FlexJustify, FlexWrap } from '@/types'
+
+export type FlexWrap = 'wrap' | 'nowrap' | 'wrap-reverse' | 'initial' | 'inherit'
+export type FlexAlign = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'stretch' | 'initial' | 'inherit'
+export type FlexJustify = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-every' | 'space-around' | 'stretch' | 'initial' | 'inherit'
+export type FlexDirection = 'row' | 'column' | 'column-reverse' | 'row-reverse' 
+
 
 @customElement('magic-flex')
 export class MagicFlex extends LitElement {
@@ -21,7 +23,7 @@ export class MagicFlex extends LitElement {
     classes = new HostClasses(this)
 
     @property({ type: String })
-    direction: 'row' | 'column' | 'column-reverse' | 'row-reverse' = 'row'
+    direction: FlexDirection  = 'row'
 
     @property({ type: String })
     gap: string = '0'

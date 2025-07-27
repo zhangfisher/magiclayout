@@ -48,4 +48,22 @@ export default css`
             color:var(--ml-text-color);
         }
     }
+    .menubar{
+        display: block;
+        border-bottom: var(--ml-border);
+        & sl-menu-item::part(base){
+            align-items: center;
+        }
+        & sl-menu-item::part(checked-icon){
+            display: none;
+        } 
+    }
+
+    sl-menu-item::part(prefix){
+        font-size:var(--ml-icon-size);
+        padding: 2px 0.2em;        
+    }
+    sl-icon::part(svg){
+        stroke-width: 1;
+    }
 ` 

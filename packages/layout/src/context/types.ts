@@ -111,6 +111,17 @@ export type MagicLayoutScreenOptions = {
     size: string    // 尺寸，媒体查询断点尺寸
 }
 
+
+
+export type MagicLayoutUserTag={
+    icon?:string
+    label:string
+    badge?:number
+    type?:'primary'|'danger'|'success'|'warning' | 'neutral'
+    color?:string
+    link?:string
+}
+
 export type MagicLayoutUserOptions = {
     visible:boolean
     /**
@@ -127,6 +138,7 @@ export type MagicLayoutUserOptions = {
      */
     avatar?:string
     status: 'idle' | 'logging' | 'online' | 'offline'
+    tags?:MagicLayoutUserTag[]
     /**
      * 登录时间
      */

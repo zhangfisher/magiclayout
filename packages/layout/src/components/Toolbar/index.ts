@@ -145,9 +145,6 @@ export class MagicLayoutToolbar extends LitElement {
         if (action.divider) {
             actionEle.classList.add('divider')
         }
-        
-      
-
         return actionEle
     }
     _getBreakpoint() {
@@ -155,7 +152,7 @@ export class MagicLayoutToolbar extends LitElement {
         if (this.itemSizes.length > 0) {
             for (let i = 0; i < this.itemSizes.length; i++) {
                 if (totalSize < this.itemSizes[i]) {
-                    return i - 1
+                    return i 
                 }
             }
         }

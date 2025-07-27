@@ -3,7 +3,7 @@ import '@shoelace-style/shoelace/dist/shoelace-autoloader.js';
 import '@shoelace-style/shoelace/dist/themes/light.css';
 import '@shoelace-style/shoelace/dist/themes/dark.css';
 import { customElement, query } from 'lit/decorators.js';
-import { css, html, LitElement, PropertyValues } from 'lit';
+import { css, html, LitElement,type PropertyValues } from 'lit';
 
 import '../src/styles/index.css'
 export * from './flex'
@@ -39,7 +39,20 @@ export class MagicLayoutExamples extends LitElement {
                 title: '管理员d',
                 avatar: 'https://ui.shadcn.com/avatars/shadcn.jpg',
                 status: 'idle',
-                loginAt: Date.now()
+                loginAt: Date.now(),
+                tags:[
+                    { icon: 'cog', label: "级别", badge: 2,type:'success',link:"" },
+                    { icon: 'star', label: "星" , badge: 2,type:'danger',link:""},
+                    { icon: 'power', label: "级别" ,badge: 2,type:'danger',link:""}
+                ],
+                menu:{
+                    visible:true,
+                    items:[
+                        { icon: 'settings', label: "设置",onClick:() =>{ console.log('settings')}},
+                        { icon: 'home', label: "首页", divider: true},
+                        { label: "仪表盘", badge: '1', divider: true }                    
+                    ]
+                }
             },
             header: {
                 title: "管理系统",

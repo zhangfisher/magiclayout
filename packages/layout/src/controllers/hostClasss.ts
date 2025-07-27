@@ -1,4 +1,4 @@
-import { ReactiveController } from 'lit';
+import type { ReactiveController } from 'lit';
 
 /**
  * 用于为组件的host增加class
@@ -17,10 +17,11 @@ import { ReactiveController } from 'lit';
  */
 
 export class HostClasses implements ReactiveController {
-    host: HTMLElement;
+    host: any;
     initialClasses: (string | Record<string, boolean>)[] = [];
     constructor(host: any, ...classes: (string | Record<string, boolean>)[]) {
-        (this.host = host).addController(this);
+        this.host = host
+        this.host.addController(this);
         this.initialClasses = classes;
     }
     _forEachClasss(args: (string | Record<string, boolean>)[], cb: (cls: string, enable: boolean) => void) {
@@ -81,8 +82,5 @@ export class HostClasses implements ReactiveController {
     }
     hostDisconnected() {
         this.remove(...this.initialClasses)
-    }
-    hostUpdate(): void {
-
-    }
+    } 
 }

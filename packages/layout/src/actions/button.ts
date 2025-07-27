@@ -34,7 +34,7 @@ export class MagicLayoutActionButton extends MagicLayoutActionBase<'button'> {
             display: flex;
             flex-direction: column;
             align-items: center;    
-            padding: 0.2em ;
+            padding: 0.5em 0.2em;
         }
         sl-button.right::part(base){
             display: flex;

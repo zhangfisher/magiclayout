@@ -5,7 +5,9 @@ import type { MagicLayoutOptions } from "@/context/types";
 import { HostStyles } from "@/controllers/hostStyles"; 
 import { tag } from "@/utils/tag";
 import { ifDefined } from "lit/directives/if-defined.js";
-
+import { repeat } from "lit-html/directives/repeat.js";
+import { when } from "lit/directives/when";
+ 
 @tag('magic-layout-user')
 export class MagicLayoutUser extends MagicElement<MagicLayoutOptions['my']> {
     static styles = styles
@@ -33,8 +35,23 @@ export class MagicLayoutUser extends MagicElement<MagicLayoutOptions['my']> {
             
     }
     renderMenubar(){
-        if(!this.state.menu) return
-        return html``
+        if(!this.state.menu || this.state.menu.visible===false) return
+        return html`
+            <s-menu 
+                class="menubar"
+                part="my-toolbar">
+                ${repeat(this.state.menu.items || [],(item)=>{
+                    if(typeof(item)==='string' ){
+                        return html`<sl-divider></sl-divider>`
+                    }else{
+                        return html`<sl-menu-item>
+                        <sl-icon  slot="prefix" name="${item.icon!}"></sl-icon>
+                        ${item.label}
+                        </sl-menu-item>`
+                    }
+                })}
+            </s-menu>
+        `
     }
     renderToolbar(){
         if(!this.state.toolbar) return
@@ -46,6 +63,20 @@ export class MagicLayoutUser extends MagicElement<MagicLayoutOptions['my']> {
                 .items=${this.state.toolbar.items || []}       
         ></magic-layout-toolbar>`
     }
+
+    renderTags(){
+        if(!this.state.tags) return
+        if(!Array.isArray(this.state.tags)) return
+        return html`<div class="tags">${repeat(this.state.tags,(tag,index)=>{
+            return html`<sl-badge variant=${tag.type || ''} pill>
+                ${tag.label}
+                ${when(tag.badge,()=>{
+                    return html`<span>${tag.badge}</span>`
+                })}
+            </sl-badge>`
+        })}</div>`
+    }
+
     render() {
         this.styles.toggle({
             
