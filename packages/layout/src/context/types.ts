@@ -117,6 +117,7 @@ export type MagicLayoutUserTag={
     icon?:string
     label:string
     badge?:number
+    tips?:string
     type?:'primary'|'danger'|'success'|'warning' | 'neutral'
     color?:string
     link?:string
@@ -137,7 +138,7 @@ export type MagicLayoutUserOptions = {
      * 头像
      */
     avatar?:string
-    status: 'idle' | 'logging' | 'online' | 'offline'
+    logined:boolean
     tags?:MagicLayoutUserTag[]
     /**
      * 登录时间

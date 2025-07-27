@@ -43,7 +43,7 @@ export class MagicLayoutExamples extends LitElement {
                 tags:[
                     { icon: 'cog', label: "级别", badge: 2,type:'success',link:"" },
                     { icon: 'star', label: "星" , badge: 2,type:'danger',link:""},
-                    { icon: 'power', label: "级别" ,badge: 2,type:'danger',link:""}
+                    { icon: 'power', label: "告警" ,badge: 4,type:'warning',link:"",tips:"打开告警信息"}
                 ],
                 menu:{
                     visible:true,

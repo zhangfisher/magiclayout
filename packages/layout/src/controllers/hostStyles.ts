@@ -1,14 +1,15 @@
-import { ReactiveController } from 'lit';
+import type { ReactiveController } from 'lit';
 
 /**
  * 用于为组件的host动态增加内联样式
  */
 export class HostStyles implements ReactiveController {
-    host: HTMLElement;
+    host: any;
     initialStyles: Record<string, string>[] = [];
 
     constructor(host: any, ...styles: Record<string, string>[]) {
-        (this.host = host).addController(this);
+        this.host = host
+        this.host.addController(this);
         this.initialStyles = styles;
     }
 

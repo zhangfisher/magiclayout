@@ -10,6 +10,6 @@
   "peerDependencies": {
     "typescript": "^5"
   },
-  "packageManager": "bun@l.2.19",
+  "packageManager": "pnpm@10.0.0",
   "workspaces": ["packages/*"]
 }

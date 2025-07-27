@@ -5,8 +5,8 @@ import type { MagicLayoutOptions } from "@/context/types";
 import { HostStyles } from "@/controllers/hostStyles"; 
 import { tag } from "@/utils/tag";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { repeat } from "lit-html/directives/repeat.js";
-import { when } from "lit/directives/when";
+import { repeat } from "lit/directives/repeat.js";
+import { when } from "lit/directives/when.js";
  
 @tag('magic-layout-user')
 export class MagicLayoutUser extends MagicElement<MagicLayoutOptions['my']> {
@@ -30,7 +30,8 @@ export class MagicLayoutUser extends MagicElement<MagicLayoutOptions['my']> {
                 >
                     <sl-icon slot="icon" name="user"></sl-icon>
                 </sl-avatar>
-                <span>${this.state.title}</span>
+                <span class="title">${this.state.title}</span>
+                ${this.renderTags()}
             </div>`
             
     }
@@ -68,10 +69,13 @@ export class MagicLayoutUser extends MagicElement<MagicLayoutOptions['my']> {
         if(!this.state.tags) return
         if(!Array.isArray(this.state.tags)) return
         return html`<div class="tags">${repeat(this.state.tags,(tag,index)=>{
-            return html`<sl-badge variant=${tag.type || ''} pill>
+            return html`<sl-badge 
+                variant=${tag.type || 'neutral'} pill
+                title="${ifDefined(tag.tips)}"
+            >   ${when(tag.icon,()=>html`<sl-icon name=${tag.icon!}></sl-icon>`)}
                 ${tag.label}
                 ${when(tag.badge,()=>{
-                    return html`<span>${tag.badge}</span>`
+                    return html`<span class="badge">${tag.badge}</span>`
                 })}
             </sl-badge>`
         })}</div>`
@@ -82,10 +86,7 @@ export class MagicLayoutUser extends MagicElement<MagicLayoutOptions['my']> {
             
         })
         this.classs.use({
-            online:this.state.status==='online',
-            idle:this.state.status==='idle',
-            offline:this.state.status==='offline',
-            logging:this.state.status==='logging',
+            logined:this.state.logined
         })
         return html`<sl-dropdown
                 distance="5" 

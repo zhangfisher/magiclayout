@@ -10,7 +10,7 @@ export const defaultState = {
         username: 'admin',
         title: '管理员',
         avatar: 'https://ui.shadcn.com/avatars/shadcn.jpg',
-        status: 'idle',
+        logined: false,
         loginAt: Date.now(),
         toolbar:{
             labelPos:'right',

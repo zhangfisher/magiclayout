@@ -34,6 +34,10 @@ export default css`
         border: 2px solid white;
         border-radius: 50%;
         box-shadow: 0px 0px 4px var(--ml-shadow-color);        
+        filter: grayscale(1);
+        &.logined{
+            filter: none;
+        }
     }
     sl-menu{
         min-width: 15em;
@@ -66,4 +70,30 @@ export default css`
     sl-icon::part(svg){
         stroke-width: 1;
     }
+    .logo{
+        .tags{
+            display: flex;
+            font-size: calc(0.5 * var(--ml-icon-size));
+            padding: 0 1em;
+            padding-bottom: 0;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.2em;
+            justify-content: center;
+            .badge{
+                border-radius: 50%;
+                background-color: rgba(255,255,255,0.5);
+                padding: 2px;
+                box-sizing: border-box;
+                margin-left: 0.2em;
+                min-width: 1.5em;
+                text-align: center;
+                font-size: 10px;
+            }
+        }
+        .title{
+            padding: 0.5em;
+        }
+    }
+    
 ` 
