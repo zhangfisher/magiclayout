@@ -1,4 +1,4 @@
-import { css } from "lit";
+import { css } from 'lit';
 
 export default css`
     :host{
@@ -57,6 +57,11 @@ export default css`
     sl-dropdown::slotted(*){
         width: 100%;
     }
-    
+    sl-tooltip::part(base){
+        background-color: var(--auto-primary-color);
+    }  
+    sl-tooltip{
+        --sl-tooltip-background-color: var(--t-color-primary-2);
+    }    
 
-`
+`;

@@ -1,10 +1,10 @@
-import { css } from "lit";
+import { css } from 'lit';
 
 export default css`
     :host{
         display: flex;
         position: relative;
-        background-color: var(--sl-color-neutral-0);
+        background-color: var(--auto-bgcolor);
     }
     .auto-field{
         display: flex;
@@ -14,7 +14,7 @@ export default css`
         padding: 0.3em;
         
         &>.label{
-            color: var(--sl-color-neutral-800);           
+            color: var(--auto-color);           
             padding: 4px; 
             font-weight: 600;
             display: flex;
@@ -64,19 +64,19 @@ export default css`
         /* 禁用样式 */
         &.disable{
             &>.label{
-                color: var(--sl-color-gray-400);
+                color: var(--auto-color);
             }
             &>.title{
-                color: var(--sl-color-gray-400);
+                color: var(--auto-color);
             }
             & sl-input::part(base),sl-input::part(input){
-                color: var(--sl-color-gray-400);
+                color: var(--auto-input-color);
                 user-select: none;
                 cursor: not-allowed;
                 pointer-events: none;
             }
             & sl-textarea::part(textarea){
-                color: var(--sl-color-gray-400);
+                color: var(--auto-input-color);
                 user-select: none;
                 cursor: not-allowed;
                 pointer-events: none;
@@ -84,4 +84,4 @@ export default css`
         }
     }
         
-`
+`;

@@ -1,5 +1,4 @@
-import { css } from "lit";
-
+import { css } from 'lit';
 
 export const fit = css`
     .fit {
@@ -9,9 +8,7 @@ export const fit = css`
         width: 100%;
         height: 100%;
     }
-`
-
-
+`;
 
 export const fullScreen = css`
     .full-screen{
@@ -21,8 +18,7 @@ export const fullScreen = css`
         width: 100%;
         height: 100%;
     } 
-`
-
+`;
 
 export const flexRow = css`
     .flex-row{
@@ -32,7 +28,7 @@ export const flexRow = css`
             align-items: center;
         }
     }
-`
+`;
 
 export const flexCol = css`
     .flex-col{
@@ -43,8 +39,7 @@ export const flexCol = css`
             justify-content: center;
         }
     }
-`
-
+`;
 
 export const scrollbar = css`
     /* 自定义滚动条样式 */
@@ -93,4 +88,10 @@ export const scrollbar = css`
     .scrollbar:hover::-webkit-scrollbar-thumb:hover {
         background-color: var(--sl-color-neutral-400, #94a3b8);
     }
+`;
+
+export const font = css`
+    .font{
+        font:300 1em/1.8 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+    }        
 `;

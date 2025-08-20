@@ -1,10 +1,12 @@
-import { css, html } from "lit";
-import { customElement } from "lit/decorators.js";
-import { MagicLayoutActionBase } from "./base";
+import { css, html } from 'lit';
+import { customElement } from 'lit/decorators.js';
+import { MagicLayoutActionBase } from './base';
 
 @customElement('magic-action-avatar')
 export class MagicLayoutActionAvatar extends MagicLayoutActionBase {
-    static styles = [MagicLayoutActionBase.styles, css`
+	static styles = [
+		MagicLayoutActionBase.styles,
+		css`
         :host::part(base){
             border:none;
             padding:0px 8px;
@@ -16,18 +18,18 @@ export class MagicLayoutActionAvatar extends MagicLayoutActionBase {
             }            
         }
         :host::part(label){
-            font-size: var(--ml-font-size);
+            font-size: var(--auto-font-size);
         }
-    `] as any
+    `,
+	] as any;
 
-    renderWidget() {
-        return html`<sl-avatar label="User avatar"></sl-avatar>`
-    }
+	renderWidget() {
+		return html`<sl-avatar label="User avatar"></sl-avatar>`;
+	}
 }
 
-
 declare global {
-    interface HTMLElementTagNameMap {
-        'magic-action-avatar': MagicLayoutActionAvatar
-    }
+	interface HTMLElementTagNameMap {
+		'magic-action-avatar': MagicLayoutActionAvatar;
+	}
 }

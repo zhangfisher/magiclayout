@@ -1,19 +1,17 @@
-import { css } from "lit";
-
-
+import { css } from 'lit';
 
 // const media = css`
 
 //     @media (max-width: 575.98px) {
-         
+
 //     }
 //     @media (min-width: 576px) and (max-width: 767.98px) {
-        
+
 //     }
 
 //     @media (min-width: 768px) and (max-width: 991.98px) {
 //         /* 大屏幕设备（桌面）样式 */
-        
+
 //     }
 
 //     @media (min-width: 992px) and (max-width: 1199.98px) {
@@ -33,7 +31,7 @@ export default css`
     sl-avatar{
         border: 2px solid white;
         border-radius: 50%;
-        box-shadow: 0px 0px 4px var(--ml-shadow-color);        
+        box-shadow: var(--auto-shadow);        
         filter: grayscale(1);
         &.logined{
             filter: none;
@@ -45,16 +43,16 @@ export default css`
         & .logo{            
             display: flex;
             align-items: center;
-            padding: 1em;
+            padding: 0.5em;
             flex-direction: column;
             box-sizing: border-box;
-            border-bottom: var(--ml-border);
-            color:var(--ml-text-color);
+            border-bottom: var(--auto-border);
+            color:var(--auto-color);
         }
     }
     .menubar{
         display: block;
-        border-bottom: var(--ml-border);
+        border-bottom: var(--auto-border);
         & sl-menu-item::part(base){
             align-items: center;
         }
@@ -64,7 +62,7 @@ export default css`
     }
 
     sl-menu-item::part(prefix){
-        font-size:var(--ml-icon-size);
+        font-size:var(--auto-icon-size);
         padding: 2px 0.2em;        
     }
     sl-icon::part(svg){
@@ -73,8 +71,8 @@ export default css`
     .logo{
         .tags{
             display: flex;
-            font-size: calc(0.5 * var(--ml-icon-size));
-            padding: 0 1em;
+            font-size: calc(0.5 * var(--auto-icon-size));
+            padding: 0;
             padding-bottom: 0;
             flex-wrap: wrap;
             align-items: center;
@@ -96,4 +94,4 @@ export default css`
         }
     }
     
-` 
+`;

@@ -1,7 +1,5 @@
-import { fit } from "@/styles/utils";
-import { css } from "lit";
-
-
+import { fit } from '@/styles/utils';
+import { css } from 'lit';
 
 export const media = css` 
     @media (max-width: 575.98px) {
@@ -25,7 +23,7 @@ export const media = css`
         /* 超超大屏幕设备（超大桌面）样式 */
     }
  
-`
+`;
 export const base = css`
     ${fit}
     :host{
@@ -43,13 +41,12 @@ export const base = css`
         transition: width 0.5s ease-out;
     }
     magic-layout-logo{
-        border-bottom: 1px solid var(--ml-border-color);
+        border-bottom: var(--auto-border);
         padding:1rem 0px;
     }
     ${media}
-`
-export const header = css``
-
+`;
+export const header = css``;
 
 export const menu = css`
     :host{
@@ -58,5 +55,5 @@ export const menu = css`
     sl-menu{
 
     }
-`
-export const footer = css``
+`;
+export const footer = css``;

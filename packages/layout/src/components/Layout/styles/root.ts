@@ -1,6 +1,6 @@
-import { css } from "lit";
-import { fullScreen, fit } from "@/styles/utils";
-import { vars } from "./vars";
+import { css } from 'lit';
+import { fullScreen, fit, scrollbar } from '@/styles/utils';
+import { themeMap } from '@/styles/themeMap';
 
 export const media = css` 
     @media (max-width: 575.98px) {
@@ -30,20 +30,21 @@ export const media = css`
 
     @media (min-width: 1200px) {
         /* 超超大屏幕设备（超大桌面）样式 */
-    }
- 
-`
+    } 
+`;
 
 export const root = css`
-    ${fit}
-    ${vars}
+    ${themeMap}
+    ${fit} 
     ${fullScreen}
+    ${scrollbar}
     :host{
         position: absolute;
         left: 0px;
         top: 0px;
         width: 100%;
         height: 100%;
+        font: var(--auto-font);
         &> .root{
             display: flex;
             position: relative;
@@ -58,14 +59,10 @@ export const root = css`
             }
         }
     }
-
     :host::part(body){
         position: relative;
         display: flex;
         flex-direction: column;
-    }
-    
-    ${media}
-  
- 
-`
+    }    
+    ${media} 
+`;
