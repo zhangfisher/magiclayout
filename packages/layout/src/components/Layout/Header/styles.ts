@@ -1,7 +1,5 @@
-import { fit,flexCol, flexRow  } from "@/styles/utils";
-import { css } from "lit";
-
-
+import { fit, flexCol, flexRow } from '@/styles/utils';
+import { css } from 'lit';
 
 const media = css`
 
@@ -30,7 +28,7 @@ const media = css`
     @media (min-width: 1200px) {
         /* 超超大屏幕设备（超大桌面）样式 */
     }
-`
+`;
 
 export default css`
     ${fit}
@@ -41,7 +39,7 @@ export default css`
         display: flex;        
         & > .header{
             box-sizing: border-box; 
-            &>magic-layout-logo{
+            & > magic-layout-logo{
                 display: inline-flex;
                 padding: 0px 0.5rem;
             }
@@ -49,10 +47,10 @@ export default css`
                 display: flex;
                 align-items: center;         
                 padding: 0px 0.5rem ;
-                min-width: 0;
+                min-width: 30%;
                 flex-shrink: 0;
             }
-            &>magic-layout-toolbar{        
+            & > magic-layout-toolbar{        
                 flex-grow: 1;
                 justify-content: end;
                 align-items: stretch; 
@@ -74,6 +72,6 @@ export default css`
     }        
     .sidebar-tigger{
         display:none;
-    }
+    } 
     ${media}    
-` 
+`;

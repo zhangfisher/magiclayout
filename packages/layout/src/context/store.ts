@@ -121,15 +121,5 @@ export const defaultState = {
 export function createLayoutStore(options?: MagicLayoutOptions) {
 	return new AutoStore<MagicLayoutOptions>(
 		Object.assign({}, defaultState, options),
-		{
-			onForEachState({ path, value, parent }) {
-				const name = path[path.length - 1];
-				if (name && isFunction(value)) {
-					if (name.startsWith('render') || name.startsWith('on')) {
-						markRaw(value);
-					}
-				}
-			},
-		},
 	) as MagicLayoutStore;
 }

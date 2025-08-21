@@ -92,7 +92,6 @@ export class MagicLayoutExamples extends LitElement {
 						{
 							type: 'search',
 							placeholder: '搜索',
-							tips: '搜索关键',
 							value: '',
 							onChange: (action, e) => {
 								console.log('search', action, e);

@@ -20,7 +20,7 @@
         "autostore": "^3.0.1",
         "flex-tools": "^1.5.2",
         "lit": "^3.3.0",
-        "themepro": "^1.0.5",
+        "themepro": "^1.0.6",
       },
       "devDependencies": {
         "@types/bun": "latest",
@@ -322,7 +322,7 @@
 
     "strip-ansi-cjs": ["strip-ansi@6.0.1", "https://registry.npmmirror.com/strip-ansi/-/strip-ansi-6.0.1.tgz", { "dependencies": { "ansi-regex": "^5.0.1" } }, "sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A=="],
 
-    "themepro": ["themepro@1.0.5", "https://registry.npmmirror.com/themepro/-/themepro-1.0.5.tgz", { "peerDependencies": { "typescript": "^5" } }, "sha512-sjFVOO3b2anwaZMtK14reOqfQd8AiE16o9Qf3/T90OIZlfJU77M0L4TkH5sC1PVD9mIQx54XHLQ3pQVSWOvPpg=="],
+    "themepro": ["themepro@1.0.6", "https://registry.npmmirror.com/themepro/-/themepro-1.0.6.tgz", { "peerDependencies": { "typescript": "^5" } }, "sha512-VvY0RtMOJmp5qBMEHfBUf7Gx544A18MPZ6/b1woakGJJZ7SvvR3BeW1hmtyt/mlyPJjLDfdhBFTZxbuQzJ7t7A=="],
 
     "tinyglobby": ["tinyglobby@0.2.14", "https://registry.npmmirror.com/tinyglobby/-/tinyglobby-0.2.14.tgz", { "dependencies": { "fdir": "^6.4.4", "picomatch": "^4.0.2" } }, "sha512-tX5e7OM1HnYr2+a2C/4V0htOcSQcoSTH9KgJnVvNm5zm/cyEWKJ7j7YutsH9CxMdtOkkLFy2AHrMci9IM8IPZQ=="],
 

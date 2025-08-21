@@ -1,3 +1,4 @@
+import { overloads } from '@/styles/overloads';
 import type {
 	MagicLayoutAction,
 	MagicLayoutActionTypes,
@@ -10,20 +11,12 @@ export class MagicLayoutActionBase<
 	T extends MagicLayoutActionTypes = 'button',
 > extends LitElement {
 	static styles = css`
-        sl-icon::part(svg){
-            stroke-width: 1px!important;
+        ${overloads}       
+        sl-button::part(base){
+            border-radius: 0;
         }
-        sl-button::part(label){
-            padding: 0px ;
-        }
-        sl-input::part(base){
-            outline: none!important;
-            box-shadow: none!important;
-        }
-        sl-textarea::part(base){
-            outline: none!important;
-            box-shadow: none!important;
-        }
+        
+        
     `;
 
 	@property({ type: Object, reflect: true, attribute: false })
@@ -51,6 +44,7 @@ export class MagicLayoutActionBase<
 			return html`<sl-divider .vertical=${!this.vertical}></sl-divider>`;
 		}
 	}
+
 	render() {
 		return html`
             ${toggleWrapper(
@@ -58,8 +52,9 @@ export class MagicLayoutActionBase<
 							this.renderWidget(),
 							(content) => {
 								return html`<sl-tooltip 
-                placement="${this.vertical ? 'right' : 'bottom'}"
-                content="${this.action.tips!}">  
+                    placement="${this.vertical ? 'right' : 'bottom'}"
+                    content="${this.action.tips!}" 
+                >  
                     ${content}
             </sl-tooltip>`;
 							},

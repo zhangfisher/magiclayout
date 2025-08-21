@@ -32,24 +32,20 @@ export class MagicLayoutActionDropdown extends MagicLayoutActionBase<'dropdown'>
                 white-space: nowrap;
                 text-overflow: ellipsis;
             } 
-            sl-menu{
-                min-width: 12em;
-                & sl-menu-item::part(label){
-                    text-align: left;                    
-                    padding: 0.5em;
-                    padding-left: 0;  
-                }
-                & sl-menu-item::part(base){
-                    display: flex;
-                    align-items: center;
-                }
-                & sl-menu-item::part(checked-icon){
-                    display: none;
-                } 
-            }
             sl-dropdown{
-                width: 100%;
+                width: 100%; 
+                height: 100%;
+                align-content: center; 
             }
+            sl-dropdown:hover{
+                background-color: color-mix(in hsl, var(--t-color-theme-2), white 20%);
+                color: var(--auto-primary-color);
+            }
+            
+            sl-button::part(base){
+                border-radius: 0;
+                background-color: transparent; 
+            } 
             [slot=trigger]{
                 align-items: center;
                 display: flex;
@@ -57,9 +53,7 @@ export class MagicLayoutActionDropdown extends MagicLayoutActionBase<'dropdown'>
             [slot=trigger]::part(caret){
                 color:var(--auto-color);
                 font-size: var(--auto-font-size);
-
             }
-
             sl-button.none::part(label){
                 display: none;
             }

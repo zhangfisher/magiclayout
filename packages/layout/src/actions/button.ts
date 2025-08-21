@@ -27,10 +27,17 @@ export class MagicLayoutActionButton extends MagicLayoutActionBase<'button'> {
             white-space: nowrap;
             text-overflow: ellipsis;
         }
-
+        sl-button{
+            height: 100%;
+            align-content: center;
+        }
         sl-button::part(base){
             border-radius: 0;
-            background-color: var(--auto-bgcolor);
+            background-color: transparent; 
+        } 
+        sl-button:hover{
+            background-color: color-mix(in hsl, var(--t-color-theme-2), white 20%);
+            color: var(--auto-primary-color);
         }
 
         sl-button.bottom::part(base){
@@ -48,7 +55,6 @@ export class MagicLayoutActionButton extends MagicLayoutActionBase<'button'> {
         sl-button.none::part(label){
             display: none;
         }
-
     `,
 	] as any;
 
