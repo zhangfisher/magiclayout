@@ -1,7 +1,5 @@
 import '@shoelace-style/shoelace/dist/shoelace.js';
 import '@shoelace-style/shoelace/dist/shoelace-autoloader.js';
-import '@shoelace-style/shoelace/dist/themes/light.css';
-import '@shoelace-style/shoelace/dist/themes/dark.css';
 import { customElement, query } from 'lit/decorators.js';
 import { css, html, LitElement, type PropertyValues } from 'lit';
 
@@ -78,7 +76,6 @@ export class MagicLayoutExamples extends LitElement {
 							icon: 'aperture',
 							label: '滤镜',
 							tips: '滤镜',
-							badge: 8,
 							labelPos: 'right',
 						},
 						{
@@ -86,6 +83,7 @@ export class MagicLayoutExamples extends LitElement {
 							label: '我的通知',
 							fixed: true,
 							tips: '通知',
+							badge: 2,
 							divider: true,
 						},
 						{ icon: 'camera', label: '我的相机', tips: '相机' },

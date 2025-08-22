@@ -1,7 +1,6 @@
-import { AutoStore, markRaw } from 'autostore';
+import { AutoStore } from 'autostore';
 import type { MagicLayoutOptions } from './types';
 import type { MagicLayoutStore } from '.';
-import { isFunction } from '@/utils/isFunction';
 
 export const defaultState = {
 	my: {

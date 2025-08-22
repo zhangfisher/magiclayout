@@ -51,9 +51,12 @@ export const overloads = css`
     }     
     sl-menu{
         min-width: 12em;
+        & sl-menu-item::part(prefix){
+            padding-left:0.2em;
+        }
         & sl-menu-item::part(label){
             text-align: left;                    
-            padding: 0.5em;
+            padding: 0.3em;
             padding-left: 0;  
         }
         & sl-menu-item::part(base){

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/** 
+/**
  * <magic-layout>
  */
 
-import { LitElement, html } from 'lit'
-import { property } from 'lit/decorators.js'
+import { LitElement, html } from 'lit';
+import { property } from 'lit/decorators.js';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
 import '@shoelace-style/shoelace/dist/components/tab/tab.js';
 import '@shoelace-style/shoelace/dist/components/input/input.js';
@@ -21,21 +21,24 @@ import '@shoelace-style/shoelace/dist/components/spinner/spinner.js';
 import '@shoelace-style/shoelace/dist/components/icon/icon.js';
 import '@shoelace-style/shoelace/dist/components/dropdown/dropdown.js';
 import '@shoelace-style/shoelace/dist/components/split-panel/split-panel.js';
-import type { IconLibrary, IconLibraryResolver } from '@shoelace-style/shoelace/dist/components/icon/library.js';
+import type {
+	IconLibrary,
+	IconLibraryResolver,
+} from '@shoelace-style/shoelace/dist/components/icon/library.js';
 import { createLayoutStore } from '@/context/store';
-import { root as rootStyles } from './styles/root'
+import { root as rootStyles } from './styles/root';
 import { provide } from '@lit/context';
-import { MagicLayoutContext } from '@/context'
+import { MagicLayoutContext } from '@/context';
 import { registerIconLibrary } from '@shoelace-style/shoelace';
 import { classMap } from 'lit/directives/class-map.js';
 import { presetIcons } from './icons';
-import '../Icon'
-import '../Toolbar'
-import './Sidebar'
-import './panels'
-import './Header'
-import './pages'
-import './workspace'
+import '../Icon';
+import '../Toolbar';
+import './Sidebar';
+import './panels';
+import './Header';
+import './pages';
+import './workspace';
 import type { MagicLayoutOptions } from '@/context/types';
 import { deepMerge } from 'flex-tools/object';
 import type { MagicLayoutSidebar } from './Sidebar';
@@ -44,126 +47,126 @@ import { when } from 'lit/directives/when.js';
 import { MediaQuery } from '@/controllers/mediaQuery';
 import { HostClasses } from '@/controllers/hostClasss';
 import { tag } from '@/utils/tag';
-import '../My'
-
+import '../My';
 
 @tag('magic-layout')
 export class MagicLayout extends LitElement {
-    static styles = rootStyles
+	static styles = rootStyles;
 
-    @provide({ context: MagicLayoutContext })
-    store = createLayoutStore()
+	@provide({ context: MagicLayoutContext })
+	store = createLayoutStore();
 
-    @property({ type: Object, reflect: true, attribute: false })
-    options?: Partial<MagicLayoutOptions>
+	@property({ type: Object, reflect: true, attribute: false })
+	options?: Partial<MagicLayoutOptions>;
 
-    @property({ type: String })
-    iconSet: string = 'https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/${name}.svg'
+	@property({ type: String })
+	iconSet: string =
+		'https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/${name}.svg';
 
-    @property({ type: Boolean, reflect: true })
-    fullScreen: boolean = false
+	@property({ type: Boolean, reflect: true })
+	fullScreen: boolean = false;
 
-    state: MagicLayoutOptions = this.store.state
+	state: MagicLayoutOptions = this.store.state;
 
-    classs = new HostClasses(this)
+	classs = new HostClasses(this);
 
-    mediaQuery = new MediaQuery(this, this.store.state.breakpoints)
+	mediaQuery = new MediaQuery(this, this.store.state.breakpoints);
 
+	constructor() {
+		super();
+		this.store.root = this;
+	}
+	get shadow() {
+		return this.shadowRoot!;
+	}
 
-    constructor() {
-        super()
-        this.store.root = this
-    }
-    get shadow() {
-        return this.shadowRoot!
-    }
+	get sibebar(): MagicLayoutSidebar {
+		return this.shadow.querySelector(
+			'magic-layout-sidebar',
+		) as MagicLayoutSidebar;
+	}
 
-    get sibebar(): MagicLayoutSidebar {
-        return this.shadow.querySelector('magic-layout-sidebar') as MagicLayoutSidebar
-    }
+	/**
+	 * 注册图标库
+	 */
+	registerIcons(
+		resolver: IconLibraryResolver,
+		options?: Omit<IconLibrary, 'name' | 'resolver'>,
+	) {
+		registerIconLibrary('default', {
+			resolver,
+			...(options || {}),
+		});
+	}
 
+	connectedCallback(): void {
+		super.connectedCallback();
+		this.registerIcons((name) => {
+			if (name in presetIcons) {
+				return `data:image/svg+xml,${encodeURIComponent((presetIcons as any)[name])}`;
+			} else {
+				return this.iconSet.replace('${name}', name);
+			}
+		});
+		if (typeof this.options === 'object') {
+			this.store.update(
+				(state) => {
+					deepMerge(state, this.options);
+				},
+				{
+					silent: true,
+				},
+			);
+		}
+	}
 
-    /**
-     * 注册图标库 
-     */
-    registerIcons(resolver: IconLibraryResolver, options?: Omit<IconLibrary, 'name' | 'resolver'>) {
-        registerIconLibrary('default', {
-            resolver,
-            ...options || {}
-        })
-    }
-
-    connectedCallback(): void {
-        super.connectedCallback()
-        this.registerIcons((name) => {
-            if (name in presetIcons) {
-                return `data:image/svg+xml,${encodeURIComponent((presetIcons as any)[name])}`;
-            } else {
-                return this.iconSet.replace('${name}', name)
-            }
-        })
-        if (typeof (this.options) === 'object') {
-            this.store.update((state) => {
-                deepMerge(state, this.options)
-            }, {
-                silent: true
-            })
-        }
-    }
-
-    renderContainer() {
-        return html`
+	renderContainer() {
+		return html`
             ${when(!this.state.header.fullRow, () => {
-            return html`<magic-layout-header part="header"></magic-layout-header> `
-        })}
+							return html`<magic-layout-header part="header"></magic-layout-header> `;
+						})}
             <magic-layout-tabs part="tabs" ></magic-layout-tabs>                 
             <magic-layout-workspace part="workspace" class="workspace"></magic-layout-workspace >   
-        `
-    }
+        `;
+	}
 
-    renderBodyWithHeader() {
-        return html`${toggleWrapper(this.state.header.fullRow, this.renderBody(), (content) => {
-            return html`<magic-flex  direction="column" class="fit body-wrapper">
+	renderBodyWithHeader() {
+		return html`${toggleWrapper(
+			this.state.header.fullRow,
+			this.renderBody(),
+			(content) => {
+				return html`<magic-flex  direction="column" class="fit body-wrapper">
                     <magic-layout-header part="header"></magic-layout-header>
                     <magic-flex grow="last" >
                         ${content}
                     </magic-flex>                    
                 </magic-flex>
-            `
-        })}`
-    }
-    renderBody() {
-        return html` 
+            `;
+			},
+		)}`;
+	}
+	renderBody() {
+		return html` 
             <magic-layout-sidebar part="sidebar"></magic-layout-sidebar>           
             <div class="container">
                ${this.renderContainer()}
             </div>
-        `
-    }
+        `;
+	}
 
-    render() {
-        return html`
+	render() {
+		return html`
         <div part="root" class="root ${classMap({
-            'full-screen': this.state.screen.full,
-        })}">
+					'full-screen': this.state.screen.full,
+				})}">
             ${this.renderBodyWithHeader()}
         </div>
-        `
-    }
-
-
+        `;
+	}
 }
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'magic-layout': MagicLayout
-    }
+	interface HTMLElementTagNameMap {
+		'magic-layout': MagicLayout;
+	}
 }
-
-
-
-// <!-- <magic-layout-sidebar part="sidebar" ></magic-layout-sidebar>
-// <div class="container">
-//    ${this.renderContainer()}
-// </div> -->
-// <!-- <magic-layout-drawer part="drawer"></magic-layout-drawer>   -->
