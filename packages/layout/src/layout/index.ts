@@ -32,8 +32,8 @@ import { MagicLayoutContext } from '@/context';
 import { registerIconLibrary } from '@shoelace-style/shoelace';
 import { classMap } from 'lit/directives/class-map.js';
 import { presetIcons } from './icons';
-import '../Icon';
-import '../Toolbar';
+import '../components/Icon';
+import '../components/Toolbar';
 import './Sidebar';
 import './panels';
 import './Header';
@@ -47,7 +47,7 @@ import { when } from 'lit/directives/when.js';
 import { MediaQuery } from '@/controllers/mediaQuery';
 import { HostClasses } from '@/controllers/hostClasss';
 import { tag } from '@/utils/tag';
-import '../My';
+import '../components/My';
 
 @tag('magic-layout')
 export class MagicLayout extends LitElement {
@@ -126,7 +126,9 @@ export class MagicLayout extends LitElement {
 							return html`<magic-layout-header part="header"></magic-layout-header> `;
 						})}
             <magic-layout-tabs part="tabs" ></magic-layout-tabs>                 
-            <magic-layout-workspace part="workspace" class="workspace"></magic-layout-workspace >   
+            <magic-layout-workspace part="workspace" class="workspace">
+                <slot name="workspace"></slot>
+            </magic-layout-workspace >   
         `;
 	}
 

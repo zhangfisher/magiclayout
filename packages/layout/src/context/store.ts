@@ -33,6 +33,7 @@ export const defaultState = {
 	theme: {
 		theme: 'light',
 		size: 'medium',
+		borderRadius: 4,
 		colors: {
 			primary: '#1890ff',
 			secondary: '#f5222d',
@@ -42,7 +43,6 @@ export const defaultState = {
 			info: '#1890ff',
 			neutral: '#f5f5f5',
 		},
-		borderRadius: 4,
 	},
 	breakpoints: {
 		sm: '576px',
@@ -112,7 +112,7 @@ export const defaultState = {
 		direction: 'col',
 	},
 	workspace: {
-		bgColor: '#fff',
+		bgColor: 'var(--auto-bgcolor)',
 	},
 	actions: [],
 } as MagicLayoutOptions;

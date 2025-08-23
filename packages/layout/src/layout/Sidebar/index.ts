@@ -4,7 +4,7 @@ import { Resizeable } from '@/controllers/resizeable';
 import { HostStyles } from '@/controllers/hostStyles';
 import * as styles from './styles';
 import '@/components/Logo';
-import { MagicElement } from '../../MagicElement';
+import { MagicElement } from '../../components/MagicElement';
 import type { RequiredMagicLayoutOptions } from '@/context/types';
 import { getCssSize } from '@/utils/getCssSize';
 import './header';

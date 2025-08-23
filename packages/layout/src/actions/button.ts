@@ -62,6 +62,12 @@ export class MagicLayoutActionButton extends MagicLayoutActionBase<'button'> {
         }
         sl-badge.badge{
             position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+        [slot="prefix"]{
+            position: relative;
+            display: flex
         }
     `,
 	] as any;
@@ -93,7 +99,7 @@ export class MagicLayoutActionButton extends MagicLayoutActionBase<'button'> {
             class="${classMap({
 							[labelPos]: true,
 						})}">
-            <span slot="prefix" style="position: relative; ">
+            <span slot="prefix" class="prefix">
                 <sl-icon name="${this.action.icon || 'file'}"></sl-icon>  
                 ${this._renderBadge()} 
             </span>

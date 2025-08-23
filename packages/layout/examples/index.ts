@@ -7,7 +7,7 @@ import '../src/styles/index.css';
 import 'themepro/index.css';
 export * from './flex';
 export * from './toolbar';
-import type { MagicLayout } from '../src/components/layout';
+import type { MagicLayout } from '../src/layout';
 
 @customElement('magic-layout-examples')
 export class MagicLayoutExamples extends LitElement {
@@ -121,7 +121,9 @@ export class MagicLayoutExamples extends LitElement {
 
 	render() {
 		return html`
-        <magic-layout .options=${this.getOptions()}></magic-layout> 
+        <magic-layout .options=${this.getOptions()}>
+            <div slot="workspace">sdsdsd</div>
+        </magic-layout> 
         `;
 	}
 }

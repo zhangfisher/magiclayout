@@ -1,8 +1,8 @@
 /**
  *
- *
+ *  <magic-layout>
  *   <magic-layout-settings></magic-layout-settings>
- *
+ *  </magic-layout>
  *
  *
  */
@@ -10,11 +10,59 @@ import '@autostorejs/form';
 import { html, LitElement } from 'lit';
 import styles from './styles.ts';
 import { tag } from '@/utils/tag.ts';
+import type { MagicLayout } from '@/layout/index.ts';
+import type { AutoStore } from 'autostore';
+import type { MagicLayoutOptions } from '@/context/types.ts';
+import { addSchemas } from './schemas.ts';
 
 @tag('magic-layout-settings')
 export class MagicLayoutSettings extends LitElement {
 	static styles = [styles];
+	_layout?: MagicLayout;
+	_store?: AutoStore<MagicLayoutOptions>;
+
+	connectedCallback() {
+		super.connectedCallback();
+		// 连接到DOM时获取layout元素
+		this._getLayout();
+		this._store = this._layout?.store;
+		addSchemas(this._store!);
+	}
+
+	/**
+	 * 从Shadow DOM的宿主开始查找layout元素
+	 * @returns MagicLayout
+	 */
+	_getLayout(): MagicLayout | undefined {
+		// 只从Shadow DOM的宿主开始查找
+		const rootNode = this.getRootNode() as ShadowRoot;
+		if (rootNode?.host) {
+			const host = rootNode.host;
+			if (host.tagName.toLowerCase() === 'magic-layout') {
+				this._layout = host as MagicLayout;
+				return this._layout;
+			}
+
+			// 从宿主元素继续向上查找
+			let parent = host.parentElement;
+			while (parent) {
+				if (parent.tagName.toLowerCase() === 'magic-layout') {
+					this._layout = parent as MagicLayout;
+					return this._layout;
+				}
+				parent = parent.parentElement;
+			}
+		}
+		console.warn(
+			'No magic-layout element found from Shadow DOM host of magic-layout-settings',
+		);
+		return undefined;
+	}
 	render() {
-		return html``;
+		if (!this._layout) return null;
+		return html`
+            <auto-form  label="主题">
+            </auto-form>
+        `;
 	}
 }
