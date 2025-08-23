@@ -72,10 +72,18 @@ export class MagicLayoutActionButton extends MagicLayoutActionBase<'button'> {
 	@property({ type: String })
 	labelPos: 'none' | 'bottom' | 'right' = 'none';
 
-	renderBadge() {
-		return html`${when(this.action.badge, () => {
+	_renderBadge() {
+		const badge = this.action.badge ? Number(this.action.badge) : 0;
+		return html`${when(badge > 0, () => {
 			return html`<sl-badge class='badge' variant="danger" pill pulse></sl-badge>`;
 		})} `;
+	}
+	_renderLabel() {
+		const labelPos = this.action.labelPos || this.labelPos;
+		return html`${when(
+			labelPos !== 'none',
+			() => html`<span>${this.action.label}</span>`,
+		)}`;
 	}
 	renderWidget() {
 		const labelPos = this.action.labelPos || this.labelPos;
@@ -87,14 +95,9 @@ export class MagicLayoutActionButton extends MagicLayoutActionBase<'button'> {
 						})}">
             <span slot="prefix" style="position: relative; ">
                 <sl-icon name="${this.action.icon || 'file'}"></sl-icon>  
-                ${this.renderBadge()} 
+                ${this._renderBadge()} 
             </span>
-            ${when(
-							labelPos !== 'none',
-							() => html`<span>${this.action.label}</span>`,
-						)}
-            
-            
+            ${this._renderLabel()}
         </sl-button>`;
 	}
 }
