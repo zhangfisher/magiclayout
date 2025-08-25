@@ -89,9 +89,3 @@ export const scrollbar = css`
         background-color: var(--sl-color-neutral-400, #94a3b8);
     }
 `;
-
-export const font = css`
-    .font{
-        font:300 1em/1.8 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
-    }        
-`;

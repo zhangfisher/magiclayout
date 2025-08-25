@@ -2,4 +2,5 @@ export * from './Flex';
 export * from './Container';
 export * from './Card';
 export * from './Toolbar';
-export * from '../layout';
+export * from './Settings';
+export * from './Icon';

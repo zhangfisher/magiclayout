@@ -61,8 +61,7 @@ export class MagicLayoutSettings extends LitElement {
 	render() {
 		if (!this._layout) return null;
 		return html`
-            <auto-form .store=${this._store}>  label="主题">
-            </auto-form>
+            <auto-form .store=${this._store}></auto-form>
         `;
 	}
 }

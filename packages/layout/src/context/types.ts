@@ -72,6 +72,7 @@ export type MagicLayoutLogoOptions = {
 };
 
 export type MagicLayoutWorkspaceOptions = {
+	type?: string;
 	bgColor?: string;
 	styles?: HTMLElementCustomStyles;
 	classs?: HTMLElementCustomClasss;

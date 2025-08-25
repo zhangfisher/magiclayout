@@ -121,8 +121,27 @@ export class MagicLayoutExamples extends LitElement {
 
 	render() {
 		return html`
-        <magic-layout .options=${this.getOptions()}>
-            <div slot="workspace">sdsdsd</div>
+        <magic-layout .options=${this.getOptions()}>  
+            <magic-layout-settings></magic-layout-settings>          
+             <div style="margin:2rem;border:1px solid blue;display:flex;height:400px;flex-direction:column;box-sizing: border-box;" >
+
+         <div style="display:flex;height:400px;box-sizing: border-box;" >
+            <div style="width:80px;display:flex;justify-content: center;position: relative;">
+               
+            </div>
+            <div style="flex-grow:1;padding: 1em;">
+                <magic-layout-logo direction="col"></magic-layout-logo>
+                <magic-layout-logo direction="row"></magic-layout-logo>
+                <magic-icon></magic-icon>
+            </div>
+            <div style="width:60px;display:flex;justify-content: center;position: relative;">
+                 
+            </div>  
+         </div>
+         <div>               
+         </div>
+         </div>
+            
         </magic-layout> 
         `;
 	}
@@ -133,3 +152,15 @@ declare global {
 		'magic-layout-examples': MagicLayoutExamples;
 	}
 }
+
+// <!-- <magic-layout-toolbar
+//                     class="fit"
+//                     vertical
+//                     location="left"
+//                     labelPos="bottom"
+
+//                 ></magic-layout-toolbar> --><!-- <magic-layout-toolbar
+//                     class="fit"
+//                     vertical
+//                     .items=${this.store.state.header.toolbar.items || []}
+//                 ></magic-layout-toolbar> -->

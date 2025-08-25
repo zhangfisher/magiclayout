@@ -21,24 +21,18 @@ import '@shoelace-style/shoelace/dist/components/spinner/spinner.js';
 import '@shoelace-style/shoelace/dist/components/icon/icon.js';
 import '@shoelace-style/shoelace/dist/components/dropdown/dropdown.js';
 import '@shoelace-style/shoelace/dist/components/split-panel/split-panel.js';
-import type {
-	IconLibrary,
-	IconLibraryResolver,
-} from '@shoelace-style/shoelace/dist/components/icon/library.js';
 import { createLayoutStore } from '@/context/store';
 import { root as rootStyles } from './styles/root';
 import { provide } from '@lit/context';
 import { MagicLayoutContext } from '@/context';
-import { registerIconLibrary } from '@shoelace-style/shoelace';
 import { classMap } from 'lit/directives/class-map.js';
-import { presetIcons } from './icons';
 import '../components/Icon';
 import '../components/Toolbar';
 import './Sidebar';
 import './panels';
 import './Header';
 import './pages';
-import './workspace';
+import '../workspaces';
 import type { MagicLayoutOptions } from '@/context/types';
 import { deepMerge } from 'flex-tools/object';
 import type { MagicLayoutSidebar } from './Sidebar';
@@ -48,6 +42,7 @@ import { MediaQuery } from '@/controllers/mediaQuery';
 import { HostClasses } from '@/controllers/hostClasss';
 import { tag } from '@/utils/tag';
 import '../components/My';
+import { registerIcons } from '@/utils/registerIcons';
 
 @tag('magic-layout')
 export class MagicLayout extends LitElement {
@@ -58,11 +53,6 @@ export class MagicLayout extends LitElement {
 
 	@property({ type: Object, reflect: true, attribute: false })
 	options?: Partial<MagicLayoutOptions>;
-
-	@property({ type: String })
-	iconSet: string =
-		'https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/${name}.svg';
-
 	@property({ type: Boolean, reflect: true })
 	fullScreen: boolean = false;
 
@@ -86,28 +76,9 @@ export class MagicLayout extends LitElement {
 		) as MagicLayoutSidebar;
 	}
 
-	/**
-	 * 注册图标库
-	 */
-	registerIcons(
-		resolver: IconLibraryResolver,
-		options?: Omit<IconLibrary, 'name' | 'resolver'>,
-	) {
-		registerIconLibrary('default', {
-			resolver,
-			...(options || {}),
-		});
-	}
-
 	connectedCallback(): void {
 		super.connectedCallback();
-		this.registerIcons((name) => {
-			if (name in presetIcons) {
-				return `data:image/svg+xml,${encodeURIComponent((presetIcons as any)[name])}`;
-			} else {
-				return this.iconSet.replace('${name}', name);
-			}
-		});
+		registerIcons();
 		if (typeof this.options === 'object') {
 			this.store.update(
 				(state) => {
@@ -119,16 +90,23 @@ export class MagicLayout extends LitElement {
 			);
 		}
 	}
-
+	renderWorkspace() {
+		if (this.store.state.workspace.type === 'tabs') {
+			return html`<magic-layout-tabs-workspace part="workspace">
+                <slot></slot>
+            </magic-layout-tabs-workspace>`;
+		} else {
+			return html`<magic-layout-stack-workspace part="workspace">
+                <slot></slot>
+            </magic-layout-stack-workspace>`;
+		}
+	}
 	renderContainer() {
 		return html`
             ${when(!this.state.header.fullRow, () => {
 							return html`<magic-layout-header part="header"></magic-layout-header> `;
 						})}
-            <magic-layout-tabs part="tabs" ></magic-layout-tabs>                 
-            <magic-layout-workspace part="workspace" class="workspace">
-                <slot name="workspace"></slot>
-            </magic-layout-workspace >   
+            ${this.renderWorkspace()}
         `;
 	}
 
