@@ -141,6 +141,12 @@ export type MagicLayoutUserOptions = {
 	classs?: HTMLElementCustomClasss;
 };
 
+export type MagicLayoutStarterOptions = {
+	visible: boolean;
+	styles?: HTMLElementCustomStyles;
+	classs?: HTMLElementCustomClasss;
+};
+
 export type MagicLayoutOptions = {
 	my: MagicLayoutUserOptions;
 	screen: MagicLayoutScreenOptions;
@@ -154,6 +160,7 @@ export type MagicLayoutOptions = {
 	actions: MagicLayoutAction[];
 	styles?: HTMLElementCustomStyles;
 	classs?: HTMLElementCustomClasss;
+	starter?: MagicLayoutStarterOptions;
 };
 
 export type RequiredMagicLayoutOptions = Required<MagicLayoutOptions>;

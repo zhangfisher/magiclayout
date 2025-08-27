@@ -35,27 +35,18 @@ export class MagicLayoutSettings extends LitElement {
 	 */
 	_getLayout(): MagicLayout | undefined {
 		// 只从Shadow DOM的宿主开始查找
-		const rootNode = this.getRootNode() as ShadowRoot;
-		if (rootNode?.host) {
-			const host = rootNode.host;
-			if (host.tagName.toLowerCase() === 'magic-layout') {
-				this._layout = host as MagicLayout;
+
+		// 从宿主元素继续向上查找
+		let parent = this.parentElement;
+		while (parent) {
+			if (parent.tagName.toLowerCase() === 'magic-layout') {
+				this._layout = parent as MagicLayout;
 				return this._layout;
 			}
-
-			// 从宿主元素继续向上查找
-			let parent = host.parentElement;
-			while (parent) {
-				if (parent.tagName.toLowerCase() === 'magic-layout') {
-					this._layout = parent as MagicLayout;
-					return this._layout;
-				}
-				parent = parent.parentElement;
-			}
+			parent = parent.parentElement;
 		}
-		console.warn(
-			'No magic-layout element found from Shadow DOM host of magic-layout-settings',
-		);
+
+		console.warn('No magic-layout element found from Shadow DOM host of magic-layout-settings');
 		return undefined;
 	}
 	render() {

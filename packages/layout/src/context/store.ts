@@ -115,10 +115,11 @@ export const defaultState = {
 		bgColor: 'var(--auto-bgcolor)',
 	},
 	actions: [],
+	starter: {
+		visible: false,
+	},
 } as MagicLayoutOptions;
 
 export function createLayoutStore(options?: MagicLayoutOptions) {
-	return new AutoStore<MagicLayoutOptions>(
-		Object.assign({}, defaultState, options),
-	) as MagicLayoutStore;
+	return new AutoStore<MagicLayoutOptions>(Object.assign({}, defaultState, options)) as MagicLayoutStore;
 }

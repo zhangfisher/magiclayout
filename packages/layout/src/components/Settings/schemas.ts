@@ -1,16 +1,12 @@
 import type { MagicLayoutOptions } from '@/context/types';
-import {
-	schema,
-	type SchemaDescriptorBuilder,
-	type AutoStore,
-} from 'autostore';
+import { schema, type SchemaDescriptorBuilder, type AutoStore } from 'autostore';
 
 const schemas = [
 	[
 		'theme.theme',
-		schema({
-			type: 'colorpicker',
+		schema('light', {
 			label: '主题颜色',
+			widget: 'colorpicker',
 		}),
 	],
 ] as unknown as [[string, SchemaDescriptorBuilder]];
