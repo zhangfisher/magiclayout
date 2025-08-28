@@ -1,20 +1,21 @@
+import { overloads } from '@/styles/overloads';
 /**
- * 
+ *
  * trigger用于控制sidebar的折叠与展开
- * 
+ *
  */
 
-import { MagicElement } from "@/components/MagicElement";
-import { tag } from "@/utils/tag";
-import { css, html } from "lit";
-import { classMap } from "lit/directives/class-map.js";
+import { MagicElement } from '@/components/MagicElement';
+import { tag } from '@/utils/tag';
+import { css, html } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 
-
-export type MagicSidebarTriggerOptions = boolean
+export type MagicSidebarTriggerOptions = boolean;
 
 @tag('magic-sidebar-trigger')
 export class MagicSidebarTrigger extends MagicElement<MagicSidebarTriggerOptions> {
-    static styles = css`
+	static styles = css`
+        ${overloads}
         sl-button::part(base){
             border:none;
             border-radius: 0px;
@@ -28,28 +29,26 @@ export class MagicSidebarTrigger extends MagicElement<MagicSidebarTriggerOptions
                 transform: rotate(-90deg);
             }
         }
-    `
+    `;
 
-    stateKey: string = 'sidebar.collapsed/'
+	stateKey: string = 'sidebar.collapsed/';
 
-
-    onTrigger() {
-        this.store.state.sidebar.collapsed = !this.store.state.sidebar.collapsed
-    }
-    render() {
-        return html`<sl-button             
-            class="sidebar-trigger ${classMap({ 'collapsed': this.store.state.sidebar.collapsed })}"
+	onTrigger() {
+		this.store.state.sidebar.collapsed = !this.store.state.sidebar.collapsed;
+	}
+	render() {
+		return html`<sl-button             
+            class="sidebar-trigger ${classMap({ collapsed: this.store.state.sidebar.collapsed })}"
             style="width: 100%;"
             @click=${this.onTrigger.bind(this)}
         >
             <sl-icon library="system" name="caret"></sl-icon>
-        </sl-button>`
-    }
+        </sl-button>`;
+	}
 }
 
-
 declare global {
-    interface HTMLElementTagNameMap {
-        'magic-sidebar-trigger': MagicSidebarTrigger
-    }
+	interface HTMLElementTagNameMap {
+		'magic-sidebar-trigger': MagicSidebarTrigger;
+	}
 }

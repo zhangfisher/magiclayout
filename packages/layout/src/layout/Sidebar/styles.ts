@@ -1,3 +1,4 @@
+import { overloads } from '@/styles/overloads';
 import { fit } from '@/styles/utils';
 import { css } from 'lit';
 
@@ -26,10 +27,13 @@ export const media = css`
 `;
 export const base = css`
     ${fit}
+    ${overloads}
     :host{
         position: relative;
         display: flex;
         z-index:9;        
+                background-color:var(--auto-panel-bgcolor);
+
         & > magic-flex{
             box-sizing: border-box;
             &>magic-logo,magic-sidebar-header,magic-sidebar-footer{
@@ -38,7 +42,7 @@ export const base = css`
         }
     } 
     :host(:not(.dragging)){
-        transition: width 0.5s ease-out;
+        transition: width 0.3s ease-out;
     }
     magic-layout-logo{
         border-bottom: var(--auto-border);

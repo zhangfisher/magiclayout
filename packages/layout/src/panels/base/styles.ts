@@ -6,6 +6,6 @@ export const styles = css`
         flex-grow: 1;
         min-width: 0;
         min-height: 0;
-        background-color: var(--auto-title-bgcolor);
+        background-color: var(--auto-bgcolor);
     }
 `;

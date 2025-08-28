@@ -37,6 +37,7 @@ export default css`
     :host{
         position: relative;
         display: flex;        
+        background-color:var(--auto-panel-bgcolor);
         & > .header{
             box-sizing: border-box; 
             & > magic-layout-logo{
@@ -70,6 +71,7 @@ export default css`
             overflow: unset;
         }
     }        
+    
     .sidebar-tigger{
         display:none;
     } 
