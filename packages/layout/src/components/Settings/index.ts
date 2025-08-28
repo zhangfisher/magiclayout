@@ -11,7 +11,7 @@ import { html, LitElement } from 'lit';
 import styles from './styles.ts';
 import { tag } from '@/utils/tag.ts';
 import type { MagicLayout } from '@/layout/index.ts';
-import type { AutoStore } from 'autostore';
+import type { Watcher, AutoStore } from 'autostore';
 import type { MagicLayoutOptions } from '@/context/types.ts';
 import { addSchemas } from './schemas.ts';
 
@@ -21,21 +21,54 @@ export class MagicLayoutSettings extends LitElement {
 	_layout?: MagicLayout;
 	_store?: AutoStore<MagicLayoutOptions>;
 
+	_subscribers: Watcher[] = [];
+
 	connectedCallback() {
 		super.connectedCallback();
 		// 连接到DOM时获取layout元素
 		this._getLayout();
 		this._store = this._layout?.store;
+		this._onChangeTheme();
 		addSchemas(this._store!);
 	}
 
+	disconnectedCallback(): void {
+		super.disconnectedCallback();
+		this._subscribers.forEach((subscriber) => subscriber.off());
+		this._subscribers = [];
+	}
+	_onChangeTheme() {
+		if (!this._store) return;
+		this._subscribers.push(
+			this._store!.watch('theme.*', ({ path, value }) => {
+				if (path[1] === 'theme') {
+					this._onChangeThemeColor(value);
+				}
+			}),
+		);
+	}
+	_onChangeThemeColor(color: string) {
+		if (color === '#FEFEFE') {
+			ThemePro.theme = 'light';
+		} else if (color === '#555') {
+			ThemePro.theme = 'dark';
+		} else if (color === 'red') {
+			ThemePro.theme = 'red';
+		} else if (color === 'blue') {
+			ThemePro.theme = 'blue';
+		} else {
+			ThemePro.theme = 'custom';
+			ThemePro.create({
+				name: 'custom',
+				theme: color,
+			});
+		}
+	}
 	/**
 	 * 从Shadow DOM的宿主开始查找layout元素
 	 * @returns MagicLayout
 	 */
 	_getLayout(): MagicLayout | undefined {
-		// 只从Shadow DOM的宿主开始查找
-
 		// 从宿主元素继续向上查找
 		let parent = this.parentElement;
 		while (parent) {
