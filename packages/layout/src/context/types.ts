@@ -39,7 +39,7 @@ export type MagicLayoutSidebarOptions = {
 	bgColor?: string; // 背景色
 	border?: number | boolean | string; // 是否显示边框
 	shadow?: string; //'none' | 'x-small' | 'small' | 'medium' | 'large' | 'x-large'
-	menu?: MagicMenubarOptions;
+	menu: MagicMenubarOptions;
 	footer: {
 		visible: boolean;
 		colorized: boolean; // 是否全彩色背景

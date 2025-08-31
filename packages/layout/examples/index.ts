@@ -64,6 +64,19 @@ export class MagicLayoutExamples extends LitElement {
 					],
 				},
 			},
+			sidebar: {
+				menu: {
+					items: [
+						{ label: '首页', icon: 'house' },
+						{ label: '用户管理', icon: 'user-round' },
+						{ label: '文章管理', icon: 'file-text' },
+						{ label: '发布文章', icon: 'rocket' },
+						{ label: '智能分析', icon: 'chart-pie' },
+						{ label: '权限管理', icon: 'shield' },
+						{ label: '系统设置', icon: 'settings' },
+					],
+				},
+			},
 			header: {
 				title: '管理系统',
 				logo: true,
@@ -150,15 +163,3 @@ declare global {
 		'magic-layout-examples': MagicLayoutExamples;
 	}
 }
-
-// <!-- <magic-layout-toolbar
-//                     class="fit"
-//                     vertical
-//                     location="left"
-//                     labelPos="bottom"
-
-//                 ></magic-layout-toolbar> --><!-- <magic-layout-toolbar
-//                     class="fit"
-//                     vertical
-//                     .items=${this.store.state.header.toolbar.items || []}
-//                 ></magic-layout-toolbar> -->

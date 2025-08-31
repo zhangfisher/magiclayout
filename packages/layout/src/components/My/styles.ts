@@ -78,15 +78,9 @@ export default css`
             align-items: center;
             gap: 0.2em;
             justify-content: center;
-            .badge{
-                border-radius: 50%;
-                background-color: rgba(255,255,255,0.5);
-                padding: 2px;
-                box-sizing: border-box;
-                margin-left: 0.2em;
-                min-width: 1.5em;
-                text-align: center;
-                font-size: 10px;
+            sl-badge::part(base){
+                border: none;
+                color:white;
             }
         }
         .title{

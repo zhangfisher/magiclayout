@@ -11,7 +11,7 @@ export default css`
         flex-wrap: nowrap;
         box-sizing: border-box;
         background-color: var(--auto-panel-bgcolor);
-        & > *{
+        & > * {
             display: flex;
             align-items: center;
         }

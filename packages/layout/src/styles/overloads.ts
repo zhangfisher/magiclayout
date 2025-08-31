@@ -53,6 +53,8 @@ export const overloads = css`
         min-width: 12em;
         & sl-menu-item::part(prefix){
             padding-left:0.2em;
+             font-size: calc(1.5 * var(--auto-font-size));
+            
         }
         & sl-menu-item::part(label){
             text-align: left;                    
@@ -62,9 +64,15 @@ export const overloads = css`
         & sl-menu-item::part(base){
             display: flex;
             align-items: center;
+            padding:  0.5em 1em;
+            
         }
         & sl-menu-item::part(checked-icon){
             display: none;
         } 
+        
     }
+    si-icon{
+                font-size: calc(1.5 * var(--auto-font-size));
+            }
 `;

@@ -53,11 +53,13 @@ export const base = css`
 export const header = css``;
 
 export const menu = css`
+    ${overloads}
     :host{
 
     }
     sl-menu{
-
+        border: none;
+        background: transparent;
     }
 `;
 export const footer = css``;
