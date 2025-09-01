@@ -1,28 +1,19 @@
 export type MagicMenubarItem = {
-	type?:
-		| 'button'
-		| 'dropdown'
-		| 'divider'
-		| 'checkbox'
-		| 'input'
-		| 'search'
-		| 'switch'
-		| 'popup-menu'
-		| 'popup-panel'
-		| 'avator';
+	type?: 'button' | 'divider' | 'popup-menu' | 'popup-panel';
 	icon?: string;
 	label?: string;
-	active?: boolean;
+	checked?: boolean;
 	disabled?: boolean;
 	badge?: string;
 	value?: any;
 	tips?: string;
-	onClick?: () => void;
-	onChange?: () => void;
+	bottom?: boolean;
+	onClick?: (e: any, item: MagicMenubarItem) => void;
+	onChange?: (e: any, item: MagicMenubarItem) => void;
 	children?: MagicMenubarItem[];
 };
 
 export type MagicMenubarOptions = {
 	visible?: boolean;
-	items?: (string | MagicMenubarItem)[];
+	items?: MagicMenubarItem[];
 };

@@ -53,26 +53,26 @@ export const overloads = css`
         min-width: 12em;
         & sl-menu-item::part(prefix){
             padding-left:0.2em;
-             font-size: calc(1.5 * var(--auto-font-size));
-            
+            font-size: calc(1.5 * var(--auto-font-size));            
         }
         & sl-menu-item::part(label){
             text-align: left;                    
             padding: 0.3em;
-            padding-left: 0;  
+            padding-left: 0;              
         }
         & sl-menu-item::part(base){
             display: flex;
             align-items: center;
             padding:  0.5em 1em;
-            
         }
         & sl-menu-item::part(checked-icon){
             display: none;
-        } 
-        
+        }
+        & sl-menu-item::part(base)::focus-visible .menu-item {
+            color:red;
+        }
     }
     si-icon{
-                font-size: calc(1.5 * var(--auto-font-size));
-            }
+        font-size: calc(1.5 * var(--auto-font-size));     
+    }
 `;

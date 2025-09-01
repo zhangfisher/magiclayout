@@ -55,11 +55,27 @@ export const header = css``;
 export const menu = css`
     ${overloads}
     :host{
-
+        display: flex;
+        flex-direction: column;
+    }
+    .empty{
+        flex-grow: 1;
     }
     sl-menu{
+        min-width: 2em;
         border: none;
         background: transparent;
+        & sl-menu-item::part(base){         
+            padding-right:  0.5em;
+        }
+        &[slot="submenu"]{
+            background-color: var(--auto-panel-bgcolor);
+            min-width: 12em;
+        }
+        & sl-menu-item:not(.has-submenu)::part(submenu-icon){
+            display: none;
+        }
+
     }
 `;
 export const footer = css``;
