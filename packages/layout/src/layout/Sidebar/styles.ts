@@ -62,12 +62,12 @@ export const menu = css`
         flex-grow: 1;
     }
     sl-menu{
-        min-width: 2em;
         border: none;
         background: transparent;
         & sl-menu-item::part(base){         
             padding-right:  0.5em;
         }
+
         &[slot="submenu"]{
             background-color: var(--auto-panel-bgcolor);
             min-width: 12em;
@@ -75,7 +75,16 @@ export const menu = css`
         & sl-menu-item:not(.has-submenu)::part(submenu-icon){
             display: none;
         }
-
+        & sl-menu-item .label{     
+            transition: width 0.3s ease-out;
+        }
     }
+    sl-menu.collapsed:not([slot="submenu"]){
+        width: 100%;
+        min-width:0px;
+        & sl-menu-item .label{         
+            display: none;
+        }   
+    }    
 `;
 export const footer = css``;

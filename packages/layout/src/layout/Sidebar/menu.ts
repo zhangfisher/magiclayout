@@ -1,17 +1,21 @@
-import { html, TemplateResult } from 'lit';
+import { html, type TemplateResult } from 'lit';
 import * as styles from './styles';
 import { tag } from '@/utils/tag';
 import type { MagicLayoutSidebarOptions } from '@/context/types';
 import { MagicElement } from '@/components/MagicElement';
 import { repeat } from 'lit/directives/repeat.js';
 import { when } from 'lit/directives/when.js';
-import { MagicMenubarItem } from '@/components/Menu/types';
+import type { MagicMenubarItem } from '@/components/Menu/types';
 import { classMap } from 'lit/directives/class-map.js';
+import { property } from 'lit/decorators.js';
 
 @tag('magic-sidebar-menu')
 export class MagicSidebarMenu extends MagicElement<MagicLayoutSidebarOptions['menu']> {
 	static styles = styles.menu;
 	stateKey: string = 'sidebar.menu';
+
+	@property({ type: Boolean, reflect: true })
+	collapsed: boolean = false;
 
 	_onClickMenu(e: any, item: MagicMenubarItem) {
 		item.onClick?.(e, item);
@@ -29,7 +33,7 @@ export class MagicSidebarMenu extends MagicElement<MagicLayoutSidebarOptions['me
                 ${when(item.icon, () => {
 									return html`<sl-icon slot="prefix" .name="${item.icon}"></sl-icon>`;
 								})}                
-                ${item.label}
+                <div class="label">${item.label}</div>
                 ${when(item.badge, () => {
 									return html`<sl-badge slot="suffix" variant="primary" pill>${item.badge}</sl-badge>`;
 								})}                   
@@ -41,7 +45,9 @@ export class MagicSidebarMenu extends MagicElement<MagicLayoutSidebarOptions['me
 	}
 	_renderMenu(items: MagicMenubarItem[], submenu: boolean = false): TemplateResult {
 		return html`
-            <sl-menu slot=${submenu ? 'submenu' : ''}>
+            <sl-menu slot=${submenu ? 'submenu' : ''} class="${classMap({
+							collapsed: !submenu && this.collapsed,
+						})}">
                 ${repeat(items || [], (item) => {
 									return this._renderMenuItem(item);
 								})}
@@ -56,9 +62,9 @@ export class MagicSidebarMenu extends MagicElement<MagicLayoutSidebarOptions['me
 
 		const bottomItems = this.state.items!.filter((item) => item.bottom) || [];
 		return html`
-        ${this._renderMenu(topItems)}
-        ${this._renderEmpty()}
-        ${this._renderMenu(bottomItems)}
+            ${this._renderMenu(topItems)}
+            ${this._renderEmpty()}
+            ${this._renderMenu(bottomItems)}
         `;
 	}
 }

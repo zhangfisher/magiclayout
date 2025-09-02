@@ -49,8 +49,7 @@ export class MagicElement<State> extends LitElement {
 				watchKeys.push(`${this.stateKey}.**`);
 			}
 		}
-		if (this.watchKeys && this.watchKeys.length > 0)
-			watchKeys.push(...this.watchKeys);
+		if (this.watchKeys && this.watchKeys.length > 0) watchKeys.push(...this.watchKeys);
 		if (stateKey && stateKey.length > 0) {
 			this.state = getVal(this.store?.state, stateKey, {});
 		}
@@ -60,7 +59,7 @@ export class MagicElement<State> extends LitElement {
 					watchKeys,
 					(operate) => {
 						if (operate.reply) return;
-						this.onStateUpdate(operate);
+						this._onStateUpdate(operate);
 					},
 					{
 						operates: 'write',
@@ -69,14 +68,15 @@ export class MagicElement<State> extends LitElement {
 			);
 		}
 	}
-
+	_onStateUpdate(operate: StateOperate) {
+		this.onStateUpdate(operate);
+		this.requestUpdate();
+	}
 	/**
 	 * 当组件的状态数据更新时触发
 	 * @param operate
 	 */
-	onStateUpdate(_: StateOperate) {
-		this.requestUpdate();
-	}
+	onStateUpdate(_: StateOperate) {}
 
 	disconnectedCallback(): void {
 		super.disconnectedCallback();
