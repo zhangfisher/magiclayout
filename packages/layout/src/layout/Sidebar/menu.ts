@@ -21,22 +21,37 @@ export class MagicSidebarMenu extends MagicElement<MagicLayoutSidebarOptions['me
 		item.onClick?.(e, item);
 		this.dispatchEvent(new CustomEvent('menu-click', { detail: item }));
 	}
-	_renderMenuItem(item: MagicMenubarItem): TemplateResult {
+
+	_renderBadge(item: MagicMenubarItem) {
+		const badge = item.badge ? Number(item.badge) : 0;
+		return html`${when(badge > 0 && !this.collapsed, () => {
+			return html`<sl-badge class='badge' slot="suffix"  variant="danger" pill pulse>${item.badge}</sl-badge>`;
+		})} `;
+	}
+	_renderRedDot(item: MagicMenubarItem) {
+		const badge = item.badge ? Number(item.badge) : 0;
+		return html`${when(badge > 0 && this.collapsed, () => {
+			return html`<sl-badge class='reddot' variant="danger" pill pulse></sl-badge>`;
+		})} `;
+	}
+	_renderMenuItem(item: MagicMenubarItem, submenu: boolean = false): TemplateResult {
 		const hasChildren = Array.isArray(item.children) && item.children.length > 0;
 		return html`<sl-menu-item
                 @click=${(e: any) => this._onClickMenu(e, item)}
                 class=${classMap({
 									'has-submenu': hasChildren,
 									checked: !!item.checked,
+									collapsed: !submenu && this.collapsed,
 								})}
-            >
+                >
                 ${when(item.icon, () => {
-									return html`<sl-icon slot="prefix" .name="${item.icon}"></sl-icon>`;
-								})}                
+									return html`<span slot="prefix" class="prefix">
+                                        <sl-icon slot="prefix" .name="${item.icon}"></sl-icon>
+                                        ${this._renderRedDot(item)}
+                                    </span>`;
+								})}
                 <div class="label">${item.label}</div>
-                ${when(item.badge, () => {
-									return html`<sl-badge slot="suffix" variant="primary" pill>${item.badge}</sl-badge>`;
-								})}                   
+                ${this._renderBadge(item)}                
                 ${when(hasChildren, () => {
 									return this._renderMenu(item.children!, true) as any;
 								})}
@@ -49,7 +64,7 @@ export class MagicSidebarMenu extends MagicElement<MagicLayoutSidebarOptions['me
 							collapsed: !submenu && this.collapsed,
 						})}">
                 ${repeat(items || [], (item) => {
-									return this._renderMenuItem(item);
+									return this._renderMenuItem(item, submenu);
 								})}
             </sl-menu>`;
 	}

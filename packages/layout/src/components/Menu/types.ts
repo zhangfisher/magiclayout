@@ -15,5 +15,6 @@ export type MagicMenubarItem = {
 
 export type MagicMenubarOptions = {
 	visible?: boolean;
+	label?: 'auto' | 'always';
 	items?: MagicMenubarItem[];
 };
