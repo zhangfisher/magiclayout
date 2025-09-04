@@ -21,6 +21,7 @@ export class MagicSidebarMenu extends MagicElement<MagicLayoutSidebarOptions['me
 		item.onClick?.(e, item);
 		this.dispatchEvent(new CustomEvent('menu-click', { detail: item }));
 	}
+	_onItemChecked(item: MagicMenubarItem) {}
 
 	_renderBadge(item: MagicMenubarItem) {
 		const badge = item.badge ? Number(item.badge) : 0;
@@ -42,10 +43,11 @@ export class MagicSidebarMenu extends MagicElement<MagicLayoutSidebarOptions['me
 									'has-submenu': hasChildren,
 									checked: !!item.checked,
 									collapsed: !submenu && this.collapsed,
+									'always-label': this.state.label === 'always',
 								})}
                 >
                 ${when(item.icon, () => {
-									return html`<span slot="prefix" class="prefix">
+									return html`<span slot="prefix" class="${submenu ? '' : 'prefix'}">
                                         <sl-icon slot="prefix" .name="${item.icon}"></sl-icon>
                                         ${this._renderRedDot(item)}
                                     </span>`;

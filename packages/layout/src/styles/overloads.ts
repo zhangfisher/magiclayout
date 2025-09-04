@@ -11,7 +11,7 @@ export const overloads = css`
     sl-icon::part(svg){
         stroke-width: 1px!important;
     }    
-    sl-icon{
+    sl-icon{        
         color: var(--auto-color);
     }
     sl-button::part(base){

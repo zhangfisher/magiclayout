@@ -66,12 +66,15 @@ export class MagicLayoutExamples extends LitElement {
 			},
 			sidebar: {
 				menu: {
+					checked: [],
+					multiple: false,
 					items: [
-						{ label: '首页', icon: 'house' },
-						{ label: '用户管理', icon: 'user-round' },
-						{ label: '文章管理', icon: 'file-text' },
-						{ label: '发布文章', icon: 'rocket', badge: 8 },
+						{ id: 'home', label: '首页', icon: 'house' },
+						{ id: 'user', label: '用户管理', icon: 'user-round' },
+						{ id: 'article', label: '文章管理', icon: 'file-text', checked: true },
+						{ id: 'publish', label: '发布文章', icon: 'rocket', badge: 8 },
 						{
+							id: 'analysis',
 							label: '智能分析',
 							icon: 'chart-pie',
 							children: [
@@ -82,8 +85,8 @@ export class MagicLayoutExamples extends LitElement {
 								{ label: '智能分析', icon: 'chart-pie' },
 							],
 						},
-						{ label: '权限管理', icon: 'shield' },
-						{ label: '系统设置', icon: 'settings', bottom: true },
+						{ id: 'perm', label: '权限管理', icon: 'shield' },
+						{ id: 'settings', label: '系统设置', icon: 'settings', bottom: true },
 					],
 				},
 			},

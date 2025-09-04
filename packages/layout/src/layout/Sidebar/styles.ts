@@ -61,13 +61,17 @@ export const menu = css`
     .empty{
         flex-grow: 1;
     }
+    sl-icon{         
+        color: var(--sl-color-neutral-700);
+    }
     sl-menu{
         border: none;
         background: transparent;
+        min-width: 6em;
         & sl-menu-item::part(base){         
             padding-right:  0.5em;
         }
-
+        
         &[slot="submenu"]{
             background-color: var(--auto-panel-bgcolor);
             min-width: 12em;
@@ -124,16 +128,26 @@ export const menu = css`
     sl-menu-item.collapsed::part(submenu-icon){
         display: none;
     }
-    sl-menu-item.collapsed .prefix::before{
+    sl-menu-item.collapsed.has-submenu .prefix::before{
         content: ' ';
         position: absolute;
-        top: calc(50% - 6px);
+        top: calc(50% - 4px);
         left: calc(100% + 4px);
-        height: 12px;
-        border: 6px solid transparent;
-        border-left: 6px solid var(--auto-color);
-        /* transform: translateX(100%); */
+        height: 8px;
+        border: 4px solid transparent;
+        border-left: 4px solid var(--auto-color);
         box-sizing: border-box;
+        opacity:0.2;
     }
+    sl-menu-item.checked{
+        background-color: var(--auto-title-bgcolor);
+    }
+    sl-menu-item:focus-visible::part(prefix) {
+        border: 1px solid red;         
+        sl-icon{
+            color: red; 
+        }
+    }
+
 `;
 export const footer = css``;

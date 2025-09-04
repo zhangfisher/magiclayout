@@ -18,7 +18,7 @@ import { isPathEq, type StateOperate } from 'autostore';
 @customElement('magic-layout-sidebar')
 export class MagicLayoutSidebar extends MagicElement<RequiredMagicLayoutOptions['sidebar']> {
 	static styles = styles.base;
-	resizeable = new Resizeable(this, { direction: 'right' });
+	resizeable = new Resizeable(this, { direction: 'right', minWidth: 150 });
 	styles = new HostStyles(this);
 	stateKey = 'sidebar';
 	watchKeys: string[] = ['sidebar.collapsed'];
