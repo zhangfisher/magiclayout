@@ -141,13 +141,9 @@ export const menu = css`
     }
     sl-menu-item.checked{
         background-color: var(--auto-title-bgcolor);
+    } 
+    sl-menu-item:focus-visible [slot="prefix"] {
+        color: var(--auto-title-bgcolor); 
     }
-    sl-menu-item:focus-visible::part(prefix) {
-        border: 1px solid red;         
-        sl-icon{
-            color: red; 
-        }
-    }
-
 `;
 export const footer = css``;

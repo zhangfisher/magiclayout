@@ -15,7 +15,6 @@ export type MagicSidebarTriggerOptions = boolean;
 @tag('magic-sidebar-trigger')
 export class MagicSidebarTrigger extends MagicElement<MagicSidebarTriggerOptions> {
 	static styles = css`
-        ${overloads}
         sl-button::part(base){
             border:none;
             border-radius: 0px;
@@ -27,7 +26,7 @@ export class MagicSidebarTrigger extends MagicElement<MagicSidebarTriggerOptions
         sl-button.collapsed{
             sl-icon{
                 transform: rotate(-90deg);
-            }
+            } 
         }
     `;
 

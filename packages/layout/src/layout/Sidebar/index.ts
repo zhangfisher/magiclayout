@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import { Resizeable } from '@/controllers/resizeable';
 import { HostStyles } from '@/controllers/hostStyles';
 import * as styles from './styles';
@@ -18,7 +18,8 @@ import { isPathEq, type StateOperate } from 'autostore';
 @customElement('magic-layout-sidebar')
 export class MagicLayoutSidebar extends MagicElement<RequiredMagicLayoutOptions['sidebar']> {
 	static styles = styles.base;
-	resizeable = new Resizeable(this, { direction: 'right', minWidth: 150 });
+	resizeableController = new Resizeable(this, { direction: 'right', minWidth: 150 });
+
 	styles = new HostStyles(this);
 	stateKey = 'sidebar';
 	watchKeys: string[] = ['sidebar.collapsed'];
@@ -26,16 +27,23 @@ export class MagicLayoutSidebar extends MagicElement<RequiredMagicLayoutOptions[
 	@query('magic-layout-logo')
 	logoEle?: MagicLayoutLogo;
 
+	@property({ type: Boolean, reflect: true })
+	collapable: boolean = true;
+
+	@property({ type: Boolean, reflect: true })
+	resizeable: boolean = true;
+
 	connectedCallback(): void {
 		super.connectedCallback();
+		this.resizeableController.enable = this.resizeable;
 	}
 
 	_onSidebarCollapsed(value: boolean) {
 		this.state.collapsed = value;
 		if (value) {
-			this.resizeable.enable = false;
+			this.resizeableController.enable = false;
 		} else {
-			this.resizeable.enable = true;
+			this.resizeableController.enable = true;
 		}
 	}
 	onStateUpdate({ path, value }: StateOperate) {
@@ -77,7 +85,7 @@ export class MagicLayoutSidebar extends MagicElement<RequiredMagicLayoutOptions[
             >
                 ${when(this.store.state.logo.pos === 'sidebar', () => html`<magic-layout-logo ?collapsed=${this.state.collapsed}> </magic-layout-logo>`)}
                 <magic-sidebar-menu .collapsed=${this.state.collapsed}></magic-sidebar-menu> 
-                <magic-sidebar-trigger> </magic-sidebar-trigger>
+                ${when(this.collapable, () => html`<magic-sidebar-trigger> </magic-sidebar-trigger>`)}                
             </magic-flex>
         `;
 	}

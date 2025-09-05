@@ -8,6 +8,7 @@ import { when } from 'lit/directives/when.js';
 import type { MagicMenubarItem } from '@/components/Menu/types';
 import { classMap } from 'lit/directives/class-map.js';
 import { property } from 'lit/decorators.js';
+import { toggleWrapper } from '@/utils/toggleWrapper';
 
 @tag('magic-sidebar-menu')
 export class MagicSidebarMenu extends MagicElement<MagicLayoutSidebarOptions['menu']> {
@@ -17,11 +18,19 @@ export class MagicSidebarMenu extends MagicElement<MagicLayoutSidebarOptions['me
 	@property({ type: Boolean, reflect: true })
 	collapsed: boolean = false;
 
-	_onClickMenu(e: any, item: MagicMenubarItem) {
-		item.onClick?.(e, item);
-		this.dispatchEvent(new CustomEvent('menu-click', { detail: item }));
+	_onClickMenu = (e: any) => {
+		console.log('menu item click:', e.target);
+	};
+	connectedCallback(): void {
+		super.connectedCallback();
+		this.addEventListener('click', this._onClickMenu);
 	}
-	_onItemChecked(item: MagicMenubarItem) {}
+
+	// _onClickMenu(e: any, item: MagicMenubarItem) {
+	// 	item.onClick?.(e, item);
+	// 	this.dispatchEvent(new CustomEvent('menu-click', { detail: item }));
+	// }
+	_onItemCheck(item: MagicMenubarItem) {}
 
 	_renderBadge(item: MagicMenubarItem) {
 		const badge = item.badge ? Number(item.badge) : 0;
@@ -35,10 +44,17 @@ export class MagicSidebarMenu extends MagicElement<MagicLayoutSidebarOptions['me
 			return html`<sl-badge class='reddot' variant="danger" pill pulse></sl-badge>`;
 		})} `;
 	}
+	_renderPrefixIcon(item: MagicMenubarItem, submenu: boolean = false) {
+		if (!item.icon) return;
+		return html`<span slot="prefix" class="${submenu ? '' : 'prefix'}">
+                                        <sl-icon slot="prefix" .name="${item.icon}"></sl-icon>
+                                        ${this._renderRedDot(item)}
+                                    </span>`;
+	}
 	_renderMenuItem(item: MagicMenubarItem, submenu: boolean = false): TemplateResult {
 		const hasChildren = Array.isArray(item.children) && item.children.length > 0;
 		return html`<sl-menu-item
-                @click=${(e: any) => this._onClickMenu(e, item)}
+                title="${item.tips || item.label || ''}"
                 class=${classMap({
 									'has-submenu': hasChildren,
 									checked: !!item.checked,
@@ -46,12 +62,7 @@ export class MagicSidebarMenu extends MagicElement<MagicLayoutSidebarOptions['me
 									'always-label': this.state.label === 'always',
 								})}
                 >
-                ${when(item.icon, () => {
-									return html`<span slot="prefix" class="${submenu ? '' : 'prefix'}">
-                                        <sl-icon slot="prefix" .name="${item.icon}"></sl-icon>
-                                        ${this._renderRedDot(item)}
-                                    </span>`;
-								})}
+                ${this._renderPrefixIcon(item, submenu)}
                 <div class="label">${item.label}</div>
                 ${this._renderBadge(item)}                
                 ${when(hasChildren, () => {
@@ -64,6 +75,7 @@ export class MagicSidebarMenu extends MagicElement<MagicLayoutSidebarOptions['me
 		return html`
             <sl-menu slot=${submenu ? 'submenu' : ''} class="${classMap({
 							collapsed: !submenu && this.collapsed,
+							submenu,
 						})}">
                 ${repeat(items || [], (item) => {
 									return this._renderMenuItem(item, submenu);

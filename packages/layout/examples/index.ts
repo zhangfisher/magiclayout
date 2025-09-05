@@ -66,22 +66,23 @@ export class MagicLayoutExamples extends LitElement {
 			},
 			sidebar: {
 				menu: {
-					checked: [],
-					multiple: false,
+					groups: {
+						'*': {},
+					},
 					items: [
 						{ id: 'home', label: '首页', icon: 'house' },
-						{ id: 'user', label: '用户管理', icon: 'user-round' },
-						{ id: 'article', label: '文章管理', icon: 'file-text', checked: true },
-						{ id: 'publish', label: '发布文章', icon: 'rocket', badge: 8 },
+						{ id: 'user', label: '用户管理', tips: '用户管理', icon: 'user-round' },
+						{ id: 'article', label: '文章管理', tips: '文章管理', icon: 'file-text', checked: true },
+						{ id: 'publish', label: '发布文章', tips: '发布文章', icon: 'rocket', badge: 8 },
 						{
 							id: 'analysis',
 							label: '智能分析',
 							icon: 'chart-pie',
 							children: [
+								{ label: '智能分析', icon: 'file' },
+								{ label: '智能分析', icon: 'settings' },
 								{ label: '智能分析', icon: 'chart-pie' },
-								{ label: '智能分析', icon: 'chart-pie' },
-								{ label: '智能分析', icon: 'chart-pie' },
-								{ label: '智能分析', icon: 'chart-pie' },
+								{ label: '智能分析', icon: 'aperture' },
 								{ label: '智能分析', icon: 'chart-pie' },
 							],
 						},
