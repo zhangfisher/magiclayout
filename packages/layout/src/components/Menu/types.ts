@@ -28,7 +28,7 @@ export type MagicMenuItemGroup = {
 export type MagicMenuItemAction = {
 	id: string;
 	icon: string;
-	tips?: string;
+	label?: string;
 	checked?: boolean;
 	enabled?: boolean;
 	value?: any;

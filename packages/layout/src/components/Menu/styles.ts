@@ -1,3 +1,4 @@
+import { overloads } from '@/styles/overloads';
 import { css } from 'lit';
 
 // const media = css`
@@ -24,6 +25,7 @@ import { css } from 'lit';
 // `
 
 export default css`     
+    ${overloads}
     :host{
         display: flex;
         position: relative;
@@ -55,6 +57,9 @@ export default css`
         &>.ml-label{
             flex-grow: 1;
             min-width: 0px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;            
         }
         &>.ml-badge{
 
@@ -64,20 +69,21 @@ export default css`
             position: relative;
             align-items:center;
             gap: 0.1em;
-            & > magic-icon{
+            magic-icon.action{
                 cursor: pointer;
                 border-radius: 6px;
                 padding: 0.3em;
                 width: 1em;
                 height: 1em;
                 background: rgba(0,0,0,0.05);
+                color:var(--auto-color);
             }
-            magic-icon:hover{                
+            magic-icon.action:hover{                
                 border-radius: 5px;
                 background: rgba(0,0,0,0.1);
                 color:var(--auto-primary-color);
             } 
-            magic-icon:active{
+            magic-icon.action:active{
                 background: rgba(0,0,0,0.2);
             } 
 

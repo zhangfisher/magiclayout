@@ -63,14 +63,11 @@ export const overloads = css`
         & sl-menu-item::part(base){
             display: flex;
             align-items: center;
-            padding:  0.5em 1em;
+            padding: calc(0.2 * var(--auto-padding)) var(--auto-padding);
         }
         & sl-menu-item::part(checked-icon){
             display: none;
-        }
-        & sl-menu-item::part(base)::focus-visible .menu-item {
-            color:red;
-        }
+        } 
     }
     si-icon{
         font-size: calc(1.5 * var(--auto-font-size));     

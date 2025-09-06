@@ -42,7 +42,7 @@ import { MediaQuery } from '@/controllers/mediaQuery';
 import { HostClasses } from '@/controllers/hostClasss';
 import { tag } from '@/utils/tag';
 import '../components/My';
-import { registerIcons } from '@/utils/registerIcons';
+import { registerIcons } from '@/icons';
 
 @tag('magic-layout')
 export class MagicLayout extends LitElement {
@@ -71,9 +71,7 @@ export class MagicLayout extends LitElement {
 	}
 
 	get sibebar(): MagicLayoutSidebar {
-		return this.shadow.querySelector(
-			'magic-layout-sidebar',
-		) as MagicLayoutSidebar;
+		return this.shadow.querySelector('magic-layout-sidebar') as MagicLayoutSidebar;
 	}
 
 	connectedCallback(): void {
@@ -111,19 +109,15 @@ export class MagicLayout extends LitElement {
 	}
 
 	renderBodyWithHeader() {
-		return html`${toggleWrapper(
-			this.state.header.fullRow,
-			this.renderBody(),
-			(content) => {
-				return html`<magic-flex  direction="column" class="fit body-wrapper">
+		return html`${toggleWrapper(this.state.header.fullRow, this.renderBody(), (content) => {
+			return html`<magic-flex  direction="column" class="fit body-wrapper">
                     <magic-layout-header part="header"></magic-layout-header>
                     <magic-flex grow="last" >
                         ${content}
                     </magic-flex>                    
                 </magic-flex>
             `;
-			},
-		)}`;
+		})}`;
 	}
 	renderBody() {
 		return html` 
