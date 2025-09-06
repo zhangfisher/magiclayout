@@ -1,7 +1,7 @@
 import type { HTMLElementCustomClasss, HTMLElementCustomStyles } from '@/types';
-import type { MagicMenubarOptions } from '../components/Menu/types';
 import type { MagicLayoutAction } from '@/actions/types';
 import type { ThemeOptions } from 'themepro';
+import type { MagicSideMenuOptions } from '@/layout/Sidebar/types';
 
 export type MagicLayoutToolbarOptions = {
 	visible?: boolean;
@@ -39,7 +39,7 @@ export type MagicLayoutSidebarOptions = {
 	bgColor?: string; // 背景色
 	border?: number | boolean | string; // 是否显示边框
 	shadow?: string; //'none' | 'x-small' | 'small' | 'medium' | 'large' | 'x-large'
-	menu: MagicMenubarOptions;
+	menu: MagicSideMenuOptions;
 	footer: {
 		visible: boolean;
 		colorized: boolean; // 是否全彩色背景
@@ -135,7 +135,7 @@ export type MagicLayoutUserOptions = {
 	 * 登录时间
 	 */
 	loginAt: number;
-	menu?: MagicMenubarOptions;
+	menu?: MagicSideMenuOptions;
 	toolbar?: MagicLayoutToolbarOptions;
 	styles?: HTMLElementCustomStyles;
 	classs?: HTMLElementCustomClasss;

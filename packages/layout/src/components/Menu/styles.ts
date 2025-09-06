@@ -1,38 +1,33 @@
-import { css } from "lit";
+import { css } from 'lit';
 
-export default css`
+// const media = css`
+
+//     @media (max-width: 575.98px) {
+
+//     }
+//     @media (min-width: 576px) and (max-width: 767.98px) {
+
+//     }
+
+//     @media (min-width: 768px) and (max-width: 991.98px) {
+//         /* 大屏幕设备（桌面）样式 */
+
+//     }
+
+//     @media (min-width: 992px) and (max-width: 1199.98px) {
+//         /* 超大屏幕设备（大桌面）样式 */
+//     }
+
+//     @media (min-width: 1200px) {
+//         /* 超超大屏幕设备（超大桌面）样式 */
+//     }
+// `
+
+export default css`     
     :host{
-        display: flex;
-        position: relative;
-        flex-direction: row;
-        flex-wrap: wrap;
-        padding: 4px;
-    }   
-    .toolbar{
-        display: flex;
-        position: relative;
-        flex-direction: row;
-        &.vert{
-            flex-direction: column;
-        }
-    }
-    sl-button::part(base){
-        border:none;
-        padding:0px 8px;
-        color: var(--sl-color-gray-700);
-        & sl-icon{
-            color:red;
-            & .lucide{
-                stroke-width: 1;
-            }
-        }
-    }
-    sl-icon::part(svg){
-            stroke-width: 1px!important;
-    }
-
-    sl-button::part(label){
-        padding: 0px ;
-    }
-
-`
+        padding: 0.5em;
+        cursor: pointer;
+    }         
+    
+    
+`;

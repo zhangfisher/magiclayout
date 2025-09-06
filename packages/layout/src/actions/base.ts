@@ -1,15 +1,10 @@
 import { overloads } from '@/styles/overloads';
-import type {
-	MagicLayoutAction,
-	MagicLayoutActionTypes,
-} from '@/actions/types';
+import type { MagicLayoutAction, MagicLayoutActionTypes } from '@/actions/types';
 import { toggleWrapper } from '@/utils/toggleWrapper';
 import { css, html, LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
 
-export class MagicLayoutActionBase<
-	T extends MagicLayoutActionTypes = 'button',
-> extends LitElement {
+export class MagicLayoutActionBase<T extends MagicLayoutActionTypes = 'button'> extends LitElement {
 	static styles = css`
         ${overloads}       
         sl-button::part(base){
@@ -46,19 +41,20 @@ export class MagicLayoutActionBase<
 	}
 
 	render() {
-		return html`
-            ${toggleWrapper(
-							!!this.action.tips,
-							this.renderWidget(),
-							(content) => {
-								return html`<sl-tooltip 
-                    placement="${this.vertical ? 'right' : 'bottom'}"
-                    content="${this.action.tips!}" 
-                >  
-                    ${content}
-            </sl-tooltip>`;
-							},
-						)}
-        `;
+		return this.renderWidget();
+		// return html`
+		//     ${toggleWrapper(
+		// 					!!this.action.tips,
+		// 					this.renderWidget(),
+		// 					(content) => {
+		// 						return html`<sl-tooltip
+		//             placement="${this.vertical ? 'right' : 'bottom'}"
+		//             content="${this.action.tips!}"
+		//         >
+		//             ${content}
+		//     </sl-tooltip>`;
+		// 					},
+		// 				)}
+		// `;
 	}
 }

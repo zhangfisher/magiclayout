@@ -1,4 +1,3 @@
-import { overloads } from '@/styles/overloads';
 /**
  *
  * trigger用于控制sidebar的折叠与展开
@@ -18,6 +17,7 @@ export class MagicSidebarTrigger extends MagicElement<MagicSidebarTriggerOptions
         sl-button::part(base){
             border:none;
             border-radius: 0px;
+            background: transparent;
         }
         sl-icon{
             transition: transform 0.2s ease-in;
@@ -27,6 +27,9 @@ export class MagicSidebarTrigger extends MagicElement<MagicSidebarTriggerOptions
             sl-icon{
                 transform: rotate(-90deg);
             } 
+        }
+        sl-button::part(base):hover{
+            background-color: var(--auto-title-bgcolor);
         }
     `;
 

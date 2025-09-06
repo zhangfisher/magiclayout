@@ -1,35 +1,42 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/**
- *
- *
- *  <magic-toobar></magic-toobar>
- *
- */
-
+import { MagicElement } from '../MagicElement';
+import styles from './styles';
+import { tag } from '@/utils/tag';
+import type { MagicMenuItem, MagicMenuOptions } from './types';
 import { html } from 'lit';
 import { property } from 'lit/decorators.js';
-import styles from './styles';
-import '@shoelace-style/shoelace/dist/components/button/button.js';
-import { tag } from '@/utils/tag';
-import { MagicElement } from '../MagicElement';
-import type { MagicLayoutSidebarOptions } from '@/context/types';
+import { repeat } from 'lit/directives/repeat.js';
+import { switch } from 'lit/directives/switch.js';
 
-@tag('magic-layout-menubar')
-export class MagicMenubar extends MagicElement<MagicLayoutSidebarOptions['menu']> {
+@tag('magic-menu')
+export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 	static styles = styles;
+	stateKey: string = 'my';
 
-	@property({ type: String })
-	title: string = '';
+	@property({ type: String, reflect: true })
+	sstateKey: string = '';
 
-	render() {
+	_renderItem(item: MagicMenuItem, parent?: MagicMenuItem) {}
+
+	_renderPopoverItem(item: MagicMenuItem) {
 		return html`
-            
+            <sl-dropdown>   </sl-dropdown>
         `;
 	}
-}
+	_renderSubmenu(item: MagicMenuItem, parent: MagicMenuItem) {
+		return html`
 
-declare global {
-	interface HTMLElementTagNameMap {
-		'magic-menubar': MagicMenubar;
+        `;
+	}
+	render() {
+		return html`${repeat(this.state.items || [], (item) => {
+            return html`${switch(item.type)}`
+			if(item.children){
+
+            }else{
+
+            }
+            
+			return this._renderItem(item);
+		})}`;
 	}
 }

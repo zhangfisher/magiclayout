@@ -5,10 +5,9 @@ import type { MagicLayoutSidebarOptions } from '@/context/types';
 import { MagicElement } from '@/components/MagicElement';
 import { repeat } from 'lit/directives/repeat.js';
 import { when } from 'lit/directives/when.js';
-import type { MagicMenubarItem } from '@/components/Menu/types';
 import { classMap } from 'lit/directives/class-map.js';
 import { property } from 'lit/decorators.js';
-import { toggleWrapper } from '@/utils/toggleWrapper';
+import type { MagicSideMenuItem } from './types';
 
 @tag('magic-sidebar-menu')
 export class MagicSidebarMenu extends MagicElement<MagicLayoutSidebarOptions['menu']> {
@@ -26,32 +25,28 @@ export class MagicSidebarMenu extends MagicElement<MagicLayoutSidebarOptions['me
 		this.addEventListener('click', this._onClickMenu);
 	}
 
-	// _onClickMenu(e: any, item: MagicMenubarItem) {
-	// 	item.onClick?.(e, item);
-	// 	this.dispatchEvent(new CustomEvent('menu-click', { detail: item }));
-	// }
-	_onItemCheck(item: MagicMenubarItem) {}
+	_onItemCheck(item: MagicSideMenuItem) {}
 
-	_renderBadge(item: MagicMenubarItem) {
+	_renderBadge(item: MagicSideMenuItem) {
 		const badge = item.badge ? Number(item.badge) : 0;
 		return html`${when(badge > 0 && !this.collapsed, () => {
 			return html`<sl-badge class='badge' slot="suffix"  variant="danger" pill pulse>${item.badge}</sl-badge>`;
 		})} `;
 	}
-	_renderRedDot(item: MagicMenubarItem) {
+	_renderRedDot(item: MagicSideMenuItem) {
 		const badge = item.badge ? Number(item.badge) : 0;
 		return html`${when(badge > 0 && this.collapsed, () => {
 			return html`<sl-badge class='reddot' variant="danger" pill pulse></sl-badge>`;
 		})} `;
 	}
-	_renderPrefixIcon(item: MagicMenubarItem, submenu: boolean = false) {
+	_renderPrefixIcon(item: MagicSideMenuItem, submenu: boolean = false) {
 		if (!item.icon) return;
 		return html`<span slot="prefix" class="${submenu ? '' : 'prefix'}">
                                         <sl-icon slot="prefix" .name="${item.icon}"></sl-icon>
                                         ${this._renderRedDot(item)}
                                     </span>`;
 	}
-	_renderMenuItem(item: MagicMenubarItem, submenu: boolean = false): TemplateResult {
+	_renderMenuItem(item: MagicSideMenuItem, submenu: boolean = false): TemplateResult {
 		const hasChildren = Array.isArray(item.children) && item.children.length > 0;
 		return html`<sl-menu-item
                 title="${item.tips || item.label || ''}"
@@ -59,7 +54,7 @@ export class MagicSidebarMenu extends MagicElement<MagicLayoutSidebarOptions['me
 									'has-submenu': hasChildren,
 									checked: !!item.checked,
 									collapsed: !submenu && this.collapsed,
-									'always-label': this.state.label === 'always',
+									'bottom-label': this.state.labelPos === 'bottom',
 								})}
                 >
                 ${this._renderPrefixIcon(item, submenu)}
@@ -68,14 +63,23 @@ export class MagicSidebarMenu extends MagicElement<MagicLayoutSidebarOptions['me
                 ${when(hasChildren, () => {
 									return this._renderMenu(item.children!, true) as any;
 								})}
+                                
             </sl-menu-item>
+            ${this._renderInlineSubmenu(item)}
       `;
 	}
-	_renderMenu(items: MagicMenubarItem[], submenu: boolean = false): TemplateResult {
+	_renderInlineSubmenu(item: MagicSideMenuItem): TemplateResult {
+		if (item.children?.length === 0) return html``;
+		return html`<div class='submenu'>
+                ${this._renderMenu(item.children!, true)}
+        </div>`;
+	}
+	_renderMenu(items: MagicSideMenuItem[], submenu: boolean = false): TemplateResult {
 		return html`
             <sl-menu slot=${submenu ? 'submenu' : ''} class="${classMap({
 							collapsed: !submenu && this.collapsed,
 							submenu,
+							colorized: this.state.colorized,
 						})}">
                 ${repeat(items || [], (item) => {
 									return this._renderMenuItem(item, submenu);

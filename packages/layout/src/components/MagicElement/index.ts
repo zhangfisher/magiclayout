@@ -11,6 +11,7 @@ import { property } from 'lit/decorators.js';
 export type StateKey = ObjectKeyPaths<Required<MagicLayoutOptions>>;
 
 export class MagicElement<State> extends LitElement {
+	@property({ type: String, reflect: true })
 	stateKey: string = ''; // 当前组件的状态key
 
 	@consume({ context: MagicLayoutContext })
@@ -33,7 +34,19 @@ export class MagicElement<State> extends LitElement {
 		super.connectedCallback();
 		this._onWatchState();
 	}
-
+	disconnectedCallback(): void {
+		super.disconnectedCallback();
+		this._offWatchState();
+	}
+	
+	updated(changedProperties: Map<string, any>): void {
+		super.updated(changedProperties);
+		if (changedProperties.has('stateKey')) {
+			this._offWatchState();
+			this._onWatchState();
+			this.requestUpdate();
+		}
+	}
 	_onWatchState() {
 		const watchKeys = [];
 		const stateKey = this.stateKey
@@ -68,6 +81,12 @@ export class MagicElement<State> extends LitElement {
 			);
 		}
 	}
+	_offWatchState() {
+		this.subscribers.forEach((subscriber) => {
+			subscriber?.off();
+		});
+	}
+
 	_onStateUpdate(operate: StateOperate) {
 		this.onStateUpdate(operate);
 		this.requestUpdate();
@@ -78,12 +97,6 @@ export class MagicElement<State> extends LitElement {
 	 */
 	onStateUpdate(_: StateOperate) {}
 
-	disconnectedCallback(): void {
-		super.disconnectedCallback();
-		this.subscribers.forEach((subscriber) => {
-			subscriber?.off();
-		});
-	}
 	/**
 	 * 监听状态变化
 	 * @param statePath

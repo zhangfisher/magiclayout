@@ -43,7 +43,7 @@ export default css`
         & .logo{            
             display: flex;
             align-items: center;
-            padding: 0.5em;
+            padding: 1em 0.5em;
             flex-direction: column;
             box-sizing: border-box;
             border-bottom: var(--auto-border);

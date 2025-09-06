@@ -1,4 +1,4 @@
-export type MagicMenuItem = {
+export type MagicSideMenuItem = {
 	id: string;
 	type?: 'button' | 'divider' | 'popup-menu' | 'popup-panel';
 	icon?: string;
@@ -10,18 +10,18 @@ export type MagicMenuItem = {
 	tips?: string;
 	bottom?: boolean;
 	group?: string;
-	onClick?: (e: any, item: MagicMenuItem) => void;
-	onChange?: (e: any, item: MagicMenuItem) => void;
-	children?: MagicMenuItem[];
+	onClick?: (e: any, item: MagicSideMenuItem) => void;
+	onChange?: (e: any, item: MagicSideMenuItem) => void;
+	children?: MagicSideMenuItem[];
 };
 
-export type MagicMenuItemGroup = {
+export type MagicSideMenuItemGroup = {
 	checked: string[];
 	multiple: boolean;
 	value: any;
 };
 
-export type MagicMenuOptions = {
+export type MagicSideMenuOptions = {
 	visible?: boolean;
 	labelPos?: 'left' | 'bottom';
 	colorized: boolean; // 是否全彩色背景
@@ -39,6 +39,6 @@ export type MagicMenuOptions = {
 	 * }
 	 *
 	 */
-	groups?: Record<string, MagicMenuItemGroup>;
-	items?: MagicMenuItem[];
+	groups?: Record<string, MagicSideMenuItemGroup>;
+	items?: MagicSideMenuItem[];
 };

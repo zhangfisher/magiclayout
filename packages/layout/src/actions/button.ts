@@ -86,16 +86,14 @@ export class MagicLayoutActionButton extends MagicLayoutActionBase<'button'> {
 	}
 	_renderLabel() {
 		const labelPos = this.action.labelPos || this.labelPos;
-		return html`${when(
-			labelPos !== 'none',
-			() => html`<span>${this.action.label}</span>`,
-		)}`;
+		return html`${when(labelPos !== 'none', () => html`<span>${this.action.label}</span>`)}`;
 	}
 	renderWidget() {
 		const labelPos = this.action.labelPos || this.labelPos;
 		return html`<sl-button 
             size="${this.size}" 
             part="widget"
+            title="${this.action.tips || this.action.label || ''}"
             class="${classMap({
 							[labelPos]: true,
 						})}">
