@@ -71,7 +71,16 @@ export class MagicLayoutExamples extends LitElement {
 					},
 					items: [
 						{ id: 'home', label: '首页', icon: 'house' },
-						{ id: 'user', label: '用户管理', tips: '用户管理', icon: 'user-round' },
+						{
+							id: 'user',
+							label: '用户管理',
+							tips: '用户管理',
+							icon: 'user-round',
+							actions: [
+								{ id: 'x1', tips: '用户', icon: 'user-round' },
+								{ id: 'x2', tips: '发布', icon: 'rocket' },
+							],
+						},
 						{ id: 'article', label: '文章管理', tips: '文章管理', icon: 'file-text', checked: true },
 						{ id: 'publish', label: '发布文章', tips: '发布文章', icon: 'rocket', badge: 8 },
 						{

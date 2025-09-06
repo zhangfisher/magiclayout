@@ -1,18 +1,22 @@
 export type MagicMenuItem = {
 	id: string;
-	type?: 'button' | 'divider' | 'popup-menu' | 'popup-panel';
 	icon?: string;
 	label?: string;
 	checked?: boolean;
-	disabled?: boolean;
+	enabled?: boolean;
+	visible?: boolean;
 	badge?: string;
 	value?: any;
 	tips?: string;
 	bottom?: boolean;
 	group?: string;
+	expanded?: boolean;
+	actions?: MagicMenuItemActions;
 	onClick?: (e: any, item: MagicMenuItem) => void;
 	onChange?: (e: any, item: MagicMenuItem) => void;
 	children?: MagicMenuItem[];
+	// 内嵌子菜单
+	inline?: boolean;
 };
 
 export type MagicMenuItemGroup = {
@@ -21,10 +25,21 @@ export type MagicMenuItemGroup = {
 	value: any;
 };
 
+export type MagicMenuItemAction = {
+	id: string;
+	icon: string;
+	tips?: string;
+	checked?: boolean;
+	enabled?: boolean;
+	value?: any;
+	onClick: (e: any, item: MagicMenuItem) => void;
+};
+export type MagicMenuItemActions = MagicMenuItemAction[];
+
 export type MagicMenuOptions = {
 	visible?: boolean;
 	labelPos?: 'left' | 'bottom';
-	colorized: boolean; // 是否全彩色背景
+	colorized?: boolean; // 是否全彩色背景
 	/**
 	 * 创建菜单项组
 	 *

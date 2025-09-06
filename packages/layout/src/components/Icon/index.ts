@@ -9,8 +9,14 @@ export class MagicIcon extends LitElement {
         :host{    
             display: flex;
             & sl-icon{ 
-                font-size: var(--auto-icon-size);
-                color: var(--auto-color);
+                color: currentColor;
+                font-size: var(--auto-icon-size); 
+                &.small{
+                    font-size: call(0.5 * var(--auto-icon-size));
+                }
+                &.large{
+                    font-size: call(1.5 * var(--auto-icon-size));
+                }
             }  
             sl-icon::part(svg) {
                 stroke-width: 1px !important;
@@ -25,7 +31,9 @@ export class MagicIcon extends LitElement {
 
 	render() {
 		return html` 
-            <sl-icon name="${this.name || 'file'}"></sl-icon>
+            <sl-icon name="${this.name || 'file'}"
+                class="${this.size}"
+            ></sl-icon>
         `;
 	}
 }
