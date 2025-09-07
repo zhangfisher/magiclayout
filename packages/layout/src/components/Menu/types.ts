@@ -9,6 +9,7 @@ export type MagicMenuItem = {
 	value?: any;
 	tips?: string;
 	bottom?: boolean;
+	loading?: boolean;
 	group?: string;
 	expanded?: boolean;
 	actions?: MagicMenuItemActions;

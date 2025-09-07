@@ -41,7 +41,7 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 			{
 				labelPos: 'right',
 				colorized: false,
-				inlineLevel: 2,
+				inlineLevel: 1,
 				items: {},
 			},
 			omit(this.state, 'items'),
@@ -120,7 +120,10 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
         ></sl-icon-button>`;
 	}
 	_onExpandInlineMenu(item: MagicMenuItem, level: number = 0, parent?: MagicMenuItem) {
-		item.expanded = !item.expanded;
+		item.expanded = item.expanded === undefined ? false : !item.expanded;
+	}
+	_renderLoading(item: MagicMenuItem) {
+		return html`${when(!this.collapsed && item.loading, () => html`<sl-spinner></sl-spinner>`)}`;
 	}
 
 	_renderItem(item: MagicMenuItem, parent?: MagicMenuItem, level: number = 0) {
@@ -129,20 +132,39 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
             ${this._renderIcon(item, level, parent)}                    
             ${this._renderLabel(item, level)}
             ${this._renderBadge(item, level)}           
+            ${this._renderLoading(item)}
 			${this._renderActions(item, level)} 
             ${this._renderExpander(item, level)}
+
         </div>`;
+	}
+	_renderSubmenu(item: MagicMenuItem, level: number = 0): TemplateResult {
+		return html`
+                <sl-menu slot="${ifDefined(level > 0 ? 'submenu' : '')}">
+                    ${repeat(item.children!, (child) => {
+											return html`<sl-menu-item>
+                            ${when(child.icon, () => html`<magic-icon slot="prefix" name="${child.icon!}"></magic-icon>`)}                            
+                            ${child.label}
+                            ${when(Number(child.badge) > 0, () => html`<sl-badge slot="suffix" class='ml-badge' variant="danger" pill pulse>${child.badge}</sl-badge>`)}
+                            ${when(child.children, () => this._renderSubmenu(child, level + 1))}
+                        </sl-menu-item>`;
+										})}
+                </sl-menu>
+            `;
 	}
 
 	_renderItemWithPopupMenu(item: MagicMenuItem, parent?: MagicMenuItem, level: number = 0) {
-		return html`
-                <sl-dropdown>
-
-                </sl-dropdown>
+		return html`               
+            <div class="ml-item" slot="trigger" caret>
+                <span class="ml-indent" style="width:${1.5 * level}em"></span>
+                ${this._renderIcon(item, level + 1, parent)}                    
+                ${this._renderLabel(item, level + 1)}        
+                <sl-dropdown class="ml-expander" placement="right" >
+                    <sl-icon-button slot="trigger" library="system" name="caret"></sl-icon-button>
+                    ${this._renderSubmenu(item)}                    
+                </sl-dropdown>                        
+            </div>                   
             `;
-	}
-	_renderPopupMenu(items: MagicMenuItem[], parent?: MagicMenuItem, level: number = 0) {
-		return html``;
 	}
 	_renderItemWithInlineMenu(item: MagicMenuItem, parent?: MagicMenuItem, level: number = 0): TemplateResult {
 		return html`${this._renderItem(item, parent, level)}           
@@ -156,7 +178,7 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 	_renderMenu(items: MagicMenuItem[], parent?: MagicMenuItem, level: number = 0) {
 		return html`${repeat(items, (item) => {
 			if (Array.isArray(item.children) && item.children.length > 0) {
-				if (this.collapsed || level > this._cache.inlineLevel) {
+				if (this.collapsed || level >= this._cache.inlineLevel) {
 					return this._renderItemWithPopupMenu(item, parent, level);
 				} else {
 					return this._renderItemWithInlineMenu(item, parent, level);

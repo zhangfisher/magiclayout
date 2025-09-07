@@ -38,9 +38,10 @@ export default css`
     .ml-item{
         display: flex;
         align-items:center;
+        flex-direction: row;
         position: relative;    
         color: var(--auto-color);
-        padding: calc(0.5 * var(--auto-padding)) var(--auto-padding);
+        padding: calc(0.5 * var(--auto-padding)) ;
         padding-right:calc(0.3 * var(--auto-padding));
         width: 100%;
         box-sizing: border-box;
@@ -96,14 +97,17 @@ export default css`
         width: 100%;        
         position: relative;
         background-color: rgba(255,255,255,0.02);
-        transition: all 0.2s ease-in;
+        transition: all 0.5s ease-out;
+        max-height: 1000px;  
         &.collapsed{
             overflow: hidden;
-            height: 0px;
+             max-height: 0px; 
         }
     }
     :host([collapsed]){
         .ml-item{
+            justify-content: center;
+            padding-right: calc(0.5 * var(--auto-padding)) ;
             &>.ml-label{
                 display: none;
             }
@@ -111,6 +115,9 @@ export default css`
                 display: none;
             }
             &>.ml-actions{
+                display: none;
+            }
+            &>.ml-indent{
                 display: none;
             }
         }

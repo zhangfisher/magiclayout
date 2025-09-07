@@ -70,7 +70,7 @@ export class MagicLayoutExamples extends LitElement {
 						'*': {},
 					},
 					items: [
-						{ id: 'home', label: '首页', icon: 'house' },
+						{ id: 'home', label: '首页', icon: 'house', loading: true },
 						{
 							id: 'user',
 							label: '用户管理',
@@ -92,11 +92,62 @@ export class MagicLayoutExamples extends LitElement {
 							label: '智能分析',
 							icon: 'chart-pie',
 							children: [
-								{ label: '智能分析', icon: 'file' },
-								{ label: '智能分析', icon: 'settings' },
-								{ label: '智能分析', icon: 'chart-pie' },
-								{ label: '智能分析', icon: 'aperture' },
-								{ label: '智能分析', icon: 'chart-pie' },
+								{ label: '智能分析-1', icon: 'file' },
+								{ label: '智能分析-1', icon: 'settings' },
+								{
+									label: '智能分析-1',
+									icon: 'chart-pie',
+									children: [
+										{ label: '智能分析-2', icon: 'file' },
+										{
+											label: '智能分析-2',
+											icon: 'settings',
+											badge: 8,
+											children: [
+												{ label: '智能分析-3', icon: 'file' },
+												{
+													label: '智能分析-3',
+													icon: 'settings',
+													children: [
+														{ label: '智能分析-4', icon: 'file' },
+														{ label: '智能分析-4', badge: 8, icon: 'settings' },
+														{ label: '智能分析-4', icon: 'chart-pie' },
+														{ label: '智能分析-4', icon: 'aperture' },
+														{ label: '智能分析-4', icon: 'chart-pie' },
+													],
+												},
+												{
+													label: '智能分析-3',
+													icon: 'chart-pie',
+													children: [
+														{ label: '智能分析-4', icon: 'file' },
+														{ label: '智能分析-4', icon: 'settings' },
+														{ label: '智能分析-4', icon: 'chart-pie' },
+														{ label: '智能分析-4', icon: 'aperture' },
+														{ label: '智能分析-4', icon: 'chart-pie' },
+													],
+												},
+												{ label: '智能分析-3', icon: 'aperture' },
+												{ label: '智能分析-3', icon: 'chart-pie' },
+											],
+										},
+										{ label: '智能分析-2', icon: 'chart-pie' },
+										{
+											label: '智能分析-2',
+											icon: 'aperture',
+											children: [
+												{ label: '智能分析-3', icon: 'file' },
+												{ label: '智能分析-3', icon: 'settings' },
+												{ label: '智能分析-3', icon: 'chart-pie' },
+												{ label: '智能分析-3', icon: 'aperture' },
+												{ label: '智能分析-3', icon: 'chart-pie' },
+											],
+										},
+										{ label: '智能分析-2', icon: 'chart-pie' },
+									],
+								},
+								{ label: '智能分析-1', icon: 'aperture' },
+								{ label: '智能分析-1', icon: 'chart-pie' },
 							],
 						},
 						{
@@ -169,8 +220,7 @@ export class MagicLayoutExamples extends LitElement {
 
 	render() {
 		return html`
-        <magic-layout .options=${this.getOptions()}> 
-            
+        <magic-layout .options=${this.getOptions()}>             
             <div style="margin:2rem;border:1px solid blue;display:flex;height:400px;flex-direction:column;box-sizing: border-box;" >
                 <magic-layout-settings></magic-layout-settings>          
                 <div style="display:flex;height:400px;box-sizing: border-box;" >
