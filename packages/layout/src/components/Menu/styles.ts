@@ -45,6 +45,7 @@ export default css`
         width: 100%;
         box-sizing: border-box;
         gap:0.5em;
+        flex-shrink: 0;
         cursor: pointer;
         user-select: none;
         &:hover{
@@ -89,6 +90,18 @@ export default css`
 
         }
     }
+    .ml-inline-submenu{
+        display: flex;
+        flex-direction: column;
+        width: 100%;        
+        position: relative;
+        background-color: rgba(255,255,255,0.02);
+        transition: all 0.2s ease-in;
+        &.collapsed{
+            overflow: hidden;
+            height: 0px;
+        }
+    }
     :host([collapsed]){
         .ml-item{
             &>.ml-label{
@@ -102,7 +115,14 @@ export default css`
             }
         }
     }
-
+    
+    sl-icon-button.expander{
+        transition: all 0.3s ease-in;
+        &.expanded{
+            transform: rotate(-90deg);
+        }
+    }
+    
 
     
     

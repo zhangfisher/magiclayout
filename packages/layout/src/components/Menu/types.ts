@@ -38,8 +38,29 @@ export type MagicMenuItemActions = MagicMenuItemAction[];
 
 export type MagicMenuOptions = {
 	visible?: boolean;
-	labelPos?: 'left' | 'bottom';
+	labelPos?: 'right' | 'bottom';
 	colorized?: boolean; // 是否全彩色背景
+	/**
+	 * 菜单图标修饰样式
+	 * -  fill: 在图标后面显示颜色填充
+	 * -  outline: 在图标外面显示边框
+	 * -  circle:  在图标外面显示圆圈
+	 * -  rectangle: 在图标外面显示圆角矩形
+	 * -  none:     不显示图标样式
+	 * - 指定颜色: 例如: 'circle,red,#769898'
+	 *
+	 *
+	 * 例如:  'circle,fill'
+	 */
+	iconStyle?: string;
+	/**
+	 * 菜单项内嵌层级
+	 * 0: 不内嵌
+	 * 1: 内嵌一级
+	 * 2: 内嵌二级
+	 * N: 内嵌N级
+	 */
+	inlineLevel?: number;
 	/**
 	 * 创建菜单项组
 	 *
@@ -55,5 +76,5 @@ export type MagicMenuOptions = {
 	 *
 	 */
 	groups?: Record<string, MagicMenuItemGroup>;
-	items?: MagicMenuItem[];
+	items: MagicMenuItem[];
 };

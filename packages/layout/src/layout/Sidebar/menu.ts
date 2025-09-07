@@ -79,7 +79,7 @@ export class MagicSidebarMenu extends MagicElement<MagicLayoutSidebarOptions['me
             <sl-menu slot=${submenu ? 'submenu' : ''} class="${classMap({
 							collapsed: !submenu && this.collapsed,
 							submenu,
-							colorized: this.state.colorized,
+							colorized: !!this.state.colorized,
 						})}">
                 ${repeat(items || [], (item) => {
 									return this._renderMenuItem(item, submenu);

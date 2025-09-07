@@ -2,12 +2,19 @@ import { MagicElement } from '../MagicElement';
 import styles from './styles';
 import { tag } from '@/utils/tag';
 import type { MagicMenuItem, MagicMenuItemAction, MagicMenuOptions } from './types';
-import { html } from 'lit';
+import { html, type TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { when } from 'lit/directives/when.js';
 import { registerIcons } from '@/icons';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { omit } from 'flex-tools/object';
+import { forEachTreeByDfs } from 'flex-tools/tree/forEachTreeByDfs';
+import { classMap } from 'lit/directives/class-map.js';
+
+type NormalizedMagicMenuOptions = Required<Omit<MagicMenuOptions, 'items'>> & {
+	items: Record<string, MagicMenuItem>;
+};
 
 @tag('magic-menu')
 export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
@@ -27,9 +34,31 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 	@property({ type: Number, reflect: true })
 	inlineLevel: number = 1;
 
+	_cache!: NormalizedMagicMenuOptions;
+
+	_normalizeCache() {
+		this._cache = Object.assign(
+			{
+				labelPos: 'right',
+				colorized: false,
+				inlineLevel: 2,
+				items: {},
+			},
+			omit(this.state, 'items'),
+		) as unknown as NormalizedMagicMenuOptions;
+		forEachTreeByDfs(this.state.items, ({ node }) => {
+			if (!node.id) {
+				console.warn('magic-menu: item must have id');
+				return;
+			}
+			this._cache.items[node.id] = node;
+		});
+	}
+
 	connectedCallback(): void {
 		super.connectedCallback();
 		registerIcons();
+		this._normalizeCache();
 	}
 
 	_renderBadge(item: MagicMenuItem, level: number = 0) {
@@ -38,7 +67,7 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 		return html`<sl-badge class='ml-badge' variant="danger" pill pulse>${badge}</sl-badge>`;
 	}
 
-	_renderIcon(item: MagicMenuItem, parent?: MagicMenuItem, level: number = 0) {
+	_renderIcon(item: MagicMenuItem, level: number = 0, parent?: MagicMenuItem) {
 		return html`<span class="ml-icon"> 
                 ${when(item.icon, () => html`<magic-icon name="${item.icon!}"></magic-icon>`)}
                 ${when(this.collapsed && !parent, () => this._renderBadge(item))}
@@ -79,18 +108,29 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
                     </sl-menu>
                 </sl-dropdown>`;
 	}
-	_renderCollapseIndicator() {
-		return html``;
+	_renderExpander(item: MagicMenuItem, level: number = 0, parent?: MagicMenuItem) {
+		if (this.collapsed) return;
+		if (!item.children || item.children.length === 0) return;
+
+		return html`<sl-icon-button data-id="${item.id}"  library="system" name="caret" class="expander ${classMap({
+			expanded: !!item.expanded,
+			right: 1,
+		})}"
+            @click=${() => this._onExpandInlineMenu(item, level, parent)}             
+        ></sl-icon-button>`;
+	}
+	_onExpandInlineMenu(item: MagicMenuItem, level: number = 0, parent?: MagicMenuItem) {
+		item.expanded = !item.expanded;
 	}
 
 	_renderItem(item: MagicMenuItem, parent?: MagicMenuItem, level: number = 0) {
 		return html`<div class="ml-item">            
-            <span class="ml-indent" style="width:${level}em"></span>
-            ${this._renderIcon(item, parent)}                    
+            <span class="ml-indent" style="width:${1.5 * level}em"></span>
+            ${this._renderIcon(item, level, parent)}                    
             ${this._renderLabel(item, level)}
             ${this._renderBadge(item, level)}           
 			${this._renderActions(item, level)} 
-            ${this._renderCollapseIndicator()}
+            ${this._renderExpander(item, level)}
         </div>`;
 	}
 
@@ -104,12 +144,19 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 	_renderPopupMenu(items: MagicMenuItem[], parent?: MagicMenuItem, level: number = 0) {
 		return html``;
 	}
-	_renderItemWithInlineMenu(item: MagicMenuItem, parent?: MagicMenuItem, level: number = 0) {}
+	_renderItemWithInlineMenu(item: MagicMenuItem, parent?: MagicMenuItem, level: number = 0): TemplateResult {
+		return html`${this._renderItem(item, parent, level)}           
+        <div class="ml-inline-submenu ${classMap({
+					collapsed: item.expanded === false,
+				})} ">
+            ${this._renderMenu(item.children!, item, level + 1)}
+        </div>`;
+	}
 
 	_renderMenu(items: MagicMenuItem[], parent?: MagicMenuItem, level: number = 0) {
 		return html`${repeat(items, (item) => {
 			if (Array.isArray(item.children) && item.children.length > 0) {
-				if (level > 0 && item.inline === false) {
+				if (this.collapsed || level > this._cache.inlineLevel) {
 					return this._renderItemWithPopupMenu(item, parent, level);
 				} else {
 					return this._renderItemWithInlineMenu(item, parent, level);
