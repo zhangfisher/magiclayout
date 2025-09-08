@@ -1,6 +1,5 @@
 import { overloads } from '@/styles/overloads';
 import type { MagicLayoutAction, MagicLayoutActionTypes } from '@/actions/types';
-import { toggleWrapper } from '@/utils/toggleWrapper';
 import { css, html, LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
 

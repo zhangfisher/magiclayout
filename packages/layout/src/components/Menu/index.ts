@@ -11,10 +11,20 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { omit } from 'flex-tools/object';
 import { forEachTreeByDfs } from 'flex-tools/tree/forEachTreeByDfs';
 import { classMap } from 'lit/directives/class-map.js';
+import { createRef, ref } from 'lit/directives/ref.js';
+import type { SlDropdown } from '@shoelace-style/shoelace';
 
 type NormalizedMagicMenuOptions = Required<Omit<MagicMenuOptions, 'items'>> & {
 	items: Record<string, MagicMenuItem>;
 };
+
+// 在window上扩展鼠标位置属性
+declare global {
+    interface Window {
+        mouseX?: number;
+        mouseY?: number;
+    }
+}
 
 @tag('magic-menu')
 export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
@@ -59,6 +69,21 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 		super.connectedCallback();
 		registerIcons();
 		this._normalizeCache();
+		
+		// 添加全局鼠标移动事件监听器
+		window.addEventListener('mousemove', this._trackMousePosition);
+	}
+	
+	disconnectedCallback(): void {
+		super.disconnectedCallback();
+		// 移除鼠标移动事件监听器
+		window.removeEventListener('mousemove', this._trackMousePosition);
+	}
+	
+	// 跟踪鼠标位置
+	private _trackMousePosition = (e: MouseEvent): void => {
+		window.mouseX = e.clientX;
+		window.mouseY = e.clientY;
 	}
 
 	_renderBadge(item: MagicMenuItem, level: number = 0) {
@@ -68,9 +93,16 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 	}
 
 	_renderIcon(item: MagicMenuItem, level: number = 0, parent?: MagicMenuItem) {
-		return html`<span class="ml-icon"> 
-                ${when(item.icon, () => html`<magic-icon name="${item.icon!}"></magic-icon>`)}
+        const iconStyles = classMap((this.state.iconStyle || '').split(',').reduce((acc,cur)=>{
+            if(cur.trim() === '') return acc            
+            acc[cur] = true;
+            return acc
+        },{} as Record<string,boolean>))
+
+		return html`<span class="ml-icon ${iconStyles}" > 
+                ${when(item.icon, () => html`<sl-icon name="${item.icon!}"></sl-icon>`)}
                 ${when(this.collapsed && !parent, () => this._renderBadge(item))}
+                ${when(this.collapsed, () => this._renderRedDot(item))}                
             </span>`;
 	}
 
@@ -152,17 +184,128 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
                 </sl-menu>
             `;
 	}
+    private _lastHoverItem: string | null = null;
+    private _hoverTimer: number | null = null;
+    private _leaveTimer: number | null = null;
 
+    _onMenuPopupItemOver(popupmenu: SlDropdown | undefined, e: MouseEvent) {
+        if (!popupmenu) return;
+        
+        // 获取当前悬停的菜单项
+        const menuItem = (e.currentTarget as HTMLElement).closest('.ml-item.popup') as HTMLElement;
+        if (!menuItem) return;
+        
+        const itemId = menuItem.dataset.id;
+        if (!itemId) return;
+        
+        // 如果是同一个菜单项的子元素触发的事件，不重复处理
+        if (this._lastHoverItem === itemId) {
+            return;
+        }
+        
+        // 清除之前的定时器
+        if (this._hoverTimer !== null) {
+            window.clearTimeout(this._hoverTimer);
+            this._hoverTimer = null;
+        }
+        
+        if (this._leaveTimer !== null) {
+            window.clearTimeout(this._leaveTimer);
+            this._leaveTimer = null;
+        }
+        
+        // 记录当前悬停的菜单项
+        this._lastHoverItem = itemId;
+        
+        // 延迟显示菜单，避免鼠标快速经过时频繁触发
+        this._hoverTimer = window.setTimeout(() => {
+            popupmenu.show();
+            this._hoverTimer = null;
+        }, 200);
+        
+        // 添加鼠标离开事件处理
+        menuItem.addEventListener('mouseleave', () => this._onMenuPopupItemLeave(popupmenu, itemId), { once: true });
+    }
+    
+    _onMenuPopupItemLeave(popupmenu: SlDropdown | undefined, itemId: string) {
+        if (!popupmenu) return;
+        
+        // 清除悬停定时器
+        if (this._hoverTimer !== null) {
+            window.clearTimeout(this._hoverTimer);
+            this._hoverTimer = null;
+        }
+        
+        // 延迟隐藏菜单，给用户时间移动到子菜单
+        this._leaveTimer = window.setTimeout(() => {
+            // 检查鼠标是否移到了子菜单上
+            const submenu = popupmenu.querySelector('sl-menu');
+            const dropdown = popupmenu.shadowRoot?.querySelector('.dropdown') as HTMLElement;
+            
+            // 检查鼠标是否在子菜单或下拉菜单容器上
+            if ((submenu && this._isMouseOverElement(submenu as HTMLElement)) || 
+                (dropdown && this._isMouseOverElement(dropdown))) {
+                // 鼠标在子菜单上，不隐藏
+                const elementToWatch = submenu || dropdown;
+                if (elementToWatch) {
+                    elementToWatch.addEventListener('mouseleave', () => {                      
+                        popupmenu.hide();  // 当鼠标离开子菜单时，隐藏弹出菜单
+                        this._lastHoverItem = null;
+                    }, { once: true });
+                }
+            } else {               
+                popupmenu.hide(); // 鼠标不在子菜单上，隐藏弹出菜单
+                this._lastHoverItem = null;
+            }
+            this._leaveTimer = null;
+        }, 300);
+    }
+    
+    _isMouseOverElement(element: HTMLElement): boolean {
+        const rect = element.getBoundingClientRect();
+        // 使用document.defaultView?.getComputedStyle获取当前鼠标位置
+        // 或者使用MouseEvent.clientX/Y的全局属性
+        const mousePosition = this._getMousePosition();
+        const mouseX = mousePosition.x;
+        const mouseY = mousePosition.y;
+        
+        return (
+            mouseX >= rect.left &&
+            mouseX <= rect.right &&
+            mouseY >= rect.top &&
+            mouseY <= rect.bottom
+        );
+    }
+    
+    // 添加一个辅助方法来获取当前鼠标位置
+    private _getMousePosition(): {x: number, y: number} {
+        return {
+            x: window.mouseX || 0,
+            y: window.mouseY || 0
+        };
+    }
+    
+	_renderRedDot(item: MagicMenuItem) {
+		const badge = item.badge ? Number(item.badge) : 0;
+		return html`${when(badge > 0 && this.collapsed, () => {
+			return html`<sl-badge class='reddot' variant="danger" pill pulse></sl-badge>`;
+		})} `;
+	}
 	_renderItemWithPopupMenu(item: MagicMenuItem, parent?: MagicMenuItem, level: number = 0) {
+        const dropdownRef = createRef<SlDropdown>();
+        const id = item.id || item.label || item.icon || '';
 		return html`               
-            <div class="ml-item" slot="trigger" caret>
+            <div class="ml-item popup" slot="trigger" 
+                data-id="${id}" 
+                @mouseover="${(e:MouseEvent) => this._onMenuPopupItemOver(dropdownRef.value, e)}">
                 <span class="ml-indent" style="width:${1.5 * level}em"></span>
-                ${this._renderIcon(item, level + 1, parent)}                    
-                ${this._renderLabel(item, level + 1)}        
-                <sl-dropdown class="ml-expander" placement="right" >
-                    <sl-icon-button slot="trigger" library="system" name="caret"></sl-icon-button>
+                ${this._renderIcon(item, level + 1, parent)}
+                ${this._renderLabel(item, level + 1)}                
+                <sl-dropdown ${ref(dropdownRef)} class="ml-expander ${classMap({collapsed:this.collapsed})}" 
+                    placement="right-start" distance="${this.collapsed ? 0 : 8}" hoist>
+                    <sl-icon-button slot="trigger" library="system" name="caret" style="transform: rotate(-90deg)"></sl-icon-button>
                     ${this._renderSubmenu(item)}                    
-                </sl-dropdown>                        
+                </sl-dropdown>          
             </div>                   
             `;
 	}

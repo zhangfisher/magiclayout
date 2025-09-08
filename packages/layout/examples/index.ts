@@ -66,6 +66,7 @@ export class MagicLayoutExamples extends LitElement {
 			},
 			sidebar: {
 				menu: {
+                    iconStyle:'outline',
 					groups: {
 						'*': {},
 					},

@@ -55,6 +55,12 @@ export default css`
         }
         &>.ml-icon{
             flex-shrink: 0;
+            position: relative;
+            font-size: var(--auto-icon-size);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
         }
         &>.ml-label{
             flex-grow: 1;
@@ -65,6 +71,13 @@ export default css`
         }
         &>.ml-badge{
 
+        }
+        .ml-expander.collapsed{
+            width:1px;
+            height:1px; 
+            overflow: hidden; 
+            position: absolute;
+            top: 2px;
         }
         &>.ml-actions{
             display: flex;
@@ -119,6 +132,17 @@ export default css`
             }
             &>.ml-indent{
                 display: none;
+            }        
+            &.popup .ml-icon:after{ 
+                content: ' ';
+                position: absolute;
+                top: calc(50% - 4px);
+                left: calc(100% + 4px);
+                height: 8px;
+                border: 4px solid transparent;
+                border-left: 4px solid var(--auto-color);
+                box-sizing: border-box;
+                opacity:0.2;
             }
         }
     }
@@ -130,6 +154,23 @@ export default css`
         }
     }
     
+    sl-badge.reddot::part(base){
+        font-size: calc(0.6 * var(--auto-font-size))!important;
+        aspect-ratio: 1;
+        padding: 0 4px !important;
+    }
+    sl-badge.reddot{
+        position: absolute;
+        top: -5px;
+        right: -5px;
+    }
+    .ml-icon.outline{
+        border: var(--auto-border);
+        border-radius: 4px;
+        padding: 0.2em;
+        aspect-ratio: 1;
+        font-size: calc(0.8 * var(--auto-icon-size));
+    }
 
     
     
