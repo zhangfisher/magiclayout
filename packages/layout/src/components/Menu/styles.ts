@@ -153,7 +153,9 @@ export default css`
             transform: rotate(-90deg);
         }
     }
-    
+    sl-badge::part(base){
+        border: 0px;
+    }
     sl-badge.reddot::part(base){
         font-size: calc(0.6 * var(--auto-font-size))!important;
         aspect-ratio: 1;
@@ -164,15 +166,21 @@ export default css`
         top: -5px;
         right: -5px;
     }
-    .ml-icon.outline{
+    .ml-icon.rectangle{
         border: var(--auto-border);
-        border-radius: 4px;
+        border-radius: 5px;
         padding: 0.2em;
         aspect-ratio: 1;
-        font-size: calc(0.8 * var(--auto-icon-size));
+        font-size: calc(0.8 * var(--auto-icon-size));        
     }
 
-    
+    .ml-icon.circle{
+        border-radius: 50%;        
+        aspect-ratio: 1;
+        padding: 0.3em;
+        border: var(--auto-border);
+        font-size: calc(0.8 * var(--auto-icon-size));
+    }
     
     
 `;

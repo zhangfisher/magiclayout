@@ -11,7 +11,20 @@ export type MagicMenuItem = {
 	bottom?: boolean;
 	loading?: boolean;
 	group?: string;
-	expanded?: boolean;
+	expanded?: boolean;    
+	/**
+	 * 菜单图标修饰样式
+	 * -  fill: 在图标后面显示颜色填充
+	 * -  outline: 在图标外面显示边框
+	 * -  circle:  在图标外面显示圆圈
+	 * -  rectangle: 在图标外面显示圆角矩形
+	 * -  none:     不显示图标样式
+	 * - 指定颜色: 例如: 'circle,red,#769898'
+	 *
+	 *
+	 * 例如:  'circle,fill'
+	 */
+	iconStyle?: string[];
 	actions?: MagicMenuItemActions;
 	onClick?: (e: any, item: MagicMenuItem) => void;
 	onChange?: (e: any, item: MagicMenuItem) => void;
@@ -44,7 +57,6 @@ export type MagicMenuOptions = {
 	/**
 	 * 菜单图标修饰样式
 	 * -  fill: 在图标后面显示颜色填充
-	 * -  outline: 在图标外面显示边框
 	 * -  circle:  在图标外面显示圆圈
 	 * -  rectangle: 在图标外面显示圆角矩形
 	 * -  none:     不显示图标样式
@@ -53,7 +65,7 @@ export type MagicMenuOptions = {
 	 *
 	 * 例如:  'circle,fill'
 	 */
-	iconStyle?: string;
+	iconStyle?: string[];
 	/**
 	 * 菜单项内嵌层级
 	 * 0: 不内嵌

@@ -63,7 +63,7 @@ export const overloads = css`
         & sl-menu-item::part(base){
             display: flex;
             align-items: center;
-            padding: calc(0.2 * var(--auto-padding)) var(--auto-padding);
+            /* padding: calc(0.2 * var(--auto-padding)) var(--auto-padding); */
         }
         & sl-menu-item::part(checked-icon){
             display: none;

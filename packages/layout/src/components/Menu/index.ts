@@ -93,12 +93,11 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 	}
 
 	_renderIcon(item: MagicMenuItem, level: number = 0, parent?: MagicMenuItem) {
-        const iconStyles = classMap((this.state.iconStyle || '').split(',').reduce((acc,cur)=>{
+        const iconStyles = classMap((item.iconStyle || this.state.iconStyle || []).reduce((acc,cur)=>{
             if(cur.trim() === '') return acc            
             acc[cur] = true;
             return acc
         },{} as Record<string,boolean>))
-
 		return html`<span class="ml-icon ${iconStyles}" > 
                 ${when(item.icon, () => html`<sl-icon name="${item.icon!}"></sl-icon>`)}
                 ${when(this.collapsed && !parent, () => this._renderBadge(item))}
@@ -140,18 +139,18 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
                     </sl-menu>
                 </sl-dropdown>`;
 	}
-	_renderExpander(item: MagicMenuItem, level: number = 0, parent?: MagicMenuItem) {
+	_renderExpander(item: MagicMenuItem) {
 		if (this.collapsed) return;
 		if (!item.children || item.children.length === 0) return;
 
 		return html`<sl-icon-button data-id="${item.id}"  library="system" name="caret" class="expander ${classMap({
-			expanded: !!item.expanded,
+			expanded: item.expanded===undefined ? true : item.expanded,
 			right: 1,
 		})}"
-            @click=${() => this._onExpandInlineMenu(item, level, parent)}             
+            @click=${() => this._onExpandInlineMenu(item)}             
         ></sl-icon-button>`;
 	}
-	_onExpandInlineMenu(item: MagicMenuItem, level: number = 0, parent?: MagicMenuItem) {
+	_onExpandInlineMenu(item: MagicMenuItem) {
 		item.expanded = item.expanded === undefined ? false : !item.expanded;
 	}
 	_renderLoading(item: MagicMenuItem) {
@@ -166,7 +165,7 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
             ${this._renderBadge(item, level)}           
             ${this._renderLoading(item)}
 			${this._renderActions(item, level)} 
-            ${this._renderExpander(item, level)}
+            ${this._renderExpander(item)}
 
         </div>`;
 	}
@@ -224,10 +223,10 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
         }, 200);
         
         // 添加鼠标离开事件处理
-        menuItem.addEventListener('mouseleave', () => this._onMenuPopupItemLeave(popupmenu, itemId), { once: true });
+        menuItem.addEventListener('mouseleave', () => this._onMenuPopupItemLeave(popupmenu), { once: true });
     }
     
-    _onMenuPopupItemLeave(popupmenu: SlDropdown | undefined, itemId: string) {
+    _onMenuPopupItemLeave(popupmenu: SlDropdown | undefined) {
         if (!popupmenu) return;
         
         // 清除悬停定时器

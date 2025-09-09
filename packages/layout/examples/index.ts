@@ -66,7 +66,7 @@ export class MagicLayoutExamples extends LitElement {
 			},
 			sidebar: {
 				menu: {
-                    iconStyle:'outline',
+                    iconStyle:['outline'],
 					groups: {
 						'*': {},
 					},
@@ -228,10 +228,7 @@ export class MagicLayoutExamples extends LitElement {
                     <div style="width:80px;display:flex;justify-content: center;position: relative;">
                     
                     </div>
-                    <div style="flex-grow:1;padding: 1em;">
-                        <magic-layout-logo direction="col"></magic-layout-logo>
-                        <magic-layout-logo direction="row"></magic-layout-logo>
-                        <magic-icon></magic-icon>
+                    <div style="flex-grow:1;padding: 1em;"> 
                     </div>
                     <div style="width:60px;display:flex;justify-content: center;position: relative;">
                         
