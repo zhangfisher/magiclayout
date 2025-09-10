@@ -20,7 +20,20 @@ export const schemas = [
                 {label:'圆形',value:'circle'},
                 {label:'填充',value:'fill'},
             ]
-		})]
+		})
+    ],
+    [
+		'sidebar.menu.labelPos',
+		schema('right', {
+			label: '文字样式',
+			widget: 'radio-button',            
+			select:[                
+                {label:'右侧', value:'right'},
+                {label:'下方',value:'bottom'},
+                
+            ]
+		})
+    ]
 ] as unknown as [[string, SchemaDescriptorBuilder]];
 
 export function addSchemas(store: AutoStore<MagicLayoutOptions>) {

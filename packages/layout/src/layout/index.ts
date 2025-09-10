@@ -41,8 +41,8 @@ import { when } from 'lit/directives/when.js';
 import { MediaQuery } from '@/controllers/mediaQuery';
 import { HostClasses } from '@/controllers/hostClasss';
 import { tag } from '@/utils/tag';
-import '../components/My';
 import { registerIcons } from '@/icons';
+import '../components/My';
 
 @tag('magic-layout')
 export class MagicLayout extends LitElement {

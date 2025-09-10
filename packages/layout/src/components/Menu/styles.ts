@@ -69,9 +69,6 @@ export default css`
             white-space: nowrap;
             text-overflow: ellipsis;            
         }
-        &>.ml-badge{
-
-        }
         .ml-expander.collapsed{
             width:1px;
             height:1px; 
@@ -101,8 +98,21 @@ export default css`
             magic-icon.action:active{
                 background: rgba(0,0,0,0.2);
             } 
-
         }
+
+        &.bottom-label{
+            flex-direction: column;
+            &>.ml-actions{
+                display: none;
+            }            
+            &>.ml-badge{
+                display: none;
+            }
+            &>sl-spinner{
+                display: none;
+            }
+        }
+        
     }
     .ml-inline-submenu{
         display: flex;

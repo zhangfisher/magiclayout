@@ -1,3 +1,5 @@
+import { HTMLElementCustomClasss, HTMLElementCustomStyles } from "@/types";
+
 export type MagicMenuItem = {
 	id: string;
 	icon?: string;
@@ -89,5 +91,7 @@ export type MagicMenuOptions = {
 	 *
 	 */
 	groups?: Record<string, MagicMenuItemGroup>;
-	items: MagicMenuItem[];
+	items: MagicMenuItem[];    
+	styles?: HTMLElementCustomStyles;
+	classs?: HTMLElementCustomClasss;
 };

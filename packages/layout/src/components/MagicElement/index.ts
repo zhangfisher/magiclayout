@@ -1,11 +1,12 @@
 import { MagicLayoutContext, type MagicLayoutStore } from '@/context';
 import type { MagicLayoutOptions } from '@/context/types';
 import { HostClasses } from '@/controllers/hostClasss';
+import { HTMLElementCustomStyles } from '@/types';
 import { getVal } from '@/utils/getVal';
 import { consume } from '@lit/context';
 import type { StateOperate, WatchListener } from 'autostore';
 import type { ObjectKeyPaths } from 'flex-tools/types';
-import { LitElement } from 'lit';
+import { LitElement, PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 export type StateKey = ObjectKeyPaths<Required<MagicLayoutOptions>>;
@@ -38,15 +39,22 @@ export class MagicElement<State> extends LitElement {
 		super.disconnectedCallback();
 		this._offWatchState();
 	}
-	
-	updated(changedProperties: Map<string, any>): void {
-		super.updated(changedProperties);
-		if (changedProperties.has('stateKey')) {
-			this._offWatchState();
-			this._onWatchState();
-			this.requestUpdate();
-		}
-	}
+	 
+    attributeChangedCallback(name: string, _old: string | null, value: string | null): void {
+        super.attributeChangedCallback(name, _old, value);
+        if (name === 'statekey' && !_old && !value) {
+            this.refresh()            
+        }
+    }
+    protected updated(changedProperties: PropertyValues) {
+        super.updated(changedProperties);
+        this._applyCustomStyles();        
+    }
+    refresh(){
+        this._offWatchState();
+        this._onWatchState();
+        this.requestUpdate();
+    }
 	_onWatchState() {
 		const watchKeys = [];
 		const stateKey = this.stateKey
@@ -97,6 +105,7 @@ export class MagicElement<State> extends LitElement {
 	 */
 	onStateUpdate(_: StateOperate) {}
 
+
 	/**
 	 * 监听状态变化
 	 * @param statePath
@@ -105,4 +114,20 @@ export class MagicElement<State> extends LitElement {
 	watch(statePath: string | string[], listener: WatchListener) {
 		this.subscribers.push(this.store.watch(statePath, listener));
 	}
+
+    _applyCustomStyles(){
+        const styles = (this.state as any).styles as HTMLElementCustomStyles
+        if(typeof(styles)==='object'){
+            Object.entries(styles).forEach(([key,value])=>{
+                const eles = Array.from(this.shadowRoot?.querySelectorAll(key) || []) as HTMLElement[]
+                eles.forEach((ele)=>{
+                    if(typeof(value)==='string'){
+                        ele.setAttribute('style',value)
+                    }else if(typeof(value)==='object'){
+                        Object.assign(ele.style,value)
+                    }                    
+                })
+            })
+        }
+    }
 }
