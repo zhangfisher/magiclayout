@@ -51,7 +51,10 @@ export default css`
         user-select: none;
         &:hover{
             background-color: rgba(0,0,0,0.03);
-             color:var(--auto-primary-color);
+            color:var(--auto-primary-color);            
+            & sl-icon{
+                color: var(--auto-primary-color) !important;
+            }
         }
         &>.ml-icon{
             flex-shrink: 0;
@@ -103,13 +106,25 @@ export default css`
         &.bottom-label{
             flex-direction: column;
             &>.ml-actions{
-                display: none;
+                position: absolute;
+                right: 0.2em;
+                magic-icon{
+                    background-color: transparent;
+                }
             }            
             &>.ml-badge{
                 display: none;
             }
             &>sl-spinner{
                 display: none;
+            }
+            &>.ml-expander   {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+            }
+            &>.ml-icon{
+                font-size: calc(1.2 * var(--auto-icon-size));
             }
         }
         

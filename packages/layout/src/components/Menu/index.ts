@@ -98,12 +98,12 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 	}
 
 	_renderIcon(item: MagicMenuItem) {
-        const iconStyles = classMap((item.iconStyle || this.state.iconStyle || []).reduce((acc,cur)=>{
+        const iconStyles = (item.iconStyle || this.state.iconStyle || []).reduce((acc,cur)=>{
             if(cur.trim() === '') return acc            
             acc[cur] = true;
             return acc
-        },{} as Record<string,boolean>))
-		return html`<span class="ml-icon ${iconStyles}" > 
+        },{} as Record<string,boolean>)
+		return html`<span class="ml-icon ${classMap(iconStyles)}" > 
                 ${when(item.icon, () => html`<sl-icon name="${item.icon!}"></sl-icon>`)}
                 ${when(this.collapsed , () => this._renderBadge(item))}
                 ${when(this.collapsed, () => this._renderRedDot(item))}                
@@ -118,30 +118,32 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 		if (this.collapsed && level === 0) return;
 		if (!Array.isArray(item.actions)) return;
 		return html`<span class="ml-actions">
-        ${repeat(item.actions, (action) => {
-					if (item.actions!.length > 2) return;
-					return html`<magic-icon name="${action.icon}" title="${action.label!}"  class='action' size="small"></magic-icon>`;
-				})}
-            ${when(item.actions.length > 2, () => {
-							return this._renderMoreActions(item.actions!);
-						})}
+            ${repeat(item.actions, (action) => {
+                if (item.actions!.length > 2 || this.state.labelPos==='bottom' ) return;
+                return html`<magic-icon name="${action.icon}" title="${action.label!}"  class='action' size="small"></magic-icon>`;
+            })}
+            ${when(item.actions.length > 2 || this.state.labelPos==='bottom', () => {
+                    return this._renderMoreActions(item.actions!);
+                })}
         </span>`;
 	}
 	_renderMoreActions(actions: MagicMenuItemAction[]) {
 		return html`<sl-dropdown>
-                    <magic-icon name="more" class='action'  slot="trigger" size="small"></magic-icon>
-                    <sl-menu>
-                        ${repeat(actions, (action) => {
-													return html`<sl-menu-item 
-                                                    .disabled=${action.enabled === false}
-                                                    type="${ifDefined(action.checked === true ? 'checkbox' : undefined)}"
-                                                    ?checked=${action.checked === true}
-                                                >
-                                <magic-icon slot="prefix" name="${action.icon}"></magic-icon>
-                                ${action.label}
-                            </sl-menu-item>`;})}
-                    </sl-menu>
-                </sl-dropdown>`;
+            <magic-icon name="more" class='action'  slot="trigger" size="small"></magic-icon>
+            <sl-menu>
+                ${repeat(actions, (action,i) => {
+                        if(this.state.labelPos!=='bottom' && i<=2) return
+                        return html`<sl-menu-item 
+                            .disabled=${action.enabled === false}
+                            type="${ifDefined(action.checked === true ? 'checkbox' : undefined)}"
+                            ?checked=${action.checked === true}
+                        >
+                        <magic-icon slot="prefix" name="${action.icon}"></magic-icon>
+                        ${action.label}
+                    </sl-menu-item>`;
+                })}
+            </sl-menu>
+        </sl-dropdown>`;
 	}
 	_renderExpander(item: MagicMenuItem) {
 		if (this.collapsed) return;
@@ -296,9 +298,13 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
         const dropdownRef = createRef<SlDropdown>();
         const id = item.id || item.label || item.icon || '';
 		return html`               
-            <div class="ml-item popup" slot="trigger" 
+            <div  slot="trigger" class="ml-item popup ${classMap({
+                    'bottom-label':this.state.labelPos==='bottom'
+                })}"
                 data-id="${id}" 
-                @mouseover="${(e:MouseEvent) => this._onMenuPopupItemOver(dropdownRef.value, e)}">
+                @mouseover="${(e:MouseEvent) => this._onMenuPopupItemOver(dropdownRef.value, e)}"
+                
+            >
                 <span class="ml-indent" style="width:${1.5 * level}em"></span>
                 ${this._renderIcon(item)}
                 ${this._renderLabel(item, level + 1)}                

@@ -1,4 +1,4 @@
-import { HTMLElementCustomStyles } from "@/context/types";
+import type { HTMLElementCustomStyles } from "@/types"
 
 
 export function applyCustomStyles(el: HTMLElement, styles: HTMLElementCustomStyles | undefined) {
@@ -7,10 +7,12 @@ export function applyCustomStyles(el: HTMLElement, styles: HTMLElementCustomStyl
         const eles = selector === 'root' ? [el] : Array.from(el.querySelectorAll(selector)) as HTMLElement[]
         eles.forEach((ele) => {
             if (typeof (value) === 'string') {
-                ele.style.cssText = value
+                ele.setAttribute('style',value)
             } else if (typeof (value) === 'object') {
                 Object.assign(ele.style, value)
             }
         })
     })
 }
+
+ 

@@ -66,12 +66,18 @@ export class MagicLayoutExamples extends LitElement {
 			},
 			sidebar: {
 				menu: {
-                    iconStyle:['outline'], 
+                    iconStyle: ['rectangle'], 
 					groups: {
 						'*': {},
 					},
 					items: [
-						{ id: 'home', label: '首页', icon: 'house', loading: true },
+						{   
+                            id: 'home', 
+                            label: '首页', 
+                            icon: 'house', 
+                            loading: true,
+                            iconStyle:['rectangle']
+                         },
 						{
 							id: 'user',
 							label: '用户管理',

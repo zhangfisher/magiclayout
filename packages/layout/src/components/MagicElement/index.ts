@@ -2,6 +2,7 @@ import { MagicLayoutContext, type MagicLayoutStore } from '@/context';
 import type { MagicLayoutOptions } from '@/context/types';
 import { HostClasses } from '@/controllers/hostClasss';
 import { HTMLElementCustomStyles } from '@/types';
+import { applyCustomStyles } from '@/utils/applyCustomStyles';
 import { getVal } from '@/utils/getVal';
 import { consume } from '@lit/context';
 import type { StateOperate, WatchListener } from 'autostore';
@@ -118,16 +119,7 @@ export class MagicElement<State> extends LitElement {
     _applyCustomStyles(){
         const styles = (this.state as any).styles as HTMLElementCustomStyles
         if(typeof(styles)==='object'){
-            Object.entries(styles).forEach(([key,value])=>{
-                const eles = Array.from(this.shadowRoot?.querySelectorAll(key) || []) as HTMLElement[]
-                eles.forEach((ele)=>{
-                    if(typeof(value)==='string'){
-                        ele.setAttribute('style',value)
-                    }else if(typeof(value)==='object'){
-                        Object.assign(ele.style,value)
-                    }                    
-                })
-            })
+            applyCustomStyles(this.shadowRoot as any,styles)
         }
     }
 }
