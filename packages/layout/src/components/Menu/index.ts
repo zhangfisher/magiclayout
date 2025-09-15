@@ -97,6 +97,7 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 		return html`<sl-badge class='ml-badge' variant="danger" pill pulse>${badge}</sl-badge>`;
 	}
 
+
 	_renderIcon(item: MagicMenuItem) {
         const iconStyles = (item.iconStyle || this.state.iconStyle || []).reduce((acc,cur)=>{
             if(cur.trim() === '') return acc            
@@ -327,15 +328,23 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 
 	_renderMenu(items: MagicMenuItem[], parent?: MagicMenuItem, level: number = 0) {
 		return html`${repeat(items, (item) => {
-			if (Array.isArray(item.children) && item.children.length > 0) {
-				if (this.collapsed || level >= this._cache.inlineLevel || this.state.labelPos==='bottom') {
-					return this._renderItemWithPopupMenu(item, parent, level);
-				} else {
-					return this._renderItemWithInlineMenu(item, parent, level);
-				}
-			} else {
-				return this._renderItem(item, parent, level);
-			}
+            if(item.type==='link'){
+
+            }else if(item.type==='separator'){
+
+            }else if(item.type==='label'){
+
+            }else if(item.type==='popup'){
+                if (Array.isArray(item.children) && item.children.length > 0) {
+                    if (this.collapsed || level >= this._cache.inlineLevel || this.state.labelPos==='bottom') {
+                        return this._renderItemWithPopupMenu(item, parent, level);
+                    } else {
+                        return this._renderItemWithInlineMenu(item, parent, level);
+                    }
+                } else {
+                    return this._renderItem(item, parent, level);
+                }
+            }			
 		})}`;
 	}
 	render() {

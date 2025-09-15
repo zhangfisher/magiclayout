@@ -1,7 +1,7 @@
 import type { HTMLElementCustomClasss, HTMLElementCustomStyles } from "@/types";
 
 export type MagicMenuItem = {
-    type: 'item' | 'group' | 'separator' | 'popup' | 'link';
+    type?: 'item' | 'label' | 'separator' | 'popup' | 'link';
 	id: string;
 	icon?: string;
 	label?: string;
