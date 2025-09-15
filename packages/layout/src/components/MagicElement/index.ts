@@ -1,13 +1,13 @@
 import { MagicLayoutContext, type MagicLayoutStore } from '@/context';
 import type { MagicLayoutOptions } from '@/context/types';
 import { HostClasses } from '@/controllers/hostClasss';
-import { HTMLElementCustomStyles } from '@/types';
+import type { HTMLElementCustomStyles } from '@/types';
 import { applyCustomStyles } from '@/utils/applyCustomStyles';
 import { getVal } from '@/utils/getVal';
 import { consume } from '@lit/context';
 import type { StateOperate, WatchListener } from 'autostore';
 import type { ObjectKeyPaths } from 'flex-tools/types';
-import { LitElement, PropertyValues } from 'lit';
+import { LitElement, type PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 export type StateKey = ObjectKeyPaths<Required<MagicLayoutOptions>>;

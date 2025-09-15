@@ -3,7 +3,6 @@ import { customElement, property } from 'lit/decorators.js';
 import { MagicLayoutActionBase } from './base';
 import { when } from 'lit/directives/when.js';
 import { classMap } from 'lit/directives/class-map.js';
-
 @customElement('magic-action-button')
 export class MagicLayoutActionButton extends MagicLayoutActionBase<'button'> {
 	static styles = [

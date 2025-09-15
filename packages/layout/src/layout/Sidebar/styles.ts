@@ -32,8 +32,7 @@ export const base = css`
         position: relative;
         display: flex;
         z-index:9;        
-                background-color:var(--auto-panel-bgcolor);
-
+        background-color:var(--auto-panel-bgcolor);
         & > magic-flex{
             box-sizing: border-box;
             &>magic-logo,magic-sidebar-header,magic-sidebar-footer{

@@ -1,4 +1,4 @@
-import { HTMLElementCustomClasss, HTMLElementCustomStyles } from "@/types";
+import type { HTMLElementCustomClasss, HTMLElementCustomStyles } from "@/types";
 
 export type MagicMenuItem = {
 	id: string;
@@ -21,9 +21,7 @@ export type MagicMenuItem = {
 	 * -  circle:  在图标外面显示圆圈
 	 * -  rectangle: 在图标外面显示圆角矩形
 	 * -  none:     不显示图标样式
-	 * - 指定颜色: 例如: 'circle,red,#769898'
-	 *
-	 *
+	 * - 指定颜色: 例如: 'circle,red,#769898' 
 	 * 例如:  'circle,fill'
 	 */
 	iconStyle?: string[];

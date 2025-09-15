@@ -69,14 +69,13 @@ export class MagicLayoutExamples extends LitElement {
                     iconStyle: ['rectangle'], 
 					groups: {
 						'*': {},
-					},
+					}, 
 					items: [
 						{   
                             id: 'home', 
                             label: '首页', 
                             icon: 'house', 
                             loading: true,
-                            iconStyle:['rectangle']
                          },
 						{
 							id: 'user',
@@ -98,6 +97,7 @@ export class MagicLayoutExamples extends LitElement {
 							id: 'analysis',
 							label: '智能分析',
 							icon: 'chart-pie',
+                            panded:false,
 							children: [
 								{ label: '智能分析-1', icon: 'file' },
 								{ label: '智能分析-1', icon: 'settings' },
