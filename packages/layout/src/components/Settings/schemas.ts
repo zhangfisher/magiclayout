@@ -4,7 +4,7 @@ import { schema, type SchemaDescriptorBuilder, type AutoStore } from 'autostore'
 export const schemas = [
 	[
 		'theme.theme',
-		schema('light', {
+		schema({
 			label: '主题颜色',
 			widget: 'colorpicker',
 			presets: ['#FEFEFE', '#555', 'red', 'blue'],
@@ -12,7 +12,7 @@ export const schemas = [
 	],
     [
 		'sidebar.menu.iconStyle',
-		schema([], {
+		schema({
 			label: '图标样式',
 			widget: 'checkbox-group',
 			select:[                
@@ -24,7 +24,7 @@ export const schemas = [
     ],
     [
 		'sidebar.menu.labelPos',
-		schema('right', {
+		schema({
 			label: '文字样式',
 			widget: 'radio-button',            
 			select:[                

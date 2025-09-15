@@ -150,14 +150,14 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 		if (!item.children || item.children.length === 0) return;
 
 		return html`<sl-icon-button data-id="${item.id}"  library="system" name="caret" class="expander ${classMap({
-			expanded: item.expanded===undefined ? true : item.expanded,
+			expanded: item.expand===undefined ? true : item.expand,
 			right: 1,
 		})}"
             @click=${() => this._onExpandInlineMenu(item)}             
         ></sl-icon-button>`;
 	}
 	_onExpandInlineMenu(item: MagicMenuItem) {
-		item.expanded = item.expanded === undefined ? false : !item.expanded;
+		item.expand = item.expand === undefined ? false : !item.expand;
 	}
 	_renderLoading(item: MagicMenuItem) {
 		return html`${when(!this.collapsed && item.loading, () => html`<sl-spinner></sl-spinner>`)}`;
@@ -319,7 +319,7 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 	_renderItemWithInlineMenu(item: MagicMenuItem, parent?: MagicMenuItem, level: number = 0): TemplateResult {
 		return html`${this._renderItem(item, parent, level)}           
         <div class="ml-inline-submenu ${classMap({
-					collapsed: item.expanded === false,
+					collapsed: item.expand === false,
 				})} ">
             ${this._renderMenu(item.children!, item, level + 1)}
         </div>`;
