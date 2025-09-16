@@ -55,6 +55,12 @@ export default css`
             & sl-icon{
                 color: var(--auto-primary-color) !important;
             }
+            & .ml-icon.rectangle,.ml-icon.circle{
+                border: 1px solid var(--auto-primary-color) !important;
+            }
+            .ml-icon.fill sl-icon{
+                color:white!important;
+            }
         }
         &>.ml-icon{
             flex-shrink: 0;
@@ -206,6 +212,24 @@ export default css`
         border: var(--auto-border);
         font-size: calc(0.8 * var(--auto-icon-size));
     }
-    
-    
+    .ml-icon.fill{        
+        background-color: var(--icon-bgcolor);
+        border:1px solid var(--icon-bgcolor);
+        sl-icon{
+            color:white;
+        }
+    }
+    .ml-separator{
+        height: 1px;
+        width:100%;
+        border-top: var(--auto-border);
+        margin: 0.5em 0;
+    }
+    .ml-group-label{
+        color: var(--auto-theme-color);
+        padding: 0.5em 1em; 
+        width: 100%;
+        font-weight: 500;
+        box-sizing: border-box;
+    }
 `;

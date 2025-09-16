@@ -65,4 +65,7 @@ export const root = css`
         flex-direction: column;
     }    
     ${media} 
+    :slotted(name){
+        display: none;
+    }
 `;

@@ -66,7 +66,6 @@ export class MagicLayoutExamples extends LitElement {
 			},
 			sidebar: {
 				menu: {
-                    iconStyle: ['rectangle'], 
 					groups: {
 						'*': {},
 					}, 
@@ -82,6 +81,7 @@ export class MagicLayoutExamples extends LitElement {
 							label: '用户管理',
 							tips: '用户管理',
 							icon: 'user-round',
+                            iconStyle:["#47ab13","fill",'circle'],
 							badge: 8,
 							actions: [
 								{ id: 'x1', label: '用户', icon: 'user-round' },
@@ -92,7 +92,11 @@ export class MagicLayoutExamples extends LitElement {
 							],
 						},
 						{ id: 'article', label: '文章管理', tips: '文章管理', icon: 'file-text', checked: true },
-						{ id: 'publish', label: '发布文章', tips: '发布文章', icon: 'rocket', badge: 8 },
+						{ type:'separator'},
+                        { id: 'publish', label: '发布文章', tips: '发布文章', icon: 'rocket', badge: 8 },
+                        { id: 'user-profile', label: '弹出面板',  icon: 'circle-user-round',
+                            
+                         },
 						{
 							id: 'analysis',
 							label: '智能分析',
@@ -157,6 +161,10 @@ export class MagicLayoutExamples extends LitElement {
 								{ label: '智能分析-1', icon: 'chart-pie' },
 							],
 						},
+                        {
+                            type:'label',
+                            label:'相关链接',
+                        },
 						{
 							id: 'perm',
 							label: '权限管理',
@@ -240,6 +248,9 @@ export class MagicLayoutExamples extends LitElement {
                         
                     </div>  
                 </div> 
+                <div slot="user-profile" style="width:300px;height:200px;background-color: #fff;">
+                    用户信息
+                </div>
          </div>
             
         </magic-layout> 

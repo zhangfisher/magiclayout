@@ -82,6 +82,7 @@ export const defaultState = {
 		},
 		menu: {
 			visible: true,
+            iconStyle:[],
 			items: [],
 		},
 		footer: {

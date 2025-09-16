@@ -64,7 +64,6 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 		) as unknown as NormalizedMagicMenuOptions;
 		forEachTreeByDfs(this.state.items, ({ node }) => {
 			if (!node.id) {
-				console.warn('magic-menu: item must have id');
 				return;
 			}
 			this._cache.items[node.id] = node;
@@ -97,14 +96,26 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 		return html`<sl-badge class='ml-badge' variant="danger" pill pulse>${badge}</sl-badge>`;
 	}
 
-
-	_renderIcon(item: MagicMenuItem) {
-        const iconStyles = (item.iconStyle || this.state.iconStyle || []).reduce((acc,cur)=>{
+    _getItemIconStyles(item: MagicMenuItem){
+        let iconBgColor:string | undefined
+        let iconStyle = (item.iconStyle || this.state.iconStyle || [])
+        // @ts-expect-error
+        if(typeof(iconStyle)==='string') iconStyle=iconStyle!.split(',')
+        const iconStyles = iconStyle.reduce((acc,cur)=>{
             if(cur.trim() === '') return acc            
+            if(cur.startsWith('#')) {
+                iconBgColor = cur  
+                return acc
+            }
             acc[cur] = true;
             return acc
         },{} as Record<string,boolean>)
-		return html`<span class="ml-icon ${classMap(iconStyles)}" > 
+        return [iconStyles,iconBgColor] as [Record<string,boolean>,string | undefined]
+    }
+
+	_renderIcon(item: MagicMenuItem) {    
+        const [iconStyles,iconBgColor] = this._getItemIconStyles(item)
+		return html`<span class="ml-icon ${classMap(iconStyles)}" style="${ifDefined(iconBgColor! ? `--icon-bgcolor:${iconBgColor}` : undefined)}"> 
                 ${when(item.icon, () => html`<sl-icon name="${item.icon!}"></sl-icon>`)}
                 ${when(this.collapsed , () => this._renderBadge(item))}
                 ${when(this.collapsed, () => this._renderRedDot(item))}                
@@ -325,16 +336,27 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
             ${this._renderMenu(item.children!, item, level + 1)}
         </div>`;
 	}
+    _renderSeparator(){
+        return html`<div class="ml-separator"></div>`
+    }
+    _renderGroupLabel(item: MagicMenuItem){
+        if(this.collapsed) return html``;
+        return html`<div class="ml-group-label">${item.label}</div>`
+    }
+    _renderPopup(item:MagicMenuItem){
+        return html``
 
+    }
 	_renderMenu(items: MagicMenuItem[], parent?: MagicMenuItem, level: number = 0) {
 		return html`${repeat(items, (item) => {
             if(item.type==='link'){
 
             }else if(item.type==='separator'){
-
+                return this._renderSeparator()
             }else if(item.type==='label'){
-
+                return this._renderGroupLabel(item)
             }else if(item.type==='popup'){
+            }else{
                 if (Array.isArray(item.children) && item.children.length > 0) {
                     if (this.collapsed || level >= this._cache.inlineLevel || this.state.labelPos==='bottom') {
                         return this._renderItemWithPopupMenu(item, parent, level);

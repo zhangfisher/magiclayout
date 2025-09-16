@@ -60,6 +60,8 @@ export class MagicLayout extends LitElement {
 
 	classs = new HostClasses(this);
 
+    slots:Record<string,Element | Element[]> = {}
+
 	mediaQuery = new MediaQuery(this, this.store.state.breakpoints);
 
 	constructor() {
@@ -87,6 +89,8 @@ export class MagicLayout extends LitElement {
 				},
 			);
 		}
+		// 初始化时获取所有slots
+		setTimeout(() => this.getSlots(), 0);
 	}
 	renderWorkspace() {
 		if (this.store.state.workspace.type === 'tabs') {
@@ -137,6 +141,25 @@ export class MagicLayout extends LitElement {
         </div>
         `;
 	}
+
+    getSlots(){
+        const allSlots = this.shadowRoot?.querySelectorAll('slot');
+        if(allSlots){
+            allSlots.forEach(slot => {
+                const name = slot.name 
+                if(!name) return 
+                const elements = slot.assignedElements({flatten: true});
+                this.slots[name] = elements.length === 1 ? elements[0] : elements;
+                
+                // 添加slot变化监听
+                slot.addEventListener('slotchange', () => {
+                    const updatedElements = slot.assignedElements({flatten: true});
+                    this.slots[name] = updatedElements.length === 1 ? updatedElements[0] : updatedElements;
+                });
+            });
+        }
+        return this.slots;
+    }
 }
 
 declare global {
