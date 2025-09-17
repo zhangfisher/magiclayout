@@ -1,7 +1,7 @@
 import type { HTMLElementCustomClasss, HTMLElementCustomStyles } from "@/types";
 
 export type MagicMenuItem = {
-    type?: 'item' | 'label' | 'separator' | 'popup' | 'link';
+    type?: 'item' | 'label' | 'divider' | 'popup' 
 	id: string;
 	icon?: string;
 	label?: string;
@@ -14,6 +14,10 @@ export type MagicMenuItem = {
 	bottom?: boolean;
 	loading?: boolean;
 	group?: string;
+    /**
+     * 菜单链接,显示一个链接符号
+     */
+    url?:string
 	expand?: boolean;    
 	/**
 	 * 菜单图标修饰样式

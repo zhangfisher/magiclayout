@@ -92,10 +92,14 @@ export class MagicLayout extends LitElement {
 		// 初始化时获取所有slots
 		setTimeout(() => this.getSlots(), 0);
 	}
+    handleSlotchange(e: any) {
+       const childNodes = e.target.assignedNodes({flatten: true});
+        
+    }
 	renderWorkspace() {
 		if (this.store.state.workspace.type === 'tabs') {
 			return html`<magic-layout-tabs-workspace part="workspace">
-                <slot></slot>
+                <slot @slotchange=${this.handleSlotchange}></slot>
             </magic-layout-tabs-workspace>`;
 		} else {
 			return html`<magic-layout-stack-workspace part="workspace">
@@ -137,7 +141,8 @@ export class MagicLayout extends LitElement {
         <div part="root" class="root ${classMap({
 					'full-screen': this.state.screen.full,
 				})}">
-            ${this.renderBodyWithHeader()}
+            ${this.renderBodyWithHeader()}        
+            <slot name="popup"></slot>   
         </div>
         `;
 	}
@@ -150,12 +155,7 @@ export class MagicLayout extends LitElement {
                 if(!name) return 
                 const elements = slot.assignedElements({flatten: true});
                 this.slots[name] = elements.length === 1 ? elements[0] : elements;
-                
-                // 添加slot变化监听
-                slot.addEventListener('slotchange', () => {
-                    const updatedElements = slot.assignedElements({flatten: true});
-                    this.slots[name] = updatedElements.length === 1 ? updatedElements[0] : updatedElements;
-                });
+                 
             });
         }
         return this.slots;

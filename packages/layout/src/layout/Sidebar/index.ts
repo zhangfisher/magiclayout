@@ -8,7 +8,6 @@ import { MagicElement } from '../../components/MagicElement';
 import type { RequiredMagicLayoutOptions } from '@/context/types';
 import { getCssSize } from '@/utils/getCssSize';
 import './header';
-import './menu';
 import './footer';
 import './trigger';
 import type { MagicLayoutLogo } from '@/components/Logo';
@@ -67,6 +66,9 @@ export class MagicLayoutSidebar extends MagicElement<RequiredMagicLayoutOptions[
 	getSidebarWidth() {
 		return getCssSize(this.state.collapsed ? this.state.collapsedWidth : this.state.width);
 	}
+    _renderEmpty(){
+        return html`<div class="empty"></div>`
+    }
 	render() {
 		this.classs.use({
 			collapsed: this.state.collapsed,
@@ -84,7 +86,9 @@ export class MagicLayoutSidebar extends MagicElement<RequiredMagicLayoutOptions[
                 class="fit"
             >
                 ${when(this.store.state.logo.pos === 'sidebar', () => html`<magic-layout-logo ?collapsed=${this.state.collapsed}> </magic-layout-logo>`)}
-                <magic-menu stateKey="sidebar.menu" .collapsed=${this.state.collapsed} ></magic-menu>
+                <magic-menu class="scrollbar" stateKey="sidebar.menu" .collapsed=${this.state.collapsed} ></magic-menu>
+                ${this._renderEmpty()}
+                <magic-menu class="scrollbar" stateKey="sidebar.menu" .collapsed=${this.state.collapsed} bottom></magic-menu>
                 ${when(this.collapable, () => html`<magic-sidebar-trigger> </magic-sidebar-trigger>`)}                
             </magic-flex>
         `;

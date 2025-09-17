@@ -92,9 +92,9 @@ export class MagicLayoutExamples extends LitElement {
 							],
 						},
 						{ id: 'article', label: '文章管理', tips: '文章管理', icon: 'file-text', checked: true },
-						{ type:'separator'},
+						{ type:'divider'},
                         { id: 'publish', label: '发布文章', tips: '发布文章', icon: 'rocket', badge: 8 },
-                        { id: 'user-profile', label: '弹出面板',  icon: 'circle-user-round',
+                         { id: 'user-profile', label: '弹出面板',  icon: 'circle-user-round',
                             
                          },
 						{
@@ -105,6 +105,7 @@ export class MagicLayoutExamples extends LitElement {
 							children: [
 								{ label: '智能分析-1', icon: 'file' },
 								{ label: '智能分析-1', icon: 'settings' },
+								{ type: 'divider' },
 								{
 									label: '智能分析-1',
 									icon: 'chart-pie',
@@ -122,7 +123,8 @@ export class MagicLayoutExamples extends LitElement {
 													children: [
 														{ label: '智能分析-4', icon: 'file' },
 														{ label: '智能分析-4', badge: 8, icon: 'settings' },
-														{ label: '智能分析-4', icon: 'chart-pie' },
+														{ type: 'divider' },
+                                                        { label: '智能分析-4', icon: 'chart-pie' },
 														{ label: '智能分析-4', icon: 'aperture' },
 														{ label: '智能分析-4', icon: 'chart-pie' },
 													],
@@ -143,6 +145,7 @@ export class MagicLayoutExamples extends LitElement {
 											],
 										},
 										{ label: '智能分析-2', icon: 'chart-pie' },
+                                        { type: 'divider' },
 										{
 											label: '智能分析-2',
 											icon: 'aperture',
@@ -175,7 +178,7 @@ export class MagicLayoutExamples extends LitElement {
 							],
 						},
 						{ id: 'settings', label: '系统设置', icon: 'settings', bottom: true },
-					],
+											],
 				},
 			},
 			header: {
@@ -248,8 +251,8 @@ export class MagicLayoutExamples extends LitElement {
                         
                     </div>  
                 </div> 
-                <div slot="user-profile" style="width:300px;height:200px;background-color: #fff;">
-                    用户信息
+                <div slot="popup" >
+                    <div class="user-profile">用户信息</div>
                 </div>
          </div>
             

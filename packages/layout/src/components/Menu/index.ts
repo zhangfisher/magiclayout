@@ -44,6 +44,9 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 	@property({ type: Number, reflect: true })
 	inlineLevel: number = 1;
 
+	@property({ type: Boolean, reflect: true })
+	bottom: boolean = false;
+
 	_cache!: NormalizedMagicMenuOptions;
 
     private _lastHoverItem: string | null = null;
@@ -52,6 +55,17 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
     private _mouseX!:number
     private _mouseY!:number
 
+    _onItemClick = (e:any) => {
+        const actionEle = e.target.closest(".ml-action")
+        if(actionEle) {
+            console.log("action=", actionEle)
+        }else{
+            const itemEle = e.target.closest(".ml-item")
+            if(itemEle) {
+                console.log("item=", itemEle)
+            }
+        }
+    }
 	_normalizeCache() {
 		this._cache = Object.assign(
 			{
@@ -76,12 +90,14 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 		this._normalizeCache();		
 		// 添加全局鼠标移动事件监听器
 		window.addEventListener('mousemove', this._trackMousePosition);
+        this.shadowRoot?.addEventListener('click', this._onItemClick)
 	}
 	
 	disconnectedCallback(): void {
 		super.disconnectedCallback();
 		// 移除鼠标移动事件监听器
 		window.removeEventListener('mousemove', this._trackMousePosition);
+        this.shadowRoot?.removeEventListener('click', this._onItemClick)
 	}
 	
 	// 跟踪鼠标位置
@@ -140,7 +156,7 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
         </span>`;
 	}
 	_renderMoreActions(actions: MagicMenuItemAction[]) {
-		return html`<sl-dropdown>
+		return html`<sl-dropdown placement="right-start" hoist>
             <magic-icon name="more" class='action'  slot="trigger" size="small"></magic-icon>
             <sl-menu>
                 ${repeat(actions, (action,i) => {
@@ -173,12 +189,12 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 	}
 	_renderLoading(item: MagicMenuItem) {
 		return html`${when(!this.collapsed && item.loading, () => html`<sl-spinner></sl-spinner>`)}`;
-	}
-
-	_renderItem(item: MagicMenuItem, parent?: MagicMenuItem, level: number = 0) {
-		return html`<div class="ml-item ${classMap({
+	} 
+	_renderItem(item: MagicMenuItem,  level: number = 0) {
+		return html`<div data-id="${ifDefined(item.id)}" class="ml-item ${classMap({
             'bottom-label':this.state.labelPos==='bottom'
-        })}" title="${ifDefined(item.label)}">            
+        })}"         
+        title="${ifDefined(item.label)}">            
             <span class="ml-indent" style="width:${1.5 * level}em"></span>
             ${this._renderIcon(item)}                    
             ${this._renderLabel(item, level)}
@@ -189,11 +205,14 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 
         </div>`;
 	}
-	_renderSubmenu(item: MagicMenuItem, level: number = 0): TemplateResult {
+	_renderSubmenu(item: MagicMenuItem, level: number = 0): TemplateResult { 
 		return html`
                 <sl-menu slot="${ifDefined(level > 0 ? 'submenu' : '')}">
                     ${repeat(item.children!, (child) => {
-											return html`<sl-menu-item>
+                            if(child.type==='divider'){
+                                return this._renderDivider()
+                            }
+							return html`<sl-menu-item>
                             ${when(child.icon, () => html`<magic-icon slot="prefix" name="${child.icon!}"></magic-icon>`)}                            
                             ${child.label}
                             ${when(Number(child.badge) > 0, () => html`<sl-badge slot="suffix" class='ml-badge' variant="danger" pill pulse>${child.badge}</sl-badge>`)}
@@ -249,14 +268,12 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
         if (this._hoverTimer !== null) {
             window.clearTimeout(this._hoverTimer);
             this._hoverTimer = null;
-        }
-        
+        }        
         // 延迟隐藏菜单，给用户时间移动到子菜单
         this._leaveTimer = window.setTimeout(() => {
             // 检查鼠标是否移到了子菜单上
             const submenu = popupmenu.querySelector('sl-menu');
-            const dropdown = popupmenu.shadowRoot?.querySelector('.dropdown') as HTMLElement;
-            
+            const dropdown = popupmenu.shadowRoot?.querySelector('.dropdown') as HTMLElement;            
             // 检查鼠标是否在子菜单或下拉菜单容器上
             if ((submenu && this._isMouseOverElement(submenu as HTMLElement)) || 
                 (dropdown && this._isMouseOverElement(dropdown))) {
@@ -306,7 +323,7 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 			return html`<sl-badge class='reddot' variant="danger" pill pulse></sl-badge>`;
 		})} `;
 	}
-	_renderItemWithPopupMenu(item: MagicMenuItem, parent?: MagicMenuItem, level: number = 0) {
+	_renderItemWithPopupMenu(item: MagicMenuItem, level: number = 0) {
         const dropdownRef = createRef<SlDropdown>();
         const id = item.id || item.label || item.icon || '';
 		return html`               
@@ -328,16 +345,17 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
             </div>                   
             `;
 	}
-	_renderItemWithInlineMenu(item: MagicMenuItem, parent?: MagicMenuItem, level: number = 0): TemplateResult {
-		return html`${this._renderItem(item, parent, level)}           
+	_renderItemWithInlineMenu(item: MagicMenuItem, level: number = 0): TemplateResult {
+		return html`${this._renderItem(item,  level)}           
         <div class="ml-inline-submenu ${classMap({
 					collapsed: item.expand === false,
 				})} ">
-            ${this._renderMenu(item.children!, item, level + 1)}
+            ${this._renderMenu(item.children!,  level + 1)}
         </div>`;
 	}
-    _renderSeparator(){
-        return html`<div class="ml-separator"></div>`
+    _renderDivider(){
+        //return html`<sl-divider></sl-divider>`
+        return html`<div class="ml-divider"></div>`
     }
     _renderGroupLabel(item: MagicMenuItem){
         if(this.collapsed) return html``;
@@ -345,31 +363,37 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
     }
     _renderPopup(item:MagicMenuItem){
         return html``
-
     }
-	_renderMenu(items: MagicMenuItem[], parent?: MagicMenuItem, level: number = 0) {
+    
+	_renderMenu(items: MagicMenuItem[],  level: number = 0) {
 		return html`${repeat(items, (item) => {
-            if(item.type==='link'){
+        
+            if(this.bottom){
+                if(!item.bottom) return 
+            }else{
+                if(item.bottom) return
+            }
 
-            }else if(item.type==='separator'){
-                return this._renderSeparator()
+            if(item.type==='divider'){
+                return this._renderDivider()
             }else if(item.type==='label'){
                 return this._renderGroupLabel(item)
             }else if(item.type==='popup'){
+
             }else{
                 if (Array.isArray(item.children) && item.children.length > 0) {
                     if (this.collapsed || level >= this._cache.inlineLevel || this.state.labelPos==='bottom') {
-                        return this._renderItemWithPopupMenu(item, parent, level);
+                        return this._renderItemWithPopupMenu(item,  level);
                     } else {
-                        return this._renderItemWithInlineMenu(item, parent, level);
+                        return this._renderItemWithInlineMenu(item,  level);
                     }
-                } else {
-                    return this._renderItem(item, parent, level);
+                }else {
+                    return this._renderItem(item, level);
                 }
-            }			
+            }
 		})}`;
 	}
 	render() {
-		return this._renderMenu(this.state.items || [], undefined, 0);
+		return this._renderMenu(this.state.items || []);
 	}
 }

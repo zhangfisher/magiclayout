@@ -219,7 +219,7 @@ export default css`
             color:white;
         }
     }
-    .ml-separator{
+    .ml-divider{
         height: 1px;
         width:100%;
         border-top: var(--auto-border);
