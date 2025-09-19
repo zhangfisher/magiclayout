@@ -84,6 +84,7 @@ export class MagicLayoutSidebar extends MagicElement<RequiredMagicLayoutOptions[
                 grow="magic-sidebar-menu" 
                 align="stretch"  
                 class="fit"
+                data-theme="blue"
             >
                 ${when(this.store.state.logo.pos === 'sidebar', () => html`<magic-layout-logo ?collapsed=${this.state.collapsed}> </magic-layout-logo>`)}
                 <magic-menu class="scrollbar" stateKey="sidebar.menu" .collapsed=${this.state.collapsed} ></magic-menu>

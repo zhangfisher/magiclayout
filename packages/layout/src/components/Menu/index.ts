@@ -12,20 +12,14 @@ import { omit } from 'flex-tools/object';
 import { forEachTreeByDfs } from 'flex-tools/tree/forEachTreeByDfs';
 import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
-import type { SlDropdown } from '@shoelace-style/shoelace';
+import type { SlDropdown } from '@shoelace-style/shoelace'; 
+import { triggerEvent } from '@/utils/triggerEvent';
+
 
 type NormalizedMagicMenuOptions = Required<Omit<MagicMenuOptions, 'items'>> & {
 	items: Record<string, MagicMenuItem>;
 };
-
-// 在window上扩展鼠标位置属性
-declare global {
-    interface Window {
-        mouseX?: number;
-        mouseY?: number;
-    }
-}
-
+ 
 @tag('magic-menu')
 export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 	static styles = styles;
@@ -57,13 +51,23 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 
     _onItemClick = (e:any) => {
         const actionEle = e.target.closest(".ml-action")
-        if(actionEle) {
-            console.log("action=", actionEle)
+        if(actionEle) {            
+            triggerEvent(e.target, 'action/click',{
+                item:this._getMenuItem(e.target)                                
+            })
         }else{
-            const itemEle = e.target.closest(".ml-item")
-            if(itemEle) {
-                console.log("item=", itemEle)
+            const item = this._getMenuItem(e.target)            
+            if(item) {                
+                triggerEvent(e.target, 'menu/click',item)
             }
+        }
+    }
+
+    _getMenuItem(el:HTMLElement):MagicMenuItem | undefined{
+        const itemEle = el.closest(".ml-item") as HTMLElement
+        if(itemEle) {
+            const itemId= itemEle.dataset.id
+            return this._cache.items[itemId!]
         }
     }
 	_normalizeCache() {
@@ -148,7 +152,7 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 		return html`<span class="ml-actions">
             ${repeat(item.actions, (action) => {
                 if (item.actions!.length > 2 || this.state.labelPos==='bottom' ) return;
-                return html`<magic-icon name="${action.icon}" title="${action.label!}"  class='action' size="small"></magic-icon>`;
+                return html`<magic-icon name="${action.icon}" title="${action.label!}" data-id="${action.id}" class='ml-action' size="small"></magic-icon>`;
             })}
             ${when(item.actions.length > 2 || this.state.labelPos==='bottom', () => {
                     return this._renderMoreActions(item.actions!);
@@ -157,11 +161,13 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 	}
 	_renderMoreActions(actions: MagicMenuItemAction[]) {
 		return html`<sl-dropdown placement="right-start" hoist>
-            <magic-icon name="more" class='action'  slot="trigger" size="small"></magic-icon>
+            <magic-icon name="more" class='ml-action'  slot="trigger" size="small"></magic-icon>
             <sl-menu>
                 ${repeat(actions, (action,i) => {
                         if(this.state.labelPos!=='bottom' && i<=2) return
                         return html`<sl-menu-item 
+                            class="ml-action"
+                            data-id="${action.id}" 
                             .disabled=${action.enabled === false}
                             type="${ifDefined(action.checked === true ? 'checkbox' : undefined)}"
                             ?checked=${action.checked === true}

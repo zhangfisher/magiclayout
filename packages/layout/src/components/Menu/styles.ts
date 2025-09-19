@@ -1,5 +1,5 @@
 import { overloads } from '@/styles/overloads';
-import { css } from 'lit';
+import { css } from 'lit'; 
 
 // const media = css`
 
@@ -90,7 +90,7 @@ export default css`
             position: relative;
             align-items:center;
             gap: 0.1em;
-            magic-icon.action{
+            magic-icon.ml-action{
                 cursor: pointer;
                 border-radius: 6px;
                 padding: 0.3em;
@@ -99,16 +99,15 @@ export default css`
                 background: rgba(0,0,0,0.05);
                 color:var(--auto-color);
             }
-            magic-icon.action:hover{                
+            magic-icon.ml-action:hover{                
                 border-radius: 5px;
                 background: rgba(0,0,0,0.1);
                 color:var(--auto-primary-color);
             } 
-            magic-icon.action:active{
+            magic-icon.ml-action:active{
                 background: rgba(0,0,0,0.2);
             } 
         }
-
         &.bottom-label{
             flex-direction: column;
             &>.ml-actions{

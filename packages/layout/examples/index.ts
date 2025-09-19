@@ -23,9 +23,13 @@ export class MagicLayoutExamples extends LitElement {
 	@query('magic-layout')
 	layout?: any;
 
+
 	protected updated(_changedProperties: PropertyValues): void {
 		super.updated(_changedProperties);
-		globalThis.layout = this.layout as MagicLayout;
+		globalThis.layout = this.layout as MagicLayout;        
+        this.layout.addEventListener("menu/click",(e)=>{
+            console.log("MenuItem click:",e.detail)
+        })        
 	}
 
 	getOptions() {
