@@ -245,7 +245,7 @@ export class MagicLayoutExamples extends LitElement {
         <magic-layout .options=${this.getOptions()}>             
             <div style="margin:2rem;border:1px solid blue;display:flex;height:400px;flex-direction:column;box-sizing: border-box;" >
                 <magic-layout-settings></magic-layout-settings>          
-                <div style="display:flex;height:400px;box-sizing: border-box;" >
+                <div style="display:flex;height:400px;box-sizing: border-box;" data-theme='blue'>
                     <div style="width:80px;display:flex;justify-content: center;position: relative;">
                     
                     </div>
@@ -254,10 +254,11 @@ export class MagicLayoutExamples extends LitElement {
                     <div style="width:60px;display:flex;justify-content: center;position: relative;">
                         
                     </div>  
+                     <my-card  title="老子-道德经" style="margin: 0.5rem;gap:0.5em" >  
+                        sddddddddddddd
+                    </my-card>
                 </div> 
-                <div slot="popup" >
-                    <div class="user-profile">用户信息</div>
-                </div>
+                
          </div>
             
         </magic-layout> 

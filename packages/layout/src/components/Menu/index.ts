@@ -14,6 +14,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import type { SlDropdown } from '@shoelace-style/shoelace'; 
 import { triggerEvent } from '@/utils/triggerEvent';
+import 'themepro'
 
 
 type NormalizedMagicMenuOptions = Required<Omit<MagicMenuOptions, 'items'>> & {
