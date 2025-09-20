@@ -42,7 +42,9 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 	@property({ type: Boolean, reflect: true })
 	bottom: boolean = false;
 
-	_cache!: NormalizedMagicMenuOptions;
+	_itemCache!: NormalizedMagicMenuOptions  
+
+    _actionCache!: Record<string,MagicMenuItemAction>  
 
     private _lastHoverItem: string | null = null;
     private _hoverTimer: number | null = null;
@@ -54,8 +56,12 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
         const actionEle = e.target.closest(".ml-action")
         if(actionEle) {            
             triggerEvent(e.target, 'action/click',{
-                item:this._getMenuItem(e.target)                                
+                item:this._getMenuItem(e.target),
+                action: this._getActionItem(actionEle)
             })
+        }else if(e.target.classList.contains('.ml-popup-item')){      
+                const itemId= e.target.dataset.id      
+                triggerEvent(e.target, 'menu/click',this._itemCache.items[itemId!])
         }else{
             const item = this._getMenuItem(e.target)            
             if(item) {                
@@ -68,11 +74,15 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
         const itemEle = el.closest(".ml-item") as HTMLElement
         if(itemEle) {
             const itemId= itemEle.dataset.id
-            return this._cache.items[itemId!]
+            return this._itemCache.items[itemId!]
         }
     }
+    _getActionItem(el:HTMLElement):MagicMenuItem | undefined{        
+        const actionId= el.dataset.id
+        return this._actionCache![actionId!]
+    }
 	_normalizeCache() {
-		this._cache = Object.assign(
+		this._itemCache = Object.assign(
 			{
 				labelPos: 'right',
 				colorized: false,
@@ -81,11 +91,18 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 			},
 			omit(this.state, 'items'),
 		) as unknown as NormalizedMagicMenuOptions;
+        this._actionCache = {}
 		forEachTreeByDfs(this.state.items, ({ node }) => {
 			if (!node.id) {
 				return;
 			}
-			this._cache.items[node.id] = node;
+			this._itemCache.items[node.id] = node;
+            if(node.actions && Array.isArray(node.actions)){
+                node.actions.forEach(action=>{
+                    if(!action.id) return 
+                    this._actionCache[action.id] = action
+                })
+            }
 		});
 	}
 
@@ -197,9 +214,10 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 	_renderLoading(item: MagicMenuItem) {
 		return html`${when(!this.collapsed && item.loading, () => html`<sl-spinner></sl-spinner>`)}`;
 	} 
-	_renderItem(item: MagicMenuItem,  level: number = 0) {
-		return html`<div data-id="${ifDefined(item.id)}" class="ml-item ${classMap({
-            'bottom-label':this.state.labelPos==='bottom'
+	_renderItem(item: MagicMenuItem,  level: number = 0,extraClasss:string='') {
+		return html`<div data-id="${ifDefined(item.id)}" class="ml-item  ${classMap({
+            'bottom-label':this.state.labelPos==='bottom',
+            [extraClasss]:true
         })}"         
         title="${ifDefined(item.label)}">            
             <span class="ml-indent" style="width:${1.5 * level}em"></span>
@@ -219,7 +237,7 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
                             if(child.type==='divider'){
                                 return this._renderDivider()
                             }
-							return html`<sl-menu-item>
+							return html`<sl-menu-item class=".ml-popup-item" data-id="${ifDefined(child.id)}">
                             ${when(child.icon, () => html`<magic-icon slot="prefix" name="${child.icon!}"></magic-icon>`)}                            
                             ${child.label}
                             ${when(Number(child.badge) > 0, () => html`<sl-badge slot="suffix" class='ml-badge' variant="danger" pill pulse>${child.badge}</sl-badge>`)}
@@ -353,7 +371,7 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
             `;
 	}
 	_renderItemWithInlineMenu(item: MagicMenuItem, level: number = 0): TemplateResult {
-		return html`${this._renderItem(item,  level)}           
+		return html`${this._renderItem(item,  level,'inline-submenu')}           
         <div class="ml-inline-submenu ${classMap({
 					collapsed: item.expand === false,
 				})} ">
@@ -361,7 +379,6 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
         </div>`;
 	}
     _renderDivider(){
-        //return html`<sl-divider></sl-divider>`
         return html`<div class="ml-divider"></div>`
     }
     _renderGroupLabel(item: MagicMenuItem){
@@ -389,7 +406,7 @@ export class MagicLayoutMenu extends MagicElement<MagicMenuOptions> {
 
             }else{
                 if (Array.isArray(item.children) && item.children.length > 0) {
-                    if (this.collapsed || level >= this._cache.inlineLevel || this.state.labelPos==='bottom') {
+                    if (this.collapsed || level >= this._itemCache.inlineLevel || this.state.labelPos==='bottom') {
                         return this._renderItemWithPopupMenu(item,  level);
                     } else {
                         return this._renderItemWithInlineMenu(item,  level);

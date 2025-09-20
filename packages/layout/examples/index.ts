@@ -23,13 +23,15 @@ export class MagicLayoutExamples extends LitElement {
 	@query('magic-layout')
 	layout?: any;
 
-
 	protected updated(_changedProperties: PropertyValues): void {
 		super.updated(_changedProperties);
 		globalThis.layout = this.layout as MagicLayout;        
         this.layout.addEventListener("menu/click",(e)=>{
             console.log("MenuItem click:",e.detail)
-        })        
+        })     
+        this.layout.addEventListener("action/click",(e)=>{
+            console.log("Action click:",e.detail)
+        })     
 	}
 
 	getOptions() {
@@ -108,13 +110,13 @@ export class MagicLayoutExamples extends LitElement {
                             panded:false,
 							children: [
 								{ label: '智能分析-1', icon: 'file' },
-								{ label: '智能分析-1', icon: 'settings' },
+								{ id:"set",label: '智能分析-1', icon: 'settings' },
 								{ type: 'divider' },
 								{
 									label: '智能分析-1',
 									icon: 'chart-pie',
 									children: [
-										{ label: '智能分析-2', icon: 'file' },
+										{id:"file", label: '智能分析-2', icon: 'file' },
 										{
 											label: '智能分析-2',
 											icon: 'settings',
@@ -177,8 +179,8 @@ export class MagicLayoutExamples extends LitElement {
 							label: '权限管理',
 							icon: 'shield',
 							actions: [
-								{ id: 'x1', label: '用户', icon: 'user-round' },
-								{ id: 'x2', label: '发布', icon: 'rocket' },
+								{ id: 'x13', label: '用户', icon: 'user-round' },
+								{ id: 'x23', label: '发布', icon: 'rocket' },
 							],
 						},
 						{ id: 'settings', label: '系统设置', icon: 'settings', bottom: true },

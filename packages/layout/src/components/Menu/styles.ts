@@ -33,6 +33,7 @@ export default css`
         flex-direction: column;
         align-items:center;
         width:100%;   
+        overflow-x: hidden;
     }         
 
     .ml-item{
